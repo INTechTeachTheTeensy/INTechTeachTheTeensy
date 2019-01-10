@@ -1,0 +1,5 @@
+# Trucs d'IDEA
+.idea/
+.gradle/
+out/
+*.iml
