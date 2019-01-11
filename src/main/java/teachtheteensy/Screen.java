@@ -1,14 +1,11 @@
 package teachtheteensy;
 
-import javafx.scene.canvas.GraphicsContext;
-
-public abstract class Screen {
+public abstract class Screen implements Renderable  {
 
     public Screen() {
 
     }
 
-    public abstract void render(GraphicsContext ctx);
     public abstract void tick();
 
     public void leftClick(double sceneX, double sceneY) {}

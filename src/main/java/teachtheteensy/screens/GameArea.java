@@ -1,6 +1,7 @@
 package teachtheteensy.screens;
 
 import javafx.scene.canvas.GraphicsContext;
+import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.Teensy;
 import teachtheteensy.math.MutableRectangle;
 
@@ -8,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class GameArea {
+public class GameArea implements Renderable {
 
     private List<Teensy> components = new LinkedList<>();
     private PrototypeScreen parent;

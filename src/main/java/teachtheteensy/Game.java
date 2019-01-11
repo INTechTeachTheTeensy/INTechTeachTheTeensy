@@ -17,6 +17,8 @@ public class Game {
      */
     private static Game INSTANCE;
 
+    private double mouseX;
+    private double mouseY;
     private final int screenWidth;
     private final int screenHeight;
     private Screen currentScreen;
@@ -70,7 +72,13 @@ public class Game {
         return 1080. / screenHeight;
     }
 
+    private void updateMousePos(MouseEvent event) {
+        mouseX = event.getSceneX();
+        mouseY = event.getSceneY();
+    }
+
     public void mouseClick(MouseEvent event) {
+        updateMousePos(event);
         if(event.getButton() == MouseButton.PRIMARY) {
             currentScreen.leftClick(event.getSceneX()*xScale(), event.getSceneY()*yScale());
         } else if(event.getButton() == MouseButton.SECONDARY) {
@@ -79,21 +87,36 @@ public class Game {
     }
 
     public void mouseReleased(MouseEvent event) {
+        updateMousePos(event);
         if(event.getButton() == MouseButton.PRIMARY) {
             currentScreen.mouseReleased(event.getSceneX()*xScale(), event.getSceneY()*yScale());
         }
     }
 
     public void mousePressed(MouseEvent event) {
+        updateMousePos(event);
         if(event.getButton() == MouseButton.PRIMARY) {
             currentScreen.mousePressed(event.getSceneX()*xScale(), event.getSceneY()*yScale());
         }
     }
 
     public void mouseDragged(MouseEvent event) {
+        updateMousePos(event);
         if(event.getButton() == MouseButton.PRIMARY) {
             currentScreen.mouseDragged(event.getSceneX()*xScale(), event.getSceneY()*yScale());
         }
+    }
+
+    public double getMouseX() {
+        return mouseX;
+    }
+
+    public double getMouseY() {
+        return mouseY;
+    }
+
+    public void mouseMoved(MouseEvent event) {
+        updateMousePos(event);
     }
 
     public void showScreen(Screen screen) {

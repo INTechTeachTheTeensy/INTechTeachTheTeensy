@@ -3,10 +3,11 @@ package teachtheteensy.screens;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import teachtheteensy.Assets;
+import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.Teensy;
 import teachtheteensy.math.MutableRectangle;
 
-public class Drawer {
+public class Drawer implements Renderable {
 
     private final Image texture;
     private final MutableRectangle buttonToOpen;

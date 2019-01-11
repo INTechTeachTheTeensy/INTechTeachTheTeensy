@@ -43,6 +43,7 @@ public class GameApp extends Application {
         stage.addEventFilter(MouseEvent.MOUSE_PRESSED, game::mousePressed);
         stage.addEventFilter(MouseEvent.MOUSE_RELEASED, game::mouseReleased);
         stage.addEventFilter(MouseEvent.MOUSE_DRAGGED, game::mouseDragged);
+        stage.addEventFilter(MouseEvent.MOUSE_MOVED, game::mouseMoved);
 
         timer.start();
         stage.show();
