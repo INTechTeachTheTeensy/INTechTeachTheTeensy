@@ -8,6 +8,7 @@ buildscript {
 
     }
 }
+
 apply plugin: 'java'
 
 repositories {
@@ -20,8 +21,8 @@ apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'full.qualified.nameOf.TheMainClass'
+    mainClass = 'teachtheteensy.boot.Bootstrap'
 
     // minimal requirement for jfxNative-task
-    vendor = 'YourName'
+    vendor = 'INTech'
 }

@@ -5,7 +5,6 @@ import javafx.application.Application;
 public class Bootstrap {
 
     public static void main(String[] args) {
-        System.out.println(System.getenv(""));
-     //   Application.launch(GameApp.class);
+        Application.launch(GameApp.class);
     }
 }
