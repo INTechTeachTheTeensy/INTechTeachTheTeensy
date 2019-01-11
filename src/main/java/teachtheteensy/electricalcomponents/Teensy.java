@@ -37,20 +37,32 @@ public class Teensy implements Renderable  {
     public void render(GraphicsContext ctx) {
         ctx.drawImage(texture, box.x, box.y);
 
-        Optional<Pin> pinUnderMouse = pins.stream()
-                .filter(pin -> {
-                    double dx = box.x+pin.getRelativeX() - Game.getInstance().getMouseX();
-                    double dy = box.y+pin.getRelativeY() - Game.getInstance().getMouseY();
-                    return dx*dx+dy*dy <= PIN_RADIUS*PIN_RADIUS;
-                })
-                .findFirst();
-        pinUnderMouse.ifPresent(pin -> {
+        pinUnderMouse().ifPresent(pin -> {
             ctx.setFill(Color.RED);
             ctx.fillOval(box.x+pin.getRelativeX()-PIN_RADIUS, box.y+pin.getRelativeY()-PIN_RADIUS, PIN_RADIUS*2, PIN_RADIUS*2);
 
             ctx.setFill(Color.BLACK);
             ctx.fillText(pin.getName(), box.x+pin.getRelativeX(), box.y+pin.getRelativeY());
         });
+
+        for(Pin p : pins) {
+            p.render(ctx);
+        }
+    }
+
+    public boolean mousePressed(double x, double y) {
+        // TODO: actions quand on commence à cliquer le composant
+        return false;
+    }
+
+    public Optional<Pin> pinUnderMouse() {
+        return pins.stream()
+                .filter(pin -> {
+                    double dx = box.x+pin.getRelativeX() - Game.getInstance().getMouseX();
+                    double dy = box.y+pin.getRelativeY() - Game.getInstance().getMouseY();
+                    return dx*dx+dy*dy <= PIN_RADIUS*PIN_RADIUS;
+                })
+                .findFirst();
     }
 
 

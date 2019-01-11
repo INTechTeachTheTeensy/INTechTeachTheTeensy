@@ -41,6 +41,9 @@ public class PrototypeScreen extends Screen {
         if(drawer.mouseReleased(screenX, screenY))
             return;
 
+        if(gameArea.mouseReleased(screenX, screenY))
+            return;
+
         if(heldComponent != null) { // si on lache le composant
             // reset des offsets pour mettre le composant au bon endroit
             heldComponent.xOffset = 0;

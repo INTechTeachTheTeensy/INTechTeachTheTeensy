@@ -24,6 +24,31 @@ public class Pin implements Renderable {
         this.relativeY = relativeY;
     }
 
+    @Override
+    public void render(GraphicsContext ctx) {
+        ctx.setLineWidth(5);
+        for(Pin connection : connections) {
+            ctx.strokeLine(getAbsoluteX(), getAbsoluteY(), connection.getAbsoluteX(), connection.getAbsoluteY());
+        }
+    }
+
+    public void connectTo(Pin other) {
+        if(other.owner == owner) {
+            throw new IllegalArgumentException("Impossible de connecter deux pins d'un même composant!");
+        }
+
+        if(other == this) {
+            throw new IllegalArgumentException("Impossible de connecter un pin à lui même!");
+        }
+
+        connections.add(other);
+        other.connections.add(this);
+    }
+
+    public Teensy getOwner() {
+        return owner;
+    }
+
     public int getIndex() {
         return index;
     }
@@ -40,8 +65,11 @@ public class Pin implements Renderable {
         return relativeY;
     }
 
-    @Override
-    public void render(GraphicsContext ctx) {
+    public double getAbsoluteX() {
+        return getRelativeX() + owner.box.x;
+    }
 
+    public double getAbsoluteY() {
+        return getRelativeY() + owner.box.y;
     }
 }

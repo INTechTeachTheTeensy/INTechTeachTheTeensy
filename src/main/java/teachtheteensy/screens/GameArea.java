@@ -2,6 +2,7 @@ package teachtheteensy.screens;
 
 import javafx.scene.canvas.GraphicsContext;
 import teachtheteensy.Renderable;
+import teachtheteensy.electricalcomponents.Pin;
 import teachtheteensy.electricalcomponents.Teensy;
 import teachtheteensy.math.MutableRectangle;
 
@@ -14,6 +15,7 @@ public class GameArea implements Renderable {
     private List<Teensy> components = new LinkedList<>();
     private PrototypeScreen parent;
     private MutableRectangle boundingBox;
+    private Pin pressedPin;
 
     public GameArea(PrototypeScreen parent) {
         this.parent = parent;
@@ -29,10 +31,38 @@ public class GameArea implements Renderable {
                     .findFirst();
 
             potentialComponent.ifPresent(teensy -> {
-                parent.heldComponent = teensy;
-                parent.heldComponent.xOffset = teensy.box.x - screenX;
-                parent.heldComponent.yOffset = teensy.box.y - screenY;
+
+                Optional<Pin> pin = teensy.pinUnderMouse();
+                if(pin.isPresent()) {
+                    pressedPin = pin.get();
+                } else { // on ne clique pas sur un pin, on est en train de déplacer un composant
+                    parent.heldComponent = teensy;
+                    parent.heldComponent.xOffset = teensy.box.x - screenX;
+                    parent.heldComponent.yOffset = teensy.box.y - screenY;
+                }
+
             });
+            return true;
+        }
+        return false;
+    }
+
+    public boolean mouseReleased(double x, double y) {
+        if(pressedPin != null) {
+            Optional<Teensy> potentialComponent = components.stream()
+                    .filter((c) -> c.box.isPointIn(x, y))
+                    .findFirst();
+
+            potentialComponent.ifPresent(teensy -> {
+                Optional<Pin> pinOptional = teensy.pinUnderMouse();
+                if (pinOptional.isPresent()) {
+                    Pin pin = pinOptional.get();
+                    if(pin != pressedPin && pin.getOwner() != pressedPin.getOwner()) {
+                        pin.connectTo(pressedPin);
+                    }
+                }
+            });
+            pressedPin = null;
             return true;
         }
         return false;
