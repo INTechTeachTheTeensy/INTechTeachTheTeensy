@@ -19,7 +19,7 @@ public final class Assets {
      */
     public static Image getImage(String name) {
         if( ! loadedImages.containsKey(name)) {
-            Image img = new Image("/assets/"+name);
+            Image img = new Image("/"+name);
             loadedImages.put(name, img);
         }
         return loadedImages.get(name);
