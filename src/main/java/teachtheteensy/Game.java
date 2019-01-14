@@ -112,11 +112,11 @@ public class Game {
     }
 
     public double getMouseX() {
-        return mouseX;
+        return mouseX * xScale();
     }
 
     public double getMouseY() {
-        return mouseY;
+        return mouseY * yScale();
     }
 
     public void mouseMoved(MouseEvent event) {

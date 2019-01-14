@@ -19,7 +19,7 @@ public class PrototypeScreen extends Screen {
     @Override
     public void render(GraphicsContext ctx) {
         // fond
-        ctx.drawImage(Assets.getImage("screens/proto_background.png"), 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+        ctx.drawImage(Assets.getImage("screens/proto_background.png"), 0, 0);
 
         // zone de jeu
         gameArea.render(ctx);

@@ -16,7 +16,7 @@ public class TitleScreen extends Screen {
 
     @Override
     public void render(GraphicsContext ctx) {
-        ctx.drawImage(Assets.getImage("screens/title.png"), 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+        ctx.drawImage(Assets.getImage("screens/title.png"), 0, 0);
     }
 
     @Override
