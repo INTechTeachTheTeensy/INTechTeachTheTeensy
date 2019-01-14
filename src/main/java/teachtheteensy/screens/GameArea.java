@@ -1,6 +1,7 @@
 package teachtheteensy.screens;
 
 import javafx.scene.canvas.GraphicsContext;
+import teachtheteensy.Game;
 import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.Pin;
 import teachtheteensy.electricalcomponents.Teensy;
@@ -74,6 +75,9 @@ public class GameArea implements Renderable {
 
     public void render(GraphicsContext ctx) {
         components.forEach((comp) -> comp.render(ctx));
+        if (pressedPin != null) {
+            ctx.strokeLine(Game.getInstance().getMouseX(), Game.getInstance().getMouseY(), pressedPin.getAbsoluteX(), pressedPin.getAbsoluteY());
+        }
     }
 
     public MutableRectangle getBoundingBox() {
