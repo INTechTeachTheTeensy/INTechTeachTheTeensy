@@ -30,6 +30,7 @@ public class Game {
     public Game(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+
         INSTANCE = this;
 
         currentScreen = new TitleScreen();
@@ -49,7 +50,10 @@ public class Game {
      */
     public void render(GraphicsContext ctx) {
         // TODO
+        ctx.save();
+        ctx.scale(1.0/xScale(), 1.0/yScale());
         currentScreen.render(ctx);
+        ctx.restore();
     }
 
     public int getScreenWidth() {
