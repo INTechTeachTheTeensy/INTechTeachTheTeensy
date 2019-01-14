@@ -3,8 +3,8 @@ package teachtheteensy.screens;
 import javafx.scene.canvas.GraphicsContext;
 import teachtheteensy.Game;
 import teachtheteensy.Renderable;
+import teachtheteensy.electricalcomponents.ElectricalComponent;
 import teachtheteensy.electricalcomponents.Pin;
-import teachtheteensy.electricalcomponents.Teensy;
 import teachtheteensy.math.MutableRectangle;
 
 import java.util.LinkedList;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class GameArea implements Renderable {
 
-    private List<Teensy> components = new LinkedList<>();
+    private List<ElectricalComponent> components = new LinkedList<>();
     private PrototypeScreen parent;
     private MutableRectangle boundingBox;
     private Pin pressedPin;
@@ -27,19 +27,19 @@ public class GameArea implements Renderable {
         if(screenX < boundingBox.width) { // prend en compte les composants
 
             // on regarde s'il y a un composant sous la souris
-            Optional<Teensy> potentialComponent = components.stream()
+            Optional<ElectricalComponent> potentialComponent = components.stream()
                     .filter((c) -> c.box.isPointIn(screenX, screenY))
                     .findFirst();
 
-            potentialComponent.ifPresent(teensy -> {
+            potentialComponent.ifPresent(electricalComponent -> {
 
-                Optional<Pin> pin = teensy.pinUnderMouse();
+                Optional<Pin> pin = electricalComponent.pinUnderMouse();
                 if(pin.isPresent()) {
                     pressedPin = pin.get();
                 } else { // on ne clique pas sur un pin, on est en train de déplacer un composant
-                    parent.heldComponent = teensy;
-                    parent.heldComponent.xOffset = teensy.box.x - screenX;
-                    parent.heldComponent.yOffset = teensy.box.y - screenY;
+                    parent.heldComponent = electricalComponent;
+                    parent.heldComponent.xOffset = electricalComponent.box.x - screenX;
+                    parent.heldComponent.yOffset = electricalComponent.box.y - screenY;
                 }
 
             });
@@ -50,12 +50,12 @@ public class GameArea implements Renderable {
 
     public boolean mouseReleased(double x, double y) {
         if(pressedPin != null) {
-            Optional<Teensy> potentialComponent = components.stream()
+            Optional<ElectricalComponent> potentialComponent = components.stream()
                     .filter((c) -> c.box.isPointIn(x, y))
                     .findFirst();
 
-            potentialComponent.ifPresent(teensy -> {
-                Optional<Pin> pinOptional = teensy.pinUnderMouse();
+            potentialComponent.ifPresent(electricalComponent -> {
+                Optional<Pin> pinOptional = electricalComponent.pinUnderMouse();
                 if (pinOptional.isPresent()) {
                     Pin pin = pinOptional.get();
                     if(pin != pressedPin && pin.getOwner() != pressedPin.getOwner()) {
@@ -69,7 +69,7 @@ public class GameArea implements Renderable {
         return false;
     }
 
-    public void addComponent(Teensy component) {
+    public void addComponent(ElectricalComponent component) {
         components.add(component);
     }
 
@@ -84,11 +84,11 @@ public class GameArea implements Renderable {
         return boundingBox;
     }
 
-    public boolean containsComponent(Teensy component) {
+    public boolean containsComponent(ElectricalComponent component) {
         return components.contains(component);
     }
 
-    public void removeComponent(Teensy component) {
+    public void removeComponent(ElectricalComponent component) {
         components.remove(component);
     }
 }

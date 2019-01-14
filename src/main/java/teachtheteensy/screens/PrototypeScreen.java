@@ -4,13 +4,13 @@ import javafx.scene.canvas.GraphicsContext;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.Screen;
-import teachtheteensy.electricalcomponents.Teensy;
+import teachtheteensy.electricalcomponents.ElectricalComponent;
 
 public class PrototypeScreen extends Screen {
 
     private Drawer drawer = new Drawer(this);
     private GameArea gameArea = new GameArea(this);
-    protected Teensy heldComponent = null;
+    protected ElectricalComponent heldComponent = null;
 
     public PrototypeScreen() {
 

@@ -14,9 +14,9 @@ public class Pin implements Renderable {
     private final double relativeY;
 
     private final List<Pin> connections = new LinkedList<>();
-    private final Teensy owner;
+    private final ElectricalComponent owner;
 
-    public Pin(Teensy owner, String name, int index, double relativeX, double relativeY) {
+    public Pin(ElectricalComponent owner, String name, int index, double relativeX, double relativeY) {
         this.owner = owner;
         this.name = name;
         this.index = index;
@@ -45,7 +45,7 @@ public class Pin implements Renderable {
         other.connections.add(this);
     }
 
-    public Teensy getOwner() {
+    public ElectricalComponent getOwner() {
         return owner;
     }
 

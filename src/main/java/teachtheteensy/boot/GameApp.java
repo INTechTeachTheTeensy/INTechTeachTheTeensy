@@ -10,6 +10,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import teachtheteensy.Game;
 
+import java.awt.*;
+
 /**
  * Classe contenant l'Application JavaFX. Initialises la fenêtre et le jeu et laisse ce dernier prendre le contrôle
  */
@@ -18,8 +20,9 @@ public class GameApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setFullScreen(true);
-        int width = 1920;
-        int height = 1080;
+        Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = resolution.width;
+        int height = resolution.height;
         stage.setTitle("Teach The Teensy");
         Canvas canvas = new Canvas(width, height);
         Group group = new Group();
