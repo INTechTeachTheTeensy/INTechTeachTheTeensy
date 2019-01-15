@@ -13,11 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class Drawer implements Renderable {
+public class Drawer extends ComponentHolder implements Renderable  {
 
     private final Image texture;
     private final MutableRectangle buttonToOpen;
-    private final List<ElectricalComponent> list;
     private final MutableRectangle boundingBox;
     private boolean open = false;
     private PrototypeScreen parent;
@@ -25,33 +24,33 @@ public class Drawer implements Renderable {
     private ElectricalComponent heldComponent = null;
 
     public Drawer(PrototypeScreen parent) {
-        list= new LinkedList<>();
+        components = new LinkedList<>();
         this.parent = parent;
         texture = Assets.getImage("elements/drawer.png");
         buttonToOpen = new MutableRectangle(0, 480, 540-388, 639-480);
 
         Teensy teensy = new Teensy();
-        teensy.box.y = 30;
-        list.add(teensy);
+        teensy.box.setY(30);
+        components.add(teensy);
 
         Led led = new Led();
-        led.box.y=teensy.box.height + teensy.box.y;
-        list.add(led);
+        led.box.setY(teensy.box.getHeight() + teensy.box.getY());
+        components.add(led);
 
         boundingBox = new MutableRectangle(0, 0, 382, 1080);
         updatePositions();
     }
 
     private void updatePositions() {
-        boundingBox.x = getPositionX();
-        for (ElectricalComponent comp : list) {
-            comp.box.x = getPositionX() + 5 /*margin*/;
+        boundingBox.setX(getPositionX());
+        for (ElectricalComponent comp : components) {
+            comp.box.setX(getPositionX() + 5) /*margin*/;
         }
 
     }
 
     public boolean leftClick(double sceneX, double sceneY) {
-        buttonToOpen.x = getPositionX()+382;
+        buttonToOpen.setX(getPositionX()+382);
         if(buttonToOpen.isPointIn(sceneX, sceneY)) {
             open = !open; // TODO: animation?
             updatePositions();
@@ -68,17 +67,16 @@ public class Drawer implements Renderable {
 
     public boolean mousePressed(double screenX, double screenY) {
         if(open) { // prend en compte les composants
-            if(screenX < buttonToOpen.x) { // si on est dans la zone
-                Optional<ElectricalComponent> potentialcomp =
-                        list.stream()
-                                .filter(electricalComponent -> electricalComponent.box.isPointIn(screenX,screenY))
-                                .findFirst();
-                if (potentialcomp.isPresent()) {
-                    ElectricalComponent component = potentialcomp.get();
+            if(screenX < buttonToOpen.getX()) { // si on est dans la zone
+                getComponentUnderPos(screenX, screenY).ifPresent(component -> { // si on commence à cliquer sur un composant
                     parent.heldComponent = component.clone();
-                    parent.heldComponent.xOffset = component.box.x - screenX;
-                    parent.heldComponent.yOffset = component.box.y - screenY;
-                }
+
+                    // le composant part de la même position, pour qu'on ai l'impression de le glisser sur la zone de jeu
+                    parent.heldComponent.box.setX(component.box.getX());
+                    parent.heldComponent.box.setY(component.box.getY());
+                    parent.heldComponent.xOffset = component.box.getX() - screenX;
+                    parent.heldComponent.yOffset = component.box.getY() - screenY;
+                });
                 return true;
             }
         }
@@ -87,7 +85,7 @@ public class Drawer implements Renderable {
 
     public void render(GraphicsContext ctx) {
         ctx.drawImage(texture, getPositionX(), 0);
-        list.forEach(comp -> comp.render(ctx));
+        super.render(ctx);
     }
 
     private double getPositionX() {

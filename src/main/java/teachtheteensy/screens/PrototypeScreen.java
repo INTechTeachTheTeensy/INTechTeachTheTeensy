@@ -5,21 +5,25 @@ import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.Screen;
 import teachtheteensy.electricalcomponents.ElectricalComponent;
+import teachtheteensy.math.MutableRectangle;
 
 public class PrototypeScreen extends Screen {
 
+    private final MutableRectangle playButton;
     private Drawer drawer = new Drawer(this);
     private GameArea gameArea = new GameArea(this);
     protected ElectricalComponent heldComponent = null;
 
     public PrototypeScreen() {
-
+        playButton = new MutableRectangle(1920/2-50, 1080-100, 100, 100);
     }
 
     @Override
     public void render(GraphicsContext ctx) {
         // fond
         ctx.drawImage(Assets.getImage("screens/proto_background.png"), 0, 0);
+
+        ctx.drawImage(Assets.getImage("ui/play_button.png"), playButton.getX(), playButton.getY());
 
         // zone de jeu
         gameArea.render(ctx);
@@ -77,13 +81,18 @@ public class PrototypeScreen extends Screen {
             return;
 
         if(heldComponent != null) {
-            heldComponent.box.x = sceneX + heldComponent.xOffset;
-            heldComponent.box.y = sceneY + heldComponent.yOffset;
+            heldComponent.box.setX(sceneX + heldComponent.xOffset);
+            heldComponent.box.setY(sceneY + heldComponent.yOffset);
         }
     }
 
     @Override
     public void leftClick(double sceneX, double sceneY) {
+        if(playButton.isPointIn(sceneX, sceneY)) {
+            Game.getInstance().showScreen(new SimulationScreen(this));
+            return;
+        }
+
         if(drawer.leftClick(sceneX, sceneY)) // le tiroir a mangé le clic (on a cliqué sur le carré pour l'ouvrir)
             return;
     }

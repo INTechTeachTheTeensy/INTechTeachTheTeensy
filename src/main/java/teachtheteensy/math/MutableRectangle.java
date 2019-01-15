@@ -3,42 +3,53 @@ package teachtheteensy.math;
 /**
  * Représentes un rectangle mutable, ie on peut changer ses dimensions et sa position
  */
-public class MutableRectangle {
+public class MutableRectangle implements IRectangle {
 
-    public double x;
-    public double y;
-    public double width;
-    public double height;
+    private double x;
+    private double y;
+    private double width;
+    private double height;
 
     public MutableRectangle(double x, double y, double width, double height) {
+        this.setX(x);
+        this.setY(y);
+        this.setWidth(width);
+        this.setHeight(height);
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getWidth() {
+        return width;
+    }
+
+    @Override
+    public double getHeight() {
+        return height;
+    }
+
+    public void setX(double x) {
         this.x = x;
+    }
+
+    public void setY(double y) {
         this.y = y;
+    }
+
+    public void setWidth(double width) {
         this.width = width;
+    }
+
+    public void setHeight(double height) {
         this.height = height;
-    }
-
-    /**
-     * Est-ce que le point est dans ce rectangle?
-     * @param px position X du point
-     * @param py position Y du point
-     * @return 'true' si le point est dans le rectangle
-     */
-    public boolean isPointIn(double px, double py) {
-        if(px < x) return false; // trop à gauche
-        if(px >= x+width) return false; // trop à droite
-        if(py < y) return false; // trop en haut
-        return !(py >= y + height);// trop en bas?
-    }
-
-    /**
-     * Test d'intersection de deux rectangles
-     * @param other l'autre rectangle
-     * @return 'true' si les deux rectangles ont une intersection non nulle
-     */
-    public boolean intersects(MutableRectangle other) {
-        if(x+width < other.x) return false; // trop à gauche
-        if(x >= other.x+other.width) return false; // trop à droite
-        if(y+height < other.y) return false; // trop en haut
-        return !(y >= other.y + other.height); // trop en bas?
     }
 }
