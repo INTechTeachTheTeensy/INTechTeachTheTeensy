@@ -100,4 +100,8 @@ public class PrototypeScreen extends Screen {
     public GameArea getGameArea() {
         return gameArea;
     }
+
+    public void resetComponents() {
+        getGameArea().components.forEach(c -> c.resetComponent());
+    }
 }

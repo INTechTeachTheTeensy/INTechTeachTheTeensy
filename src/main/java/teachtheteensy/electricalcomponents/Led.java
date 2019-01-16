@@ -32,4 +32,9 @@ public class Led extends ElectricalComponent {
     public ElectricalComponent clone() {
         return new Led();
     }
+
+    @Override
+    public void resetComponent() {
+        isOn = false;
+    }
 }

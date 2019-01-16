@@ -34,4 +34,9 @@ public class Teensy extends ElectricalComponent{
     public ElectricalComponent clone() {
         return new Teensy();
     }
+
+    @Override
+    public void resetComponent() {
+
+    }
 }

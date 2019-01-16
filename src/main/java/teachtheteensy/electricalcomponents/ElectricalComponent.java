@@ -77,4 +77,6 @@ public abstract class ElectricalComponent implements Renderable,Cloneable  {
     public List<Pin> getPins() {
         return pins;
     }
+
+    public abstract void resetComponent();
 }
