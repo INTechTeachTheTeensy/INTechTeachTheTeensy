@@ -3,16 +3,15 @@ package teachtheteensy.electricalcomponents;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import teachtheteensy.Game;
 import teachtheteensy.Renderable;
+import teachtheteensy.electricalcomponents.models.ElectricalModel;
 import teachtheteensy.math.MutableRectangle;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-public abstract class ElectricalComponent implements Renderable,Cloneable  {
+public abstract class ElectricalComponent implements Renderable, Cloneable {
 
     private final Image texture;
     protected final List<Pin> pins = new LinkedList<>();
@@ -20,6 +19,7 @@ public abstract class ElectricalComponent implements Renderable,Cloneable  {
 
     public double xOffset;
     public double yOffset;
+    private ElectricalModel model;
 
     public ElectricalComponent(Image texture) {
         this(texture, texture.getWidth(), texture.getHeight());
@@ -28,6 +28,14 @@ public abstract class ElectricalComponent implements Renderable,Cloneable  {
     public ElectricalComponent(Image texture, double width, double height) {
         this.texture = texture;
         box = new MutableRectangle(0, 0, width, height);
+
+        model = createElectricalProperties();
+    }
+
+    protected abstract ElectricalModel createElectricalProperties();
+
+    public ElectricalModel getElectricalModel() {
+        return model;
     }
 
     public void step() {}

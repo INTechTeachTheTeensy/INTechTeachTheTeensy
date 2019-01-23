@@ -87,4 +87,16 @@ public class Pin implements Renderable {
         double dy = getAbsoluteY() - Game.getInstance().getMouseY();
         return dx*dx+dy*dy <= PIN_RADIUS*PIN_RADIUS;
     }
+
+    public boolean hasAtLeastOneConnection() {
+        return ! connections.isEmpty();
+    }
+
+    public double calculateTension(double current, double prevTension, double stepTime) {
+        return owner.getElectricalModel().calculateTensionAtPin(current, prevTension, this, stepTime);
+    }
+
+    public double calculateCurrent(double prevCurrent, double tension, double stepTime) {
+        return owner.getElectricalModel().calculateCurrentAtPin(prevCurrent, tension, this, stepTime);
+    }
 }
