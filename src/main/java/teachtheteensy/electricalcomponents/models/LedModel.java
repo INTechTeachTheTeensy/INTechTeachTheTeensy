@@ -43,6 +43,16 @@ public class LedModel extends ElectricalModel {
         isOn = false;
     }
 
+    @Override
+    public double calculateTensionAtPin(double current, double prevTension, Pin pin, double stepTime) {
+        return 0;
+    }
+
+    @Override
+    public double calculateCurrentAtPin(double prevCurrent, double tension, Pin pin, double stepTime) {
+        return 0;
+    }
+
     public boolean isOn() {
         return isOn;
     }

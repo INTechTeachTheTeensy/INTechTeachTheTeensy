@@ -22,4 +22,8 @@ public class Wire {
     public Pin getNodeB() {
         return nodeB;
     }
+
+    public double calculateCurrent(double tension, double current, double stepTime) {
+        return 0;
+    }
 }

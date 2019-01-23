@@ -36,4 +36,6 @@ public abstract class ElectricalModel {
     public void reset() {}
 
     public abstract double calculateTensionAtPin(double current, double prevTension, Pin pin, double stepTime);
+
+    public abstract double calculateCurrentAtPin(double prevCurrent, double tension, Pin pin, double stepTime);
 }
