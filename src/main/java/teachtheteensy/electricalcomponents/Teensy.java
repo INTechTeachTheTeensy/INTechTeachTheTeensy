@@ -2,8 +2,10 @@ package teachtheteensy.electricalcomponents;
 
 import javafx.scene.image.Image;
 import teachtheteensy.Assets;
+import teachtheteensy.electricalcomponents.models.ElectricalModel;
+import teachtheteensy.electricalcomponents.models.TeensyModel;
 
-public class Teensy extends ElectricalComponent{
+public class Teensy extends ElectricalComponent {
 
     public Teensy() {
         super(Assets.getImage("components/teensy.png"));
@@ -28,6 +30,11 @@ public class Teensy extends ElectricalComponent{
         for (int i = 39; i >= 33; i--) {
             pins.add(new Pin(this, ""+i, i, 145, 22.5+(56-i)*22.5));
         }
+    }
+
+    @Override
+    protected ElectricalModel createElectricalProperties() {
+        return new TeensyModel(this);
     }
 
     @Override
