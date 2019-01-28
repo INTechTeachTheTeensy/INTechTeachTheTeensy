@@ -6,6 +6,12 @@ buildscript {
         mavenLocal()
         mavenCentral()
 
+        maven {
+            url = "https://oss.sonatype.org/content/groups/public/"
+        }
+        maven {
+            url = "http://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
 }
 
@@ -25,4 +31,14 @@ jfx {
 
     // minimal requirement for jfxNative-task
     vendor = 'INTech'
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.knowm.konfig/konfig
+    compile group: 'org.knowm.konfig', name: 'konfig', version: '0.0.3'
+
+    compile "org.knowm.xchart:xchart:3.5.1"
+    compile "org.apache.commons:commons-math3:3.6.1"
+    compile "net.objecthunter:exp4j:0.4.8"
+    compile "org.slf4j:slf4j-simple:1.7.25"
 }
