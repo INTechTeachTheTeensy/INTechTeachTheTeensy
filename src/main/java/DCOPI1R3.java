@@ -37,23 +37,31 @@ public class DCOPI1R3 {
         BigDecimal dt = new BigDecimal("0.02");
         BigDecimal stepTime = new BigDecimal("0.0003");
         while(true) {
+            long time = System.currentTimeMillis();
             simulationResult = transientAnalysis.stepFor(dt, stepTime);
-            chart.setXAxisTitle(simulationResult.getxDataLabel());
-            chart.setYAxisTitle(simulationResult.getyDataLabel());
-            chart.getSeriesMap().clear();
-            for (String valueToPlot : valuesToPlot) {
+            System.out.println("Time for step: "+(System.currentTimeMillis()-time)+" ms");
+            synchronized (chart) {
+                chart.setXAxisTitle(simulationResult.getxDataLabel());
+                chart.setYAxisTitle(simulationResult.getyDataLabel());
+                chart.getSeriesMap().clear();
+                for (String valueToPlot : valuesToPlot) {
 
-                SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valueToPlot);
+                    SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valueToPlot);
 
-                if (simulationData == null) {
-                    throw new IllegalArgumentException(
-                            valueToPlot + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
+                    if (simulationData == null) {
+                        throw new IllegalArgumentException(
+                                valueToPlot + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
+                    }
+
+                    chart.addSeries(valueToPlot, simulationData.getxData(), simulationData.getyData());
                 }
-
-                chart.addSeries(valueToPlot, simulationData.getxData(), simulationData.getyData());
             }
 
-            SwingUtilities.invokeLater(frame.getContentPane()::repaint);
+            SwingUtilities.invokeLater(() -> {
+                synchronized (chart) {
+                    frame.getContentPane().repaint();
+                }
+            });
         }
     }
 }

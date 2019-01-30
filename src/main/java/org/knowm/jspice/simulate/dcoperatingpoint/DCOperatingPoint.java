@@ -29,7 +29,9 @@ public final class DCOperatingPoint {
 
   private final Netlist netlist;
   private final Double timeStep;
-  private final DCOperatingPointResult previousDcOperatingPointResult;
+
+  // modified
+  public DCOperatingPointResult previousDcOperatingPointResult;
   private ConvergenceTracker convergenceTracker;
 
   /**

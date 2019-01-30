@@ -58,6 +58,7 @@ public class TransientAnalysis {
   private BigDecimal currentTime = BigDecimal.ZERO;
   private Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<>();
   private SimulationResult simulationResult = new SimulationResult("Time [s]", "", timeSeriesDataMap);
+  private DCOperatingPoint dcOperatingPoint;
 
 
   public SimulationResult stepFor(BigDecimal time, BigDecimal timeStep) {
@@ -145,7 +146,12 @@ public class TransientAnalysis {
       netlist.setInitialConditions(false);
 
       // solve DC operating point
-      dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, SPICEUtils.bigDecimalFromString(transientAnalysisDefinition.getTimeStep()).doubleValue())
+      if(dcOperatingPoint == null) {
+        dcOperatingPoint = new DCOperatingPoint(dCOperatingPointResult, netlist, timeStep.doubleValue());
+      } else {
+        dcOperatingPoint.previousDcOperatingPointResult = dCOperatingPointResult;
+      }
+      dCOperatingPointResult = dcOperatingPoint
               .run();
       //        System.out.println(dCOperatingPointResult.toString());
 
