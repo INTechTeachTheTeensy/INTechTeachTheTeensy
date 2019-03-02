@@ -205,7 +205,9 @@ public class Netlist implements Konfigurable {
     // make sure no components have the same name
     Component existingComponent = componentIDMap.get(netListComponent.getComponent().getId());
     if (existingComponent != null) {
-      throw new IllegalArgumentException("The component ID " + netListComponent.getComponent().getId() + " is not unique!");
+      //throw new IllegalArgumentException("The component ID " + netListComponent.getComponent().getId() + " is not unique!");
+      System.err.println("The component ID " + netListComponent.getComponent().getId() + " is not unique!");
+      return;
     }
 
     //    NetlistComponent netListComponent = new NetlistComponent(component, nodes);
@@ -273,7 +275,7 @@ public class Netlist implements Konfigurable {
     else if (netListComponent instanceof NetlistVCVS) {
       netListVCVSs.add(netListComponent);
     } else {
-      throw new IllegalArgumentException("Unknown Component Type!");
+      throw new IllegalArgumentException("Unknown Component Type ("+netListComponent+")!");
     }
 
   }

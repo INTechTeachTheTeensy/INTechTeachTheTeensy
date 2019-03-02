@@ -99,4 +99,13 @@ public class Pin implements Renderable {
     public double calculateCurrent(double prevCurrent, double tension, double stepTime) {
         return owner.getElectricalModel().calculateCurrentAtPin(prevCurrent, tension, this, stepTime);
     }
+
+    /**
+     * Renvoies un String qui va identifier cette pin de manière unique pour JSpice.
+     * Si plusieurs pins ont le même nom dans un même composant, elles seront considérées comme connectées (ce qui est voulu, notamment pour GND)
+     * @return un String qui identifie cette pin en tant que noeud pour JSpice
+     */
+    public String toNodeName() {
+        return owner.toString()+"("+owner.hashCode()+")."+name;
+    }
 }

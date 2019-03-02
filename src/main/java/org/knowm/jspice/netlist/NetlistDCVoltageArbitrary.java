@@ -29,6 +29,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NetlistDCVoltageArbitrary extends NetlistComponent {
 
+
+  public NetlistDCVoltageArbitrary(DCVoltageArbitrary source, String... nodes) {
+    super(source, nodes);
+  }
+
   public NetlistDCVoltageArbitrary(String id, String expression, String... nodes) {
 
     super(new DCVoltageArbitrary(id, expression), nodes);

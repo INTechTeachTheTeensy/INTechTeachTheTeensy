@@ -3,6 +3,8 @@ package teachtheteensy.electricalcomponents;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import org.knowm.jspice.netlist.NetlistComponent;
+import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.models.ElectricalModel;
 import teachtheteensy.math.MutableRectangle;
@@ -87,4 +89,12 @@ public abstract class ElectricalComponent implements Renderable, Cloneable {
     }
 
     public abstract void resetComponent();
+
+    public abstract List<? extends NetlistComponent> toNetlistComponents();
+
+    /**
+     * Change l'état du composant en fonction du résultat de l'analyse (appelé à chaque tick)
+     * @param result le result de l'analyse/simulation
+     */
+    public void interpretResult(SimulationResult result) {}
 }

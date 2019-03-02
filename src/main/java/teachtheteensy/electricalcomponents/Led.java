@@ -1,9 +1,17 @@
 package teachtheteensy.electricalcomponents;
 
 import javafx.scene.image.Image;
+import org.knowm.jspice.netlist.NetlistComponent;
+import org.knowm.jspice.netlist.NetlistDiode;
+import org.knowm.jspice.simulate.SimulationPlotData;
+import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Assets;
 import teachtheteensy.electricalcomponents.models.ElectricalModel;
 import teachtheteensy.electricalcomponents.models.LedModel;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Led extends ElectricalComponent {
 
@@ -42,6 +50,7 @@ public class Led extends ElectricalComponent {
     @Override
     public void resetComponent() {
         getElectricalModel().reset();
+        isOn = false;
     }
 
     public Pin getMinusPin() {
@@ -53,7 +62,22 @@ public class Led extends ElectricalComponent {
     }
 
     public boolean isOn() {
-        return ((LedModel)this.getElectricalModel()).isOn();
+        return isOn;
     }
 
+    @Override
+    public List<? extends NetlistComponent> toNetlistComponents() {
+        return Collections.singletonList(new NetlistDiode("Led(" + hashCode() + ")", 0.025, plusPin.getName(), minusPin.getName()));
+    }
+
+    @Override
+    public void interpretResult(SimulationResult result) {
+        SimulationPlotData plusPotential = result.getSimulationPlotDataMap().get(plusPin.toNodeName());
+        SimulationPlotData minusPotential = result.getSimulationPlotDataMap().get(minusPin.toNodeName());
+
+        // on se base que sur le premier point de la simulation
+        double plusActualPotential = plusPotential.getyData().get(0).doubleValue();
+        double minusActualPotential = minusPotential.getyData().get(0).doubleValue();
+        isOn = plusActualPotential > minusActualPotential;
+    }
 }
