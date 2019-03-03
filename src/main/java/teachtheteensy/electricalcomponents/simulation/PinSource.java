@@ -16,11 +16,21 @@ public class PinSource extends DCVoltageArbitrary {
         super(pin.toNodeName(), "<none>");
     }
 
-    public double getValue() {
+    public void setValue(double value) {
+        this.value = value;
+        setSweepValue(value);
+    }
+
+    @Override
+    public double getSweepableValue() {
         return value;
     }
 
+    public double getValue() {
+        return value;
+    }
     // Modifié pour pouvoir choisir la valeur programmatiquement
+
     @Override
     public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
         // create stamp
@@ -40,10 +50,7 @@ public class PinSource extends DCVoltageArbitrary {
         RHS[idxB] += stamp[1];
         RHS[idxI] += stamp[2];
 
-        setSweepValue(value);
-    }
-
-    public void setValue(double value) {
-        this.value = value;
+//        setValue(value);
+   //     setSweepValue(value);
     }
 }

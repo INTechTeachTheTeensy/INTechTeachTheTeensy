@@ -108,4 +108,12 @@ public class Pin implements Renderable {
     public String toNodeName() {
         return owner.toString()+"("+owner.hashCode()+")."+name;
     }
+
+    /**
+     * Force la {@link teachtheteensy.electricalcomponents.simulation.NodeMap NodeMap} à utiliser le nom de noeud de cette pin (quitte à remplacer ceux déjà utilisés)
+     * @return
+     */
+    public boolean forcesNodeName() {
+        return false;
+    }
 }

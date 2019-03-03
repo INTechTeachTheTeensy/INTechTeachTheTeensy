@@ -9,6 +9,9 @@ import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.Screen;
 import teachtheteensy.electricalcomponents.ElectricalComponent;
+import teachtheteensy.electricalcomponents.GNDPin;
+import teachtheteensy.electricalcomponents.simulation.NetlistTeensyPin;
+import teachtheteensy.electricalcomponents.simulation.NodeMap;
 import teachtheteensy.math.MutableRectangle;
 
 import java.math.BigDecimal;
@@ -34,27 +37,38 @@ public class SimulationScreen extends Screen {
      * De combien en combien JSpice doit simuler? (résolution en temps)
      */
     private final BigDecimal stepTime = new BigDecimal("0.0003");
+    private final NodeMap nodeMap;
 
 
     public SimulationScreen(PrototypeScreen parent) {
         this.parent = parent;
+        this.nodeMap = new NodeMap();
+        this.pauseButton = new MutableRectangle(1920/2-50,1080-100,100,100);
+
         components = parent.getGameArea().getComponents();
         analyser = createAnalyser();
-        pauseButton = new MutableRectangle(1920/2-50,1080-100,100,100);
     }
 
     private TransientAnalysis createAnalyser() {
         Netlist netlist = new Netlist() {
             {
+                nodeMap.buildFrom(components);
                 // on récupère les composants et on les transforme en composants compréhensibles pour JSpice
                 components.stream()
-                        .map(ElectricalComponent::toNetlistComponents)
+                        .map(c -> c.toNetlistComponents(nodeMap))
                         .flatMap(Collection::stream)
                         .distinct()
+                        .filter(c -> {
+                            if(c instanceof NetlistTeensyPin) {
+                                return !(((NetlistTeensyPin) c).getPin() instanceof GNDPin);
+                            }
+                            return true;
+                        })
                         .forEach(this::addNetListComponent);
             }
         };
 
+        System.out.println("!! "+netlist.toSpiceString());
         // initialisation de l'analyseur
         TransientConfig transientConfig = new TransientConfig(".02", ".0002"); // TODO: changer les valeurs?
         netlist.setSimulationConfig(transientConfig);
@@ -65,7 +79,7 @@ public class SimulationScreen extends Screen {
     public void tick() {
         components.forEach(ElectricalComponent::step);
         SimulationResult result = analyser.stepFor(dt, stepTime);
-        components.forEach(c -> c.interpretResult(result));
+        components.forEach(c -> c.interpretResult(nodeMap, result));
     }
 
     @Override

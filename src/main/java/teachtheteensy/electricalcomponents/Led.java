@@ -6,10 +6,11 @@ import org.knowm.jspice.netlist.NetlistDiode;
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Assets;
+import teachtheteensy.JSpiceUtils;
 import teachtheteensy.electricalcomponents.models.ElectricalModel;
 import teachtheteensy.electricalcomponents.models.LedModel;
+import teachtheteensy.electricalcomponents.simulation.NodeMap;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,18 +67,22 @@ public class Led extends ElectricalComponent {
     }
 
     @Override
-    public List<? extends NetlistComponent> toNetlistComponents() {
-        return Collections.singletonList(new NetlistDiode("Led(" + hashCode() + ")", 0.025, plusPin.getName(), minusPin.getName()));
+    public List<? extends NetlistComponent> toNetlistComponents(NodeMap nodeMap) {
+        if(plusPin.hasAtLeastOneConnection() && minusPin.hasAtLeastOneConnection()) {
+            NetlistDiode diode = new NetlistDiode("Led(" + hashCode() + ")", 0.025, nodeMap.getNode(plusPin), nodeMap.getNode(minusPin));
+            return Collections.singletonList(diode);
+        }
+        return Collections.emptyList();
     }
 
     @Override
-    public void interpretResult(SimulationResult result) {
-        SimulationPlotData plusPotential = result.getSimulationPlotDataMap().get(plusPin.toNodeName());
-        SimulationPlotData minusPotential = result.getSimulationPlotDataMap().get(minusPin.toNodeName());
+    public void interpretResult(NodeMap nodeMap, SimulationResult result) {
+        double plusPotential = JSpiceUtils.voltage(result, nodeMap, plusPin);
+        double minusPotential = JSpiceUtils.voltage(result, nodeMap, minusPin);
 
         // on se base que sur le premier point de la simulation
-        double plusActualPotential = plusPotential.getyData().get(0).doubleValue();
-        double minusActualPotential = minusPotential.getyData().get(0).doubleValue();
-        isOn = plusActualPotential > minusActualPotential;
+        System.err.println(">>> + => "+plusPotential);
+        System.err.println(">>> - => "+minusPotential);
+        isOn = plusPotential > minusPotential;
     }
 }

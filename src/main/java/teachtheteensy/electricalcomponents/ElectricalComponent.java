@@ -7,6 +7,7 @@ import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.models.ElectricalModel;
+import teachtheteensy.electricalcomponents.simulation.NodeMap;
 import teachtheteensy.math.MutableRectangle;
 
 import java.util.LinkedList;
@@ -90,11 +91,11 @@ public abstract class ElectricalComponent implements Renderable, Cloneable {
 
     public abstract void resetComponent();
 
-    public abstract List<? extends NetlistComponent> toNetlistComponents();
+    public abstract List<? extends NetlistComponent> toNetlistComponents(NodeMap nodeMap);
 
     /**
      * Change l'état du composant en fonction du résultat de l'analyse (appelé à chaque tick)
      * @param result le result de l'analyse/simulation
      */
-    public void interpretResult(SimulationResult result) {}
+    public void interpretResult(NodeMap nodeMap, SimulationResult result) {}
 }
