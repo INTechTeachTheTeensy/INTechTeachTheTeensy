@@ -5,6 +5,9 @@ import teachtheteensy.programming.InstructionTag;
 import teachtheteensy.programming.PseudoAssemblyEngine;
 
 @InstructionTag
+/**
+ * Représentation l'instruction 'nop' qui fait un cycle sans rien faire
+ */
 public class Nop implements Instruction {
     @Override
     public String name() {

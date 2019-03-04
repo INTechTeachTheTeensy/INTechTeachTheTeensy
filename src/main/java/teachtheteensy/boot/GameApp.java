@@ -19,6 +19,7 @@ public class GameApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // initialisation de JavaFX et de la fenêtre
         stage.setFullScreen(true);
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
         int width = resolution.width;
@@ -34,6 +35,7 @@ public class GameApp extends Application {
         GraphicsContext ctx = canvas.getGraphicsContext2D();
         Game game = new Game(width, height);
 
+        // main loop
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -42,6 +44,7 @@ public class GameApp extends Application {
             }
         };
 
+        // events utiles pour le jeu
         stage.addEventFilter(MouseEvent.MOUSE_CLICKED, game::mouseClick);
         stage.addEventFilter(MouseEvent.MOUSE_PRESSED, game::mousePressed);
         stage.addEventFilter(MouseEvent.MOUSE_RELEASED, game::mouseReleased);

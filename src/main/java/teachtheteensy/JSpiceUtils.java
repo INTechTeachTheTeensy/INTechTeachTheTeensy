@@ -7,7 +7,14 @@ import teachtheteensy.electricalcomponents.simulation.NodeMap;
 
 public final class JSpiceUtils {
 
-
+    /**
+     * Extrait l'information de potentiel en un noeud donné pour un résultat de simulation
+     * On se base que sur le premier point de la simulation
+     * @param result le résultat de simulation
+     * @param nodeMap la {@link NodeMap} correspondant au circuit
+     * @param pin la pin concernée
+     * @return le potentiel à la pin donnée
+     */
     public static double voltage(SimulationResult result, NodeMap nodeMap, Pin pin) {
         String node = nodeMap.getNode(pin);
         if(node.equals("0")) // c'est la masse

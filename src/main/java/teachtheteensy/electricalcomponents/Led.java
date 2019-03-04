@@ -7,17 +7,23 @@ import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Assets;
 import teachtheteensy.JSpiceUtils;
-import teachtheteensy.electricalcomponents.models.ElectricalModel;
-import teachtheteensy.electricalcomponents.models.LedModel;
 import teachtheteensy.electricalcomponents.simulation.NodeMap;
 
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Composant représentant une LED. Une LED est allumée si le potentiel sur sa broche '+' est supérieur à celui sur sa broche '-'
+ */
 public class Led extends ElectricalComponent {
 
     private final Pin plusPin;
     private final Pin minusPin;
+
+    /**
+     * La LED est-elle allumée ?
+     * @see #interpretResult(NodeMap, SimulationResult)
+     */
     private boolean isOn;
 
     public Led() {
@@ -29,18 +35,9 @@ public class Led extends ElectricalComponent {
     }
 
     @Override
-    protected ElectricalModel createElectricalProperties() {
-        return new LedModel(this);
-    }
-
-    @Override
     public Image getTexture() {
+        // on change la texture selon l'état de la LED
         return isOn() ? Assets.getImage("components/led_rouge.png") : super.getTexture();
-    }
-
-    @Override
-    public void step() {
-        super.step();
     }
 
     @Override
@@ -50,7 +47,6 @@ public class Led extends ElectricalComponent {
 
     @Override
     public void resetComponent() {
-        getElectricalModel().reset();
         isOn = false;
     }
 
@@ -68,6 +64,7 @@ public class Led extends ElectricalComponent {
 
     @Override
     public List<? extends NetlistComponent> toNetlistComponents(NodeMap nodeMap) {
+        // on ne crée de composant que si les deux broches sont connectées
         if(plusPin.hasAtLeastOneConnection() && minusPin.hasAtLeastOneConnection()) {
             NetlistDiode diode = new NetlistDiode("Led(" + hashCode() + ")", 0.025, nodeMap.getNode(plusPin), nodeMap.getNode(minusPin));
             return Collections.singletonList(diode);
@@ -77,12 +74,11 @@ public class Led extends ElectricalComponent {
 
     @Override
     public void interpretResult(NodeMap nodeMap, SimulationResult result) {
+        // récupération des potentiels
         double plusPotential = JSpiceUtils.voltage(result, nodeMap, plusPin);
         double minusPotential = JSpiceUtils.voltage(result, nodeMap, minusPin);
 
-        // on se base que sur le premier point de la simulation
-        System.err.println(">>> + => "+plusPotential);
-        System.err.println(">>> - => "+minusPotential);
+        // changement de l'état
         isOn = plusPotential > minusPotential;
     }
 }

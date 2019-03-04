@@ -7,8 +7,14 @@ import teachtheteensy.electricalcomponents.VoltagePin;
 
 import java.util.List;
 
+/**
+ * Elément JSpice qui représente une pin de Teensy
+ */
 public class NetlistTeensyPin extends NetlistDCVoltageArbitrary {
     private final Pin pin;
+    /**
+     * Composant JSpice qui permet de contrôler le voltage de cette pin si besoin
+     */
     private final PinSource source;
 
     public NetlistTeensyPin(Pin pin) {
@@ -20,7 +26,6 @@ public class NetlistTeensyPin extends NetlistDCVoltageArbitrary {
         } else {
             source.setValue(0.0);
         }
-        System.out.println("!!! "+this.toSpiceString()+" "+source.getSweepableValue());
     }
 
     @Override

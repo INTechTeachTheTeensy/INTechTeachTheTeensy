@@ -9,6 +9,10 @@ import teachtheteensy.electricalcomponents.Pin;
 
 import java.util.Map;
 
+/**
+ * Source de tension arbitraire qui permet de modéliser une pin de Teensy qui fournit une tension.
+ * Utiliser {@link PinSource#setValue(double)} pour changer la valeur de la tension
+ */
 public class PinSource extends DCVoltageArbitrary {
     private double value;
 
@@ -29,8 +33,8 @@ public class PinSource extends DCVoltageArbitrary {
     public double getValue() {
         return value;
     }
-    // Modifié pour pouvoir choisir la valeur programmatiquement
 
+    // Modifié pour pouvoir choisir la valeur programmatiquement (cf DCVoltageArbitrary)
     @Override
     public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
         // create stamp

@@ -1,5 +1,8 @@
 package teachtheteensy.math;
 
+/**
+ * Implémentation de {@link IRectangle} qui est immutable, ie qui ne peut être modifié
+ */
 public class FixedRectangle implements IRectangle {
 
     private double x;

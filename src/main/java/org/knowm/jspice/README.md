@@ -1,3 +1,6 @@
+Modified version for this very project:
+- Continuous analysis
+
 ## Introduction
 
 JSpice is a SPICE-inspired analog circuit simulator made in Java with an emphasis on simulating memristors and analog circuits containing memristors. 

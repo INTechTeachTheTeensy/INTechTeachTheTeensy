@@ -3,8 +3,6 @@ package teachtheteensy.electricalcomponents;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import teachtheteensy.Assets;
-import teachtheteensy.electricalcomponents.models.ElectricalModel;
-import teachtheteensy.electricalcomponents.models.TeensyModel;
 import teachtheteensy.electricalcomponents.simulation.NetlistTeensyPin;
 import teachtheteensy.electricalcomponents.simulation.NodeMap;
 
@@ -13,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Représentation d'une Teensy avec ses pins
+ */
 public class Teensy extends ElectricalComponent {
 
     /**
@@ -29,7 +30,7 @@ public class Teensy extends ElectricalComponent {
         super(Assets.getImage("components/teensy.png"));
         pinMap = new HashMap<>();
 
-        // pins
+        // initialisation des pins
         pins.add(new GNDPin(this, -1, 9, 22.5));
         for (int i = 0; i <= 12; i++) {
             pins.add(new Pin(this, ""+i, i, 9, 22.5+(i+1)*22.5));
@@ -51,20 +52,16 @@ public class Teensy extends ElectricalComponent {
             pins.add(new Pin(this, ""+i, i, 145, 22.5+(56-i)*22.5));
         }
 
+        // liste des équivalents des pins pour JSpice
         netlistPins = pins.stream()
                 .map(NetlistTeensyPin::new)
-                .distinct() // distinct() est utilisé pour n'avoir que des pins de même nom
+                .distinct() // distinct() est utilisé pour n'avoir que des pins de nom différents
                 .map(p -> {
                     pinMap.put(p.getPin().getName(), p);
                     return p;
                 })
                 .collect(Collectors.toList());
      //   netlistPins.add(new NetlistDCVoltage(toString()+"("+hashCode()+").3.3->GND", 3.3, pinMap.get("+3.3").getId(), "0"));
-    }
-
-    @Override
-    protected ElectricalModel createElectricalProperties() {
-        return new TeensyModel(this);
     }
 
     @Override
@@ -86,6 +83,7 @@ public class Teensy extends ElectricalComponent {
 
     @Override
     public List<? extends NetlistComponent> toNetlistComponents(NodeMap nodeMap) {
+        // mets à jour les noeuds connectés aux pins
         netlistPins.forEach(pin -> {
             if(pin instanceof NetlistTeensyPin) {
                 if(((NetlistTeensyPin) pin).getPin() instanceof VoltagePin) {
@@ -95,6 +93,8 @@ public class Teensy extends ElectricalComponent {
                 }
             }
         });
+
+        // retire les pins non connectées
         return netlistPins.stream()
                 .filter(p -> {
                     if(p instanceof NetlistTeensyPin) {

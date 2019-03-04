@@ -5,6 +5,9 @@ import teachtheteensy.programming.InstructionTag;
 import teachtheteensy.programming.PseudoAssemblyEngine;
 
 @InstructionTag
+/**
+ * Représentation l'instruction 'delay' qui permet de faire une pause pendant l'exécution du script
+ */
 public class Delay implements Instruction {
     @Override
     public String name() {

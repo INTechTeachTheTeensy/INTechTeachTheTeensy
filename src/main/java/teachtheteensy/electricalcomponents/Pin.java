@@ -8,17 +8,51 @@ import teachtheteensy.Renderable;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Représente une pin d'un composant (position, nom et connections)
+ */
 public class Pin implements Renderable {
 
     public final static int PIN_RADIUS = 10;
+
+    /**
+     * Nom de la pin
+     */
     private final String name;
+
+    /**
+     * Indice de la pin (utilisé pour la programmation des composants)
+     */
     private final int index;
+
+    /**
+     * Position relative sur l'axe X de la pin par rapport au coin gauche du composant
+     */
     private final double relativeX;
+
+    /**
+     * Position relative sur l'axe Y de la pin par rapport au coin gauche du composant
+     */
     private final double relativeY;
 
+    /**
+     * Liste de toutes les pins connectées à celle-ci
+     */
     private final List<Pin> connections = new LinkedList<>();
+
+    /**
+     * Le composant de cette pin
+     */
     private final ElectricalComponent owner;
 
+    /**
+     * Crées une nouvelle pin
+     * @param owner
+     * @param name
+     * @param index
+     * @param relativeX
+     * @param relativeY
+     */
     public Pin(ElectricalComponent owner, String name, int index, double relativeX, double relativeY) {
         this.owner = owner;
         this.name = name;
@@ -29,6 +63,8 @@ public class Pin implements Renderable {
 
     @Override
     public void render(GraphicsContext ctx) {
+        // on dessine une ligne par connection
+        // comme chaque pin fait le dessin, les lignes sont dessinées deux fois...
         ctx.setLineWidth(5);
         ctx.setStroke(Color.GREENYELLOW);
         for(Pin connection : connections) {
@@ -37,6 +73,11 @@ public class Pin implements Renderable {
         ctx.setStroke(Color.BLACK);
     }
 
+    /**
+     * Création d'une connection entre deux pins.
+     * Vérifie que les deux pins ne proviennent pas du même composant et qu'elles ne sont pas les mêmes
+     * @param other l'autre pin
+     */
     public void connectTo(Pin other) {
         if(other.owner == owner) {
             throw new IllegalArgumentException("Impossible de connecter deux pins d'un même composant!");
@@ -82,22 +123,23 @@ public class Pin implements Renderable {
         return getRelativeY() + owner.box.getY();
     }
 
+    /**
+     * La souris est-elle sur cette pin?
+     * @see #PIN_RADIUS
+     * @return 'true' si la souris est présente sur la pin
+     */
     public boolean isMouseOn() {
         double dx = getAbsoluteX() - Game.getInstance().getMouseX();
         double dy = getAbsoluteY() - Game.getInstance().getMouseY();
         return dx*dx+dy*dy <= PIN_RADIUS*PIN_RADIUS;
     }
 
+    /**
+     * Vérifies que cette pin a au moins une connection
+     * @return 'true' si cette pin a au moins une connection
+     */
     public boolean hasAtLeastOneConnection() {
         return ! connections.isEmpty();
-    }
-
-    public double calculateTension(double current, double prevTension, double stepTime) {
-        return owner.getElectricalModel().calculateTensionAtPin(current, prevTension, this, stepTime);
-    }
-
-    public double calculateCurrent(double prevCurrent, double tension, double stepTime) {
-        return owner.getElectricalModel().calculateCurrentAtPin(prevCurrent, tension, this, stepTime);
     }
 
     /**
@@ -111,7 +153,8 @@ public class Pin implements Renderable {
 
     /**
      * Force la {@link teachtheteensy.electricalcomponents.simulation.NodeMap NodeMap} à utiliser le nom de noeud de cette pin (quitte à remplacer ceux déjà utilisés)
-     * @return
+     * Permets d'avoir des noms de noeuds qui ne dépendent pas de l'ordre d'insertion des composants sur la zone de jeu
+     * @return 'true' si cette pin force le nom du noeud qui lui est associé
      */
     public boolean forcesNodeName() {
         return false;

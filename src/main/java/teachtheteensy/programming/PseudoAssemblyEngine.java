@@ -6,6 +6,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Moteur de simulation du code de la Teensy
+ */
 public class PseudoAssemblyEngine {
 
     public enum State {
@@ -32,11 +35,17 @@ public class PseudoAssemblyEngine {
      * Le """""code""""" qui s'exécute sur la Teensy
      */
     private final String code;
+
     /**
      * Compteur représentant le temps qu'il reste à attendre (eg avec un DELAY 500)
      */
     private double delayCounter;
+
+    /**
+     * Le temps écoulé depuis le lancement du moteur (en temps de jeu)
+     */
     private double time;
+
     /**
      * Etat actuel du moteur
      */
@@ -44,19 +53,26 @@ public class PseudoAssemblyEngine {
 
     private double lineExecutionTime = 0.02500; // 40 instr/s pour le moment
     private double lastLineExecutionTime = 0.0;
+
     /**
      * Ligne à laquelle le code est actuellement
      */
     private int programCounter;
+
     /**
      * Lignes de "code"
      */
     private final String[] lines;
+
     /**
      * Message d'erreur à afficher lorsqu'il y a une erreur
      */
     private String errorMessage;
 
+    /**
+     * Liste des instructions reconnues
+     * @see InstructionTag
+     */
     private static final Map<String, Instruction> instructionTable = new HashMap<>();
 
     /**
@@ -71,23 +87,25 @@ public class PseudoAssemblyEngine {
                     Instruction instance = (Instruction)clazz.newInstance();
                     instructionTable.put(instance.name(), instance);
                 } catch (InstantiationException e) {
-                    System.err.println("Bah alors, on a pas mis de constructeur sans arguments?");
-                    e.printStackTrace();
+                    throw new RuntimeException("Bah alors, on a pas mis de constructeur sans arguments?", e);
                 } catch (IllegalAccessException e) {
-                    System.err.println("Bah alors, on a pas mis de constructeur public?");
-                    e.printStackTrace();
+                    throw new RuntimeException("Bah alors, on a pas mis de constructeur public?", e);
                 } catch (ClassCastException e) {
-                    System.err.println("Bah alors, c'est pas une instruction cette classe!");
-                    e.printStackTrace();
+                    throw new RuntimeException("Bah alors, c'est pas une instruction cette classe!", e);
                 }
             }
         }
     }
 
+    /**
+     * Crées un nouveau moteur de simulation avec le code source donné
+     * @param sourceCode le code source
+     */
     public PseudoAssemblyEngine(String sourceCode) {
         if(instructionTable.isEmpty()) {
-            initInstructionTable();
+            initInstructionTable(); // recherche des instructions si besoin
         }
+        // initialisation de l'état du moteur
         this.state = State.RUNNING;
         this.code = sourceCode;
         this.lines = sourceCode.split("\n");
@@ -95,9 +113,12 @@ public class PseudoAssemblyEngine {
     }
 
     /**
-     *
+     * Exécute une simple étape du moteur.
+     * Si l'état est {@link State#PAUSED} ou {@link State#CRASHED}, le moteur ne fait d'incrémenter son compteur de temps
+     * Si l'état est {@link State#DELAY}, le moteur vérifie si le temps d'attente a été effectué, et s'il l'est, remets l'état à {@link State#RUNNING}
+     * Enfin, si l'état est {@link State#RUNNING} ou vient de devenir {@link State#RUNNING} suite à la fin d'une attente,
+     * le moteur exécute autant d'instructions que possible autorisé pendant 'delta' par {@link #getLineExecutionTime()}
      * @param delta le temps écoulé depuis le dernier appel
-     * @return
      */
     public void step(double delta) {
         time += delta;
@@ -119,9 +140,15 @@ public class PseudoAssemblyEngine {
 
         if(state == State.RUNNING) {
             while(runLine());
+        } else {
+            lastLineExecutionTime = time;
         }
     }
 
+    /**
+     * Exécutes une ligne si possible (ie pas de crash ou qu'il reste assez de temps)
+     * @return 'true' si l'exécution a été possible
+     */
     private boolean runLine() {
         if(time-lastLineExecutionTime >= lineExecutionTime) {
             if(programCounter >= lines.length) {
@@ -151,11 +178,19 @@ public class PseudoAssemblyEngine {
         return false;
     }
 
+    /**
+     * Mets le moteur dans l'état {@link State#CRASHED} avec un message d'erreur
+     * @param message message d'erreur
+     */
     private void crash(String message) {
         state = State.CRASHED;
         errorMessage = message;
     }
 
+    /**
+     * Mets le moteur dans l'état {@link State#DELAY} avec un temps d'attente donné
+     * @param delay temps d'attente
+     */
     public void delay(double delay) {
         this.delayCounter = delay;
         state = State.DELAY;
