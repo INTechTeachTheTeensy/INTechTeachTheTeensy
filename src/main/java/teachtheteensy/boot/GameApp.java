@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import teachtheteensy.Game;
@@ -50,6 +51,8 @@ public class GameApp extends Application {
         stage.addEventFilter(MouseEvent.MOUSE_RELEASED, game::mouseReleased);
         stage.addEventFilter(MouseEvent.MOUSE_DRAGGED, game::mouseDragged);
         stage.addEventFilter(MouseEvent.MOUSE_MOVED, game::mouseMoved);
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, game::keyPressed);
+        stage.addEventFilter(KeyEvent.KEY_RELEASED, game::keyReleased);
 
         timer.start();
         stage.show();

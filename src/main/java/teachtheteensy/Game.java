@@ -2,6 +2,7 @@ package teachtheteensy;
 
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import teachtheteensy.screens.PrototypeScreen;
@@ -79,6 +80,14 @@ public class Game {
     private void updateMousePos(MouseEvent event) {
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
+    }
+
+    public void keyPressed(KeyEvent event) {
+        currentScreen.keyPressed(event);
+    }
+
+    public void keyReleased(KeyEvent event) {
+        currentScreen.keyReleased(event);
     }
 
     public void mouseClick(MouseEvent event) {
