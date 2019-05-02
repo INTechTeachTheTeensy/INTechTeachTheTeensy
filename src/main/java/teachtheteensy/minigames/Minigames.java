@@ -2,6 +2,7 @@ package teachtheteensy.minigames;
 
 public enum Minigames {
     SNAKE(Snake.class), // mini-jeu example
+    DDR(teachtheteensy.minigames.ddr.DDR.class), // test copy Snake
     ;
 
     private Class<? extends Minigame> minigameClass;
