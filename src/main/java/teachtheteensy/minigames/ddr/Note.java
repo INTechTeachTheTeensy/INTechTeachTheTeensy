@@ -17,7 +17,7 @@ public class Note {
     public Note (int x, int y){
         this.x=x;
         this.y=y;
-        this.imageNote = Assets.getImage("ddr/note.png");
+        this.imageNote = Assets.getImage("ddr/note.png");           // Assets.getImage appelle une image préchargée
         this.imageMissed = Assets.getImage("ddr/noteMissed.png");
     }
 
@@ -26,11 +26,11 @@ public class Note {
         if (rate()){
             image=imageMissed;
         }
-        ctx.drawImage(image, x, y, 50, 50);
+        ctx.drawImage(image, x, y, 100, 100);
     }
 
     public boolean rate (){
-        return y > Game.getInstance().getScreenHeight()-50;
+        return y > Game.getInstance().getScreenHeight()-150;
     }
 
 
