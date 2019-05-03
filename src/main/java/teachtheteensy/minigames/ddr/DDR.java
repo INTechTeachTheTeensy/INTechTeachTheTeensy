@@ -26,7 +26,7 @@ public class DDR extends Minigame {
     /**
      * Compteur de tick. Permet de manière assez peu propre de régler la vitesse du jeu
      */
-    private int tick;
+    private int tick=0;
 
     // déclaration des images
     private final Image leftArrow= Assets.getImage("ddr/leftArrow.png");
@@ -37,13 +37,28 @@ public class DDR extends Minigame {
     Note noteDown=new Note(Game.getInstance().getScreenWidth()*2/3+220, 0);
     Note noteRight=new Note(Game.getInstance().getScreenWidth()*2/3+330, 0);
 
+    private final List<Note> allNotes=new ArrayList<>();
+
 
     @Override
     public void tick() {
+        // timer pour afficher règles
         noteLeft.y+=10;
         noteUp.y+=10;
         noteDown.y+=10;
         noteRight.y+=10;
+        if (tick==20){
+            Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*((int)(Math.random()*3)+1)), 0);
+            allNotes.add(newNote);
+            tick=0;
+            return;
+        }
+        for (int i=1; i<=allNotes.size();i++){
+            allNotes.get(i-1).y+=10;
+        }
+
+        tick++;
+
     }
 
     @Override
@@ -55,10 +70,14 @@ public class DDR extends Minigame {
         //ctx.setFill(Color.GRAY);
         //ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-10, Game.getInstance().getScreenHeight()-160, 460, 120);
 
+        // render toutes les notes
         noteLeft.render(ctx);
         noteUp.render(ctx);
         noteDown.render(ctx);
         noteRight.render(ctx);
+        for (int i=1; i<=allNotes.size();i++){
+            allNotes.get(i-1).render(ctx);
+        }
 
 
         // affichage des cases flèches
