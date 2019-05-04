@@ -30,7 +30,7 @@ public class Note {
     }
 
     public boolean rate (){
-        return y > Game.getInstance().getScreenHeight()-150;
+        return y > Game.getInstance().getScreenHeight()-100;
     }
 
 

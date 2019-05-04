@@ -18,10 +18,6 @@ import java.util.Objects;
 
 
 public class DDR extends Minigame {
-    /**
-     * Mise à jour du jeu (donc déplacement) tous les 10 ticks (~60/10 Hz => ~6Hz)
-     */
-    private static final int TICKS_PER_UPDATE = 10;
 
     /**
      * Compteur de tick. Permet de manière assez peu propre de régler la vitesse du jeu
@@ -32,29 +28,49 @@ public class DDR extends Minigame {
     private final Image leftArrow= Assets.getImage("ddr/leftArrow.png");
     private final Image background=Assets.getImage("ddr/Background.png");
 
-    Note noteLeft=new Note(Game.getInstance().getScreenWidth()*2/3, 0);
-    Note noteUp=new Note(Game.getInstance().getScreenWidth()*2/3+110, 0);
-    Note noteDown=new Note(Game.getInstance().getScreenWidth()*2/3+220, 0);
-    Note noteRight=new Note(Game.getInstance().getScreenWidth()*2/3+330, 0);
+    // couleurs
+    private Color dimRed = new Color(1,0.0,0.0,0.5);
+    private Color dimGreen = new Color(0,1, 0, 0.5);
+    private Color dimBlue = new Color(0,0, 1, 0.5);
+    private Color dimYellow = new Color(1,1, 0, 0.5);
 
+    // notes
+    //Note noteLeft=new Note(Game.getInstance().getScreenWidth()*2/3, 0);
     private final List<Note> allNotes=new ArrayList<>();
+    private final List<Note> leftNotes=new ArrayList<>();
+    private final List<Note> upNotes=new ArrayList<>();
+    private final List<Note> downNotes=new ArrayList<>();
+    private final List<Note> rightNotes=new ArrayList<>();
+
+
+    // compteur de points
+    private int count=0;
+
+    private int status=0;
 
 
     @Override
     public void tick() {
         // timer pour afficher règles
-        noteLeft.y+=10;
-        noteUp.y+=10;
-        noteDown.y+=10;
-        noteRight.y+=10;
-        if (tick==20){
-            Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*((int)(Math.random()*3)+1)), 0);
+        //noteLeft.y+=10;
+        if (tick==35){
+            int randInt= (int)(Math.random()*4);
+            Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*randInt), 0);
+            if (randInt==0) {
+                leftNotes.add(newNote);
+            } else if (randInt==1) {
+                upNotes.add(newNote);
+            } else if (randInt==2) {
+                downNotes.add(newNote);
+            } else {
+                rightNotes.add(newNote);
+            }
             allNotes.add(newNote);
             tick=0;
             return;
         }
         for (int i=1; i<=allNotes.size();i++){
-            allNotes.get(i-1).y+=10;
+            allNotes.get(i-1).y+=4;
         }
 
         tick++;
@@ -69,15 +85,21 @@ public class DDR extends Minigame {
         ctx.drawImage(background, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         //ctx.setFill(Color.GRAY);
         //ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-10, Game.getInstance().getScreenHeight()-160, 460, 120);
+        ctx.setFill(dimBlue);
+        ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-2, 0, 104, Game.getInstance().getScreenHeight());
+        ctx.setFill(dimYellow);
+        ctx.fillRect(Game.getInstance().getScreenWidth()*2/3+110-2, 0, 104, Game.getInstance().getScreenHeight());
+        ctx.setFill(dimGreen);
+        ctx.fillRect(Game.getInstance().getScreenWidth()*2/3+110*2-2, 0, 104, Game.getInstance().getScreenHeight());
+        ctx.setFill(dimRed);
+        ctx.fillRect(Game.getInstance().getScreenWidth()*2/3+110*3-2, 0, 104, Game.getInstance().getScreenHeight());
 
         // render toutes les notes
-        noteLeft.render(ctx);
-        noteUp.render(ctx);
-        noteDown.render(ctx);
-        noteRight.render(ctx);
+        //noteLeft.render(ctx);
         for (int i=1; i<=allNotes.size();i++){
             allNotes.get(i-1).render(ctx);
         }
+
 
 
         // affichage des cases flèches
@@ -100,7 +122,60 @@ public class DDR extends Minigame {
         Image rightArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth()*2/3+330, Game.getInstance().getScreenHeight()-150, 100,100);
 
+        if (status==1) {
+            ctx.setFill(dimBlue);
+            ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+            status=0;
+        } else if (status==2) {
+            ctx.setFill(dimYellow);
+            ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+            status=0;
+        } else if (status==3) {
+            ctx.setFill(dimGreen);
+            ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+            status=0;
+        } else if (status==4) {
+            ctx.setFill(dimRed);
+            ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+            status=0;
+        }
+    }
 
+
+
+    public void keyPressed (KeyEvent event) {
+        switch(event.getCode()) {
+            case LEFT:
+                for (int i=1; i<=leftNotes.size(); i++) {
+                    if ((Game.getInstance().getScreenHeight()-240 <= leftNotes.get(i-1).y) & (leftNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        status=1;
+                    }
+                }
+                break;
+
+            case UP:
+                for (int i=1; i<=upNotes.size(); i++) {
+                    if ((Game.getInstance().getScreenHeight()-240 <= upNotes.get(i-1).y) & (upNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        status=2;
+                    }
+                }
+                break;
+
+            case DOWN:
+                for (int i=1; i<=downNotes.size(); i++) {
+                    if ((Game.getInstance().getScreenHeight()-240 <= downNotes.get(i-1).y) & (downNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        status=3;
+                    }
+                }
+                break;
+            case RIGHT:
+                for (int i=1; i<=rightNotes.size(); i++) {
+                    if ((Game.getInstance().getScreenHeight()-240 <= rightNotes.get(i-1).y) & (rightNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        status=4;
+                    }
+                }
+                break;
+        }
     }
 
 }
