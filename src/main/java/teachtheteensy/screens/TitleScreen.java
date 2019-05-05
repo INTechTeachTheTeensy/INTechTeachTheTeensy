@@ -62,9 +62,7 @@ public class TitleScreen extends Screen {
                 try {
                     Minigame minigame = Minigames.valueOf(name).createInstance();
                     Game.getInstance().showScreen(minigame);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
+                } catch (IllegalAccessException | InstantiationException e) {
                     e.printStackTrace();
                 }
                 break; // ne vérifie pas les boutons d'après

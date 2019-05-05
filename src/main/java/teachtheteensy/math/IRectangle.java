@@ -23,7 +23,7 @@ public interface IRectangle {
      * @param other l'autre rectangle
      * @return 'true' si les deux rectangles ont une intersection non nulle
      */
-    default boolean intersects(MutableRectangle other) {
+    default boolean intersects(IRectangle other) {
         if(getX() + getWidth() < other.getX()) return false; // trop à gauche
         if(getX() >= other.getX() + other.getWidth()) return false; // trop à droite
         if(getY() + getHeight() < other.getY()) return false; // trop en haut
