@@ -43,9 +43,11 @@ public class DDR extends Minigame {
 
 
     // compteur de points
-    private int count=0;
-
+    public int count=0;
     private int status=0;
+    private int lp=Game.getInstance().getScreenWidth()-50;
+    private boolean ouch=false; // =true si on doit perdre un pv
+    private int timerPv=0; // timer pour rajouter un pv
 
 
     @Override
@@ -71,10 +73,21 @@ public class DDR extends Minigame {
             if (allNotes.get(i-1).y>Game.getInstance().getScreenHeight()) {
                 allNotes.remove(i-1);
             } else {
-                allNotes.get(i-1).y+=4;     // vitesse chute notes
+                allNotes.get(i-1).y+=10;     // vitesse chute notes
             }
         }
 
+        // enlever des pvs
+        if (ouch==true) {
+            lp-=50;
+            ouch=false;
+        }
+        // rajouter des pvs
+        if ((timerPv == 100) & (lp < (Game.getInstance().getScreenWidth() - 50))) {
+            lp+=5;
+            timerPv=0;
+        }
+        timerPv++;
         tick++;
 
     }
@@ -82,17 +95,16 @@ public class DDR extends Minigame {
 
     @Override
     public void render(GraphicsContext ctx) {
-        // remplit l'écran de noir (permet d'effacer l'image de la frame d'avant)
+            // remplit l'écran de noir (permet d'effacer l'image de la frame d'avant)
         //ctx.setFill(Color.BLACK);
         //ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         ctx.drawImage(background, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-        // affichage score
-        ctx.setFill(Color.LIGHTGRAY);
-        ctx.fillRect(75, 50, 350, 75);
-        ctx.setFont(new Font(50));      // nouvelle police avec la police par défaut en augmentant la taille
-        ctx.setFill(Color.BLACK);
-        ctx.fillText("Score: "+count, 100, 100);
-
+            // affichage score
+        //ctx.setFill(Color.LIGHTGRAY);
+        //ctx.fillRect(75, 50, 350, 75);
+        //ctx.setFont(new Font(50));      // nouvelle police avec la police par défaut en augmentant la taille
+        //ctx.setFill(Color.BLACK);
+        //ctx.fillText("Score: "+count, 100, 100);
 
 
         ctx.setFill(dimBlue);
@@ -104,14 +116,14 @@ public class DDR extends Minigame {
         ctx.setFill(dimRed);
         ctx.fillRect(Game.getInstance().getScreenWidth()*2/3+110*3-2, 0, 104, Game.getInstance().getScreenHeight());
 
-        // render toutes les notes
+            // render toutes les notes
         //noteLeft.render(ctx);
         for (int i=1; i<=allNotes.size();i++){
             allNotes.get(i-1).render(ctx);
         }
 
 
-        // affichage des cases flèches
+            // affichage des cases flèches
         ctx.drawImage(leftArrow, Game.getInstance().getScreenWidth()*2/3, Game.getInstance().getScreenHeight()-150, 100,100);
             // rotation de l'image via ImageView
         SnapshotParameters para=new SnapshotParameters();
@@ -131,7 +143,13 @@ public class DDR extends Minigame {
         Image rightArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth()*2/3+330, Game.getInstance().getScreenHeight()-150, 100,100);
 
-        // affichage validation
+            // affichage barre de vie
+        ctx.setFill(Color.LIGHTGRAY);
+        ctx.fillRect( 20, 25, Game.getInstance().getScreenWidth()-40, 50);
+        ctx.setFill(Color.RED);
+        ctx.fillRect(25, 30, lp, 40);
+
+            // affichage validation
         if (status==1) {
             ctx.setFill(dimBlue);
             ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
@@ -165,6 +183,7 @@ public class DDR extends Minigame {
                     }
                 }
                 if (status==0) {
+                    ouch=true;
                     count--;
                 }
                 break;
@@ -178,6 +197,7 @@ public class DDR extends Minigame {
                     }
                 }
                 if (status==0) {
+                    ouch=true;
                     count--;
                 }
                 break;
@@ -191,6 +211,7 @@ public class DDR extends Minigame {
                     }
                 }
                 if (status==0) {
+                    ouch=true;
                     count--;
                 }
                 break;
@@ -204,6 +225,7 @@ public class DDR extends Minigame {
                     }
                 }
                 if (status==0) {
+                    ouch=true;
                     count--;
                 }
                 break;
