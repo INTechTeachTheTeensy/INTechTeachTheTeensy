@@ -1,7 +1,9 @@
 package teachtheteensy.minigames;
 
 public enum Minigames {
-    SNAKE(Snake.class), // mini-jeu example
+
+    SNAKE(Snake.class),// mini-jeu example
+    RUNNINGCHASE(RunningChase.class),
     DDR(teachtheteensy.minigames.ddr.DDR.class), // test copy Snake
     ;
 
