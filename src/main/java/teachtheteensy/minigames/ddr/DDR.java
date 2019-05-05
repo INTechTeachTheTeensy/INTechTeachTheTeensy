@@ -164,6 +164,9 @@ public class DDR extends Minigame {
                         status=1;
                     }
                 }
+                if (status==0) {
+                    count--;
+                }
                 break;
 
             case UP:
@@ -173,6 +176,9 @@ public class DDR extends Minigame {
                         count++;
                         status=2;
                     }
+                }
+                if (status==0) {
+                    count--;
                 }
                 break;
 
@@ -184,7 +190,11 @@ public class DDR extends Minigame {
                         status=3;
                     }
                 }
+                if (status==0) {
+                    count--;
+                }
                 break;
+
             case RIGHT:
                 for (int i=1; i<=allNotes.size(); i++) {
                     if ((allNotes.get(i-1).col==4) & (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) & (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
@@ -192,6 +202,9 @@ public class DDR extends Minigame {
                         count++;
                         status=4;
                     }
+                }
+                if (status==0) {
+                    count--;
                 }
                 break;
         }
