@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
@@ -66,7 +68,11 @@ public class DDR extends Minigame {
             return;
         }
         for (int i=1; i<=allNotes.size();i++){
-            allNotes.get(i-1).y+=4;     // vitesse chute notes
+            if (allNotes.get(i-1).y>Game.getInstance().getScreenHeight()) {
+                allNotes.remove(i-1);
+            } else {
+                allNotes.get(i-1).y+=4;     // vitesse chute notes
+            }
         }
 
         tick++;
@@ -80,9 +86,14 @@ public class DDR extends Minigame {
         //ctx.setFill(Color.BLACK);
         //ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         ctx.drawImage(background, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-
+        // affichage score
+        ctx.setFill(Color.LIGHTGRAY);
+        ctx.fillRect(75, 50, 350, 75);
+        ctx.setFont(new Font(50));      // nouvelle police avec la police par défaut en augmentant la taille
         ctx.setFill(Color.BLACK);
         ctx.fillText("Score: "+count, 100, 100);
+
+
 
         ctx.setFill(dimBlue);
         ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-2, 0, 104, Game.getInstance().getScreenHeight());
