@@ -37,10 +37,7 @@ public class DDR extends Minigame {
     // notes
     //Note noteLeft=new Note(Game.getInstance().getScreenWidth()*2/3, 0);
     private final List<Note> allNotes=new ArrayList<>();
-    private final List<Note> leftNotes=new ArrayList<>();
-    private final List<Note> upNotes=new ArrayList<>();
-    private final List<Note> downNotes=new ArrayList<>();
-    private final List<Note> rightNotes=new ArrayList<>();
+
 
 
     // compteur de points
@@ -51,31 +48,31 @@ public class DDR extends Minigame {
 
     @Override
     public void tick() {
-        // timer pour afficher règles
-        //noteLeft.y+=10;
+        // timer pour delay l'arriver des notes
         if (tick==35){
             int randInt= (int)(Math.random()*4);
             Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*randInt), 0);
             if (randInt==0) {
-                leftNotes.add(newNote);
+                newNote.col=1;
             } else if (randInt==1) {
-                upNotes.add(newNote);
+                newNote.col=2;
             } else if (randInt==2) {
-                downNotes.add(newNote);
+                newNote.col=3;
             } else {
-                rightNotes.add(newNote);
+                newNote.col=4;
             }
             allNotes.add(newNote);
             tick=0;
             return;
         }
         for (int i=1; i<=allNotes.size();i++){
-            allNotes.get(i-1).y+=4;
+            allNotes.get(i-1).y+=4;     // vitesse chute notes
         }
 
         tick++;
 
     }
+
 
     @Override
     public void render(GraphicsContext ctx) {
@@ -83,8 +80,10 @@ public class DDR extends Minigame {
         //ctx.setFill(Color.BLACK);
         //ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         ctx.drawImage(background, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-        //ctx.setFill(Color.GRAY);
-        //ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-10, Game.getInstance().getScreenHeight()-160, 460, 120);
+
+        ctx.setFill(Color.BLACK);
+        ctx.fillText("Score: "+count, 100, 100);
+
         ctx.setFill(dimBlue);
         ctx.fillRect(Game.getInstance().getScreenWidth()*2/3-2, 0, 104, Game.getInstance().getScreenHeight());
         ctx.setFill(dimYellow);
@@ -101,10 +100,9 @@ public class DDR extends Minigame {
         }
 
 
-
         // affichage des cases flèches
         ctx.drawImage(leftArrow, Game.getInstance().getScreenWidth()*2/3, Game.getInstance().getScreenHeight()-150, 100,100);
-        // rotation de l'image via ImageView
+            // rotation de l'image via ImageView
         SnapshotParameters para=new SnapshotParameters();
         para.setFill(Color.TRANSPARENT);
 
@@ -122,6 +120,7 @@ public class DDR extends Minigame {
         Image rightArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth()*2/3+330, Game.getInstance().getScreenHeight()-150, 100,100);
 
+        // affichage validation
         if (status==1) {
             ctx.setFill(dimBlue);
             ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
@@ -143,34 +142,43 @@ public class DDR extends Minigame {
 
 
 
+
     public void keyPressed (KeyEvent event) {
         switch(event.getCode()) {
             case LEFT:
-                for (int i=1; i<=leftNotes.size(); i++) {
-                    if ((Game.getInstance().getScreenHeight()-240 <= leftNotes.get(i-1).y) & (leftNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                for (int i=1; i<=allNotes.size(); i++) {
+                    if ((allNotes.get(i-1).col==1) & (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) & (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        allNotes.remove(i-1);
+                        count++;
                         status=1;
                     }
                 }
                 break;
 
             case UP:
-                for (int i=1; i<=upNotes.size(); i++) {
-                    if ((Game.getInstance().getScreenHeight()-240 <= upNotes.get(i-1).y) & (upNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                for (int i=1; i<=allNotes.size(); i++) {
+                    if ((allNotes.get(i-1).col==2) & (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) & (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        allNotes.remove(i-1);
+                        count++;
                         status=2;
                     }
                 }
                 break;
 
             case DOWN:
-                for (int i=1; i<=downNotes.size(); i++) {
-                    if ((Game.getInstance().getScreenHeight()-240 <= downNotes.get(i-1).y) & (downNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                for (int i=1; i<=allNotes.size(); i++) {
+                    if ((allNotes.get(i-1).col==3) & (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) & (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        allNotes.remove(i-1);
+                        count++;
                         status=3;
                     }
                 }
                 break;
             case RIGHT:
-                for (int i=1; i<=rightNotes.size(); i++) {
-                    if ((Game.getInstance().getScreenHeight()-240 <= rightNotes.get(i-1).y) & (rightNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                for (int i=1; i<=allNotes.size(); i++) {
+                    if ((allNotes.get(i-1).col==4) & (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) & (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
+                        allNotes.remove(i-1);
+                        count++;
                         status=4;
                     }
                 }

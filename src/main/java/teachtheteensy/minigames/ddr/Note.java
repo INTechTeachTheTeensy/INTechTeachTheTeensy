@@ -11,6 +11,8 @@ import teachtheteensy.Game;
 public class Note {
     private final Image imageNote;
     private final Image imageMissed;
+    public boolean status=false;
+    int col;
     int x;
     int y;
 
@@ -34,6 +36,9 @@ public class Note {
     }
 
 
-
-
 }
+
+
+
+
+
