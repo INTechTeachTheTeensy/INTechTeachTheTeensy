@@ -38,9 +38,15 @@ public class GameApp extends Application {
 
         // main loop
         AnimationTimer timer = new AnimationTimer() {
+
+            private long lastUpdate = 0;
+
             @Override
             public void handle(long now) {
-                game.tick();
+                if(now - lastUpdate >= 16_000_000) { // 16ms
+                    game.tick();
+                    lastUpdate = now;
+                }
                 game.render(ctx);
             }
         };

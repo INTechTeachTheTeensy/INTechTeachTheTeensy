@@ -3,7 +3,6 @@ package teachtheteensy.electricalcomponents;
 import javafx.scene.image.Image;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.netlist.NetlistDiode;
-import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationResult;
 import teachtheteensy.Assets;
 import teachtheteensy.JSpiceUtils;
