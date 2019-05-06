@@ -42,6 +42,7 @@ public class DDR extends Minigame {
 
     // couleurs
     private Color dimRed = new Color(1,0.0,0.0,0.5);
+    private Color trueRed = new Color( 1, 0, 0, 0.8);
     private Color dimGreen = new Color(0,1, 0, 0.5);
     private Color dimBlue = new Color(0,0, 1, 0.5);
     private Color dimYellow = new Color(1,1, 0, 0.5);
@@ -151,12 +152,7 @@ public class DDR extends Minigame {
         //ctx.setFill(Color.BLACK);
         //ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         ctx.drawImage(currBackground, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-            // affichage score
-        //ctx.setFill(Color.LIGHTGRAY);
-        //ctx.fillRect(75, 50, 350, 75);
-        //ctx.setFont(new Font(50));      // nouvelle police avec la police par défaut en augmentant la taille
-        //ctx.setFill(Color.BLACK);
-        //ctx.fillText("Score: "+count, 100, 100);
+
 
 
         ctx.setFill(dimBlue);
@@ -189,7 +185,7 @@ public class DDR extends Minigame {
 
             // affichage game over
         if (!gameStatus) {
-            ctx.setFill(dimRed);
+            ctx.setFill(trueRed);
             ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
             // affichage score
             ctx.setFill(Color.LIGHTGRAY);
