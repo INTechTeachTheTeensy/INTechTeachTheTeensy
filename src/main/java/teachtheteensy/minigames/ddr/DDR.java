@@ -7,12 +7,14 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,10 +73,14 @@ public class DDR extends Minigame {
 
 
     public DDR() {
-        backgrounds.add(background1);
-        backgrounds.add(background2);
-        backgrounds.add(background3);
-        this.currBackground = backgrounds.get((int)(Math.random()*2));
+        Level level1 = new Level(0, 0);
+        level1.getLevel1();
+        currBackground=level1.getBackgrounds().get(0);
+        speed=level1.getNotesSpeed();
+        //backgrounds.add(background1);
+        //backgrounds.add(background2);
+        //backgrounds.add(background3);
+        //this.currBackground = backgrounds.get((int)(Math.random()*2));
 
         // rotation de l'image via ImageView
         SnapshotParameters para=new SnapshotParameters();
@@ -91,6 +97,21 @@ public class DDR extends Minigame {
         ivArrow.setRotate(180);
         this.rightArrow=ivArrow.snapshot(para, null);
 
+        /**
+         * tentative de son
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                String musiqueInge = "src/main/resources/ddr/sheep.wav";
+                Media curSong = new Media(new File(musiqueInge).toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(curSong);
+                mediaPlayer.play();
+            }
+        };
+        thread.start();
+        */
+
+
     }
     @Override
     public void tick() {
@@ -100,7 +121,7 @@ public class DDR extends Minigame {
             return;
         }
         // timer pour delay l'arriver des notes
-        if (tick==35){
+        if (tick==30){
             int randInt= (int)(Math.random()*4);
             Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*randInt), 0, speed);
             if (randInt==0) {
@@ -113,8 +134,8 @@ public class DDR extends Minigame {
                 newNote.col=4;
             }
             allNotes.add(newNote);
-            if (lp < Game.getInstance().getScreenWidth()-500) {
-                lp+=10;
+            if (lp < Game.getInstance().getScreenWidth()-800) {
+                lp+=20;
             }
             speed0Meter++;
             tick=0;
@@ -136,7 +157,7 @@ public class DDR extends Minigame {
         }
 
         // augmenter vitesse
-        if (speed0Meter==5) {
+        if (speed0Meter==100) {
             speed++;
             speed0Meter=0;
         }
