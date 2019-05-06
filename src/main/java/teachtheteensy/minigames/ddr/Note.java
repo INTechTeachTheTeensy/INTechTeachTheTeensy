@@ -27,7 +27,7 @@ public class Note {
         if (rate()){
             image=imageMissed;
         }
-        ctx.drawImage(image, x, y, 100, 100);
+        ctx.drawImage(image, x+10, y, 80, 80);
     }
 
     public boolean rate (){
