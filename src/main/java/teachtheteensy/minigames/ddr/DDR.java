@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
@@ -49,6 +50,7 @@ public class DDR extends Minigame {
     private int status=0;
     private int lp=Game.getInstance().getScreenWidth()-60;
     private boolean ouch=false; // =true si on doit perdre un pv
+    private boolean gameStatus=true;  // =false si on a perdu
 
     private static final Effect GLOW;
     static {
@@ -59,6 +61,11 @@ public class DDR extends Minigame {
 
     @Override
     public void tick() {
+        // game over
+        if (lp<=0) {
+            gameStatus=false;
+            return;
+        }
         // timer pour delay l'arriver des notes
         if (tick==35){
             int randInt= (int)(Math.random()*4);
@@ -158,11 +165,17 @@ public class DDR extends Minigame {
         ctx.fillRect(lp, 30, Game.getInstance().getScreenWidth()-60-lp, 40);
         ctx.drawImage(cadreBarreLp, 45, 25, Game.getInstance().getScreenWidth()-90, 50);
 
-            // affichage validation
-        if (status==1) {
-            ctx.setFill(dimBlue);
+            // affichage game over
+        if (!gameStatus) {
+            ctx.setFill(dimRed);
             ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-            status=0;
+            // affichage score
+            ctx.setFill(Color.LIGHTGRAY);
+            ctx.fillRect(75, 50, 350, 75);
+            ctx.setFont(new Font(50));     // nouvelle police avec la police par défaut en augmentant la taille
+            ctx.setFill(Color.BLACK);
+            ctx.fillText("Score: "+count, 100, 100);
+
         }
     }
 
@@ -170,6 +183,7 @@ public class DDR extends Minigame {
 
 
     public void keyPressed (KeyEvent event) {
+        status=0;
         switch(event.getCode()) {
             case LEFT:
                 for (int i=1; i<=allNotes.size(); i++) {
@@ -181,7 +195,6 @@ public class DDR extends Minigame {
                 }
                 if (status==0) {
                     ouch=true;
-                    count--;
                 }
                 break;
 
@@ -195,7 +208,6 @@ public class DDR extends Minigame {
                 }
                 if (status==0) {
                     ouch=true;
-                    count--;
                 }
                 break;
 
@@ -209,7 +221,6 @@ public class DDR extends Minigame {
                 }
                 if (status==0) {
                     ouch=true;
-                    count--;
                 }
                 break;
 
@@ -223,7 +234,6 @@ public class DDR extends Minigame {
                 }
                 if (status==0) {
                     ouch=true;
-                    count--;
                 }
                 break;
         }
