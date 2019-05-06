@@ -29,9 +29,16 @@ public class DDR extends Minigame {
 
     // déclaration des images
     private final Image leftArrow = Assets.getImage("ddr/leftArrow.png");
-    private final Image background = Assets.getImage("ddr/Background.png");
+    private final Image upArrow;
+    private final Image downArrow;
+    private final Image rightArrow;
     private final Image barreLp = Assets.getImage("ddr/barreLp.png");
     private final Image cadreBarreLp = Assets.getImage("ddr/cadreBarreLp.png");
+    private final Image background1 = Assets.getImage("ddr/Background.png");
+    private final Image background2 = Assets.getImage("ddr/BackgroundAllo.png");
+    private final Image background3 = Assets.getImage("ddr/BackgroundJavaS.jpg");
+    private final List<Image> backgrounds = new ArrayList<>();
+    private final Image currBackground;
 
     // couleurs
     private Color dimRed = new Color(1,0.0,0.0,0.5);
@@ -61,6 +68,29 @@ public class DDR extends Minigame {
         GLOW = glow;
     }
 
+
+    public DDR() {
+        backgrounds.add(background1);
+        backgrounds.add(background2);
+        backgrounds.add(background3);
+        this.currBackground = backgrounds.get((int)(Math.random()*2));
+
+        // rotation de l'image via ImageView
+        SnapshotParameters para=new SnapshotParameters();
+        para.setFill(Color.TRANSPARENT);
+
+        ImageView ivArrow=new ImageView(leftArrow);
+
+        ivArrow.setRotate(90);
+        this.upArrow=ivArrow.snapshot(para, null);
+
+        ivArrow.setRotate(270);
+        this.downArrow=ivArrow.snapshot(para, null);
+
+        ivArrow.setRotate(180);
+        this.rightArrow=ivArrow.snapshot(para, null);
+
+    }
     @Override
     public void tick() {
         // game over
@@ -120,7 +150,7 @@ public class DDR extends Minigame {
             // remplit l'écran de noir (permet d'effacer l'image de la frame d'avant)
         //ctx.setFill(Color.BLACK);
         //ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
-        ctx.drawImage(background, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+        ctx.drawImage(currBackground, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
             // affichage score
         //ctx.setFill(Color.LIGHTGRAY);
         //ctx.fillRect(75, 50, 350, 75);
@@ -147,22 +177,8 @@ public class DDR extends Minigame {
 
             // affichage des cases flèches
         ctx.drawImage(leftArrow, Game.getInstance().getScreenWidth()*2/3, Game.getInstance().getScreenHeight()-150, 100,100);
-            // rotation de l'image via ImageView
-        SnapshotParameters para=new SnapshotParameters();
-        para.setFill(Color.TRANSPARENT);
-
-        ImageView ivArrow=new ImageView(leftArrow);
-
-        ivArrow.setRotate(90);
-        Image upArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(upArrow, Game.getInstance().getScreenWidth()*2/3+110, Game.getInstance().getScreenHeight()-150, 100,100);
-
-        ivArrow.setRotate(270);
-        Image downArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(downArrow, Game.getInstance().getScreenWidth()*2/3+220, Game.getInstance().getScreenHeight()-150, 100,100);
-
-        ivArrow.setRotate(180);
-        Image rightArrow=ivArrow.snapshot(para, null);
         ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth()*2/3+330, Game.getInstance().getScreenHeight()-150, 100,100);
 
             // affichage barre de vie
