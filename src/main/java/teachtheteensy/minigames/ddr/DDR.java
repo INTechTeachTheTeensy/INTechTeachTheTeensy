@@ -46,6 +46,8 @@ public class DDR extends Minigame {
 
 
     // compteur de points
+    private int speed=10;  // vitesse initiale du jeu
+    private int speed0Meter=0;
     public int count=0;
     private int status=0;
     private int lp=Game.getInstance().getScreenWidth()-60;
@@ -69,7 +71,7 @@ public class DDR extends Minigame {
         // timer pour delay l'arriver des notes
         if (tick==35){
             int randInt= (int)(Math.random()*4);
-            Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*randInt), 0);
+            Note newNote=new Note(((Game.getInstance().getScreenWidth() * 2) / 3) +(110*randInt), 0, speed);
             if (randInt==0) {
                 newNote.col=1;
             } else if (randInt==1) {
@@ -80,9 +82,10 @@ public class DDR extends Minigame {
                 newNote.col=4;
             }
             allNotes.add(newNote);
-            if (lp < Game.getInstance().getScreenWidth()-50) {
-                lp+=2;
+            if (lp < Game.getInstance().getScreenWidth()-500) {
+                lp+=10;
             }
+            speed0Meter++;
             tick=0;
             return;
         }
@@ -91,7 +94,7 @@ public class DDR extends Minigame {
                 allNotes.remove(i-1);
                 ouch=true;
             } else {
-                allNotes.get(i-1).y+=10;     // vitesse chute notes
+                allNotes.get(i-1).y+=allNotes.get(i-1).v;     // vitesse chute notes
             }
         }
 
@@ -101,8 +104,11 @@ public class DDR extends Minigame {
             ouch=false;
         }
 
-
-        // fin de jeu
+        // augmenter vitesse
+        if (speed0Meter==5) {
+            speed++;
+            speed0Meter=0;
+        }
 
         tick++;
 
@@ -175,6 +181,9 @@ public class DDR extends Minigame {
             ctx.setFont(new Font(50));     // nouvelle police avec la police par défaut en augmentant la taille
             ctx.setFill(Color.BLACK);
             ctx.fillText("Score: "+count, 100, 100);
+            ctx.setFont(new Font(250));     // nouvelle police avec la police par défaut en augmentant la taille
+            ctx.setFill(Color.BLACK);
+            ctx.fillText("GAME - OVER", 100,Game.getInstance().getScreenHeight()/2);
 
         }
     }
@@ -184,6 +193,7 @@ public class DDR extends Minigame {
 
     public void keyPressed (KeyEvent event) {
         status=0;
+        //FIXME: revoir taille hitbox
         switch(event.getCode()) {
             case LEFT:
                 for (int i=1; i<=allNotes.size(); i++) {
