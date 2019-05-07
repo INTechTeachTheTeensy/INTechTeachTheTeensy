@@ -36,10 +36,6 @@ public class DDR extends Minigame {
     private final Image rightArrow;
     private final Image barreLp = Assets.getImage("ddr/barreLp.png");
     private final Image cadreBarreLp = Assets.getImage("ddr/cadreBarreLp.png");
-    private final Image background1 = Assets.getImage("ddr/Background.png");
-    private final Image background2 = Assets.getImage("ddr/BackgroundAllo.png");
-    private final Image background3 = Assets.getImage("ddr/BackgroundJavaS.jpg");
-    private final List<Image> backgrounds = new ArrayList<>();
     private final Image currBackground;
 
     // couleurs
@@ -62,7 +58,8 @@ public class DDR extends Minigame {
     private int status=0;
     private int lp=Game.getInstance().getScreenWidth()-60;
     private boolean ouch=false; // =true si on doit perdre un pv
-    private boolean gameStatus=true;  // =false si on a perdu
+    private int gameStatus=0;  // =0 si on joue, =1 si on aperdu, =2 si on a gagné
+    Level level = new Level(0, 0, 0);
 
     private static final Effect GLOW;
     static {
@@ -73,14 +70,11 @@ public class DDR extends Minigame {
 
 
     public DDR() {
-        Level level1 = new Level(0, 0);
-        level1.getLevel1();
-        currBackground=level1.getBackgrounds().get(0);
-        speed=level1.getNotesSpeed();
-        //backgrounds.add(background1);
-        //backgrounds.add(background2);
-        //backgrounds.add(background3);
-        //this.currBackground = backgrounds.get((int)(Math.random()*2));
+        // initialiser le script du niveau
+
+        level.getLevel1();
+        currBackground=level.getBackgrounds().get((int)Math.random()*level.getBackgrounds().size());
+        speed=level.getNotesSpeed();
 
         // rotation de l'image via ImageView
         SnapshotParameters para=new SnapshotParameters();
@@ -96,6 +90,7 @@ public class DDR extends Minigame {
 
         ivArrow.setRotate(180);
         this.rightArrow=ivArrow.snapshot(para, null);
+
 
         /**
          * tentative de son
@@ -117,7 +112,7 @@ public class DDR extends Minigame {
     public void tick() {
         // game over
         if (lp<=0) {
-            gameStatus=false;
+            gameStatus=1;
             return;
         }
         // timer pour delay l'arriver des notes
@@ -134,10 +129,11 @@ public class DDR extends Minigame {
                 newNote.col=4;
             }
             allNotes.add(newNote);
-            if (lp < Game.getInstance().getScreenWidth()-800) {
+            if (lp < Game.getInstance().getScreenWidth()/3) {
                 lp+=20;
             }
             speed0Meter++;
+            level.incTime();
             tick=0;
             return;
         }
@@ -205,7 +201,7 @@ public class DDR extends Minigame {
         ctx.drawImage(cadreBarreLp, 45, 25, Game.getInstance().getScreenWidth()-90, 50);
 
             // affichage game over
-        if (!gameStatus) {
+        if (gameStatus==1) {
             ctx.setFill(trueRed);
             ctx.fillRect(0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
             // affichage score
