@@ -5,7 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -200,19 +199,35 @@ public class DDR extends Minigame {
         switch (arrowStatus) {
             case 1:
                 leftArrow.render(ctx, "LIGHT");
-                arrowStatus=0;
+                leftArrow.decCounter();
+                if (leftArrow.getCounter()==0) {
+                    arrowStatus=0;
+                    leftArrow.setCounter(4);
+                }
                 break;
             case 2:
                 upArrow.render(ctx, "LIGHT");
-                arrowStatus=0;
+                upArrow.decCounter();
+                if (upArrow.getCounter()==0) {
+                    arrowStatus=0;
+                    upArrow.setCounter(4);
+                }
                 break;
             case 3:
                 downArrow.render(ctx, "LIGHT");
-                arrowStatus=0;
+                downArrow.decCounter();
+                if (downArrow.getCounter()==0) {
+                    arrowStatus=0;
+                    downArrow.setCounter(4);
+                }
                 break;
             case 4:
                 rightArrow.render(ctx, "LIGHT");
-                arrowStatus=0;
+                rightArrow.decCounter();
+                if (rightArrow.getCounter()==0) {
+                    arrowStatus=0;
+                    rightArrow.setCounter(4);
+                }
                 break;
         }
 

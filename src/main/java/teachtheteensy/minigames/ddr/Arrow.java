@@ -12,9 +12,11 @@ public class Arrow {
     private int col;
     Image imageArrow;
     Image imageActivatedArrow;
+    private int counter;
 
     public Arrow(int col) {
         this.col=col;
+        this.counter=4;
         Image leftArrow = Assets.getImage("ddr/leftArrow.png");
         Image lightLeftArrow = Assets.getImage("ddr/lightLeftArrow.png");
 
@@ -55,5 +57,17 @@ public class Arrow {
         } else {
             ctx.drawImage(imageArrow, Game.getInstance().getScreenWidth() * 2 / 3 + col*110, Game.getInstance().getScreenHeight() - 150, 100, 100);
         }
+    }
+
+    public int getCounter() {
+        return (counter);
+    }
+
+    public void decCounter() {
+        counter--;
+    }
+
+    public void setCounter(int i) {
+        counter=i;
     }
 }
