@@ -35,12 +35,7 @@ public class DDR extends Minigame {
     private final Arrow upArrow;
     private final Arrow downArrow;
     private final Arrow rightArrow;
-    /*
-    private final Image lightLeftArrow = Assets.getImage("ddr/lightLeftArrow.png");
-    private final Image lightUpArrow;
-    private final Image lightDownArrow;
-    private final Image lightRightArrow;
-    */
+
     private final Image barreLp = Assets.getImage("ddr/barreLp.png");
     private final Image cadreBarreLp = Assets.getImage("ddr/cadreBarreLp.png");
     private final Image currBackground;
@@ -87,31 +82,8 @@ public class DDR extends Minigame {
         currBackground=level.getBackgrounds().get((int)Math.random()*level.getBackgrounds().size());
         speed=level.getNotesSpeed();
 
-        // rotation de l'image via ImageView
-        /*
-        SnapshotParameters para=new SnapshotParameters();
-        para.setFill(Color.TRANSPARENT);
 
-        ImageView ivArrow=new ImageView(leftArrow);
-
-        ivArrow.setRotate(90);
-        this.upArrow=ivArrow.snapshot(para, null);
-        ivArrow.setRotate(270);
-        this.downArrow=ivArrow.snapshot(para, null);
-        ivArrow.setRotate(180);
-        this.rightArrow=ivArrow.snapshot(para, null);
-
-
-        ImageView ivLightArrow=new ImageView(lightLeftArrow);
-
-        ivArrow.setRotate(90);
-        this.lightUpArrow=ivArrow.snapshot(para, null);
-        ivArrow.setRotate(270);
-        this.lightDownArrow=ivArrow.snapshot(para, null);
-        ivArrow.setRotate(180);
-        this.lightRightArrow=ivArrow.snapshot(para, null);
-        */
-
+        // initialiser les flèches
         leftArrow = new Arrow(0);
         upArrow = new Arrow(1);
         downArrow = new Arrow(2);
@@ -221,17 +193,29 @@ public class DDR extends Minigame {
 
 
         // affichage des cases flèches
-        /*
-        ctx.drawImage(leftArrow, Game.getInstance().getScreenWidth() * 2 / 3, Game.getInstance().getScreenHeight() - 150, 100, 100);
-        ctx.drawImage(upArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 110, Game.getInstance().getScreenHeight() - 150, 100, 100);
-        ctx.drawImage(downArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 220, Game.getInstance().getScreenHeight() - 150, 100, 100);
-        ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 330, Game.getInstance().getScreenHeight() - 150, 100, 100);
-        */
-
         leftArrow.render(ctx, " ");
         upArrow.render(ctx, " ");
         downArrow.render(ctx, " ");
         rightArrow.render(ctx, " ");
+        switch (arrowStatus) {
+            case 1:
+                leftArrow.render(ctx, "LIGHT");
+                arrowStatus=0;
+                break;
+            case 2:
+                upArrow.render(ctx, "LIGHT");
+                arrowStatus=0;
+                break;
+            case 3:
+                downArrow.render(ctx, "LIGHT");
+                arrowStatus=0;
+                break;
+            case 4:
+                rightArrow.render(ctx, "LIGHT");
+                arrowStatus=0;
+                break;
+        }
+
 
 
         // affichage barre de vie
@@ -296,7 +280,7 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==2) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=1;
+                        arrowStatus=2;
                     }
                 }
                 if (arrowStatus==0) {
@@ -309,7 +293,7 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==3) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=1;
+                        arrowStatus=3;
                     }
                 }
                 if (arrowStatus==0) {
@@ -322,7 +306,7 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==4) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=1;
+                        arrowStatus=4;
                     }
                 }
                 if (arrowStatus==0) {
