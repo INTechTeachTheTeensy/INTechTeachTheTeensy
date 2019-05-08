@@ -30,17 +30,21 @@ public class DDR extends Minigame {
     private int tick=0;
 
     // déclaration des images
-    private final Image leftArrow = Assets.getImage("ddr/leftArrow.png");
-    private final Image upArrow;
-    private final Image downArrow;
-    private final Image rightArrow;
+
+    private final Arrow leftArrow;
+    private final Arrow upArrow;
+    private final Arrow downArrow;
+    private final Arrow rightArrow;
+    /*
     private final Image lightLeftArrow = Assets.getImage("ddr/lightLeftArrow.png");
     private final Image lightUpArrow;
     private final Image lightDownArrow;
     private final Image lightRightArrow;
+    */
     private final Image barreLp = Assets.getImage("ddr/barreLp.png");
     private final Image cadreBarreLp = Assets.getImage("ddr/cadreBarreLp.png");
     private final Image currBackground;
+
 
     // couleurs
     private Color dimRed = new Color(1,0.0,0.0,0.5);
@@ -67,13 +71,14 @@ public class DDR extends Minigame {
     private int gameStatus=0;  // =0 si on joue, =1 si on aperdu, =2 si on a gagné
     Level level = new Level(0, 0, 0);
 
+    /*
     private static final Effect GLOW;
     static {
         Glow glow = new Glow();
         glow.setLevel(0.5);
         GLOW = glow;
     }
-
+    */
 
     public DDR() {
         // initialiser le script du niveau
@@ -83,6 +88,7 @@ public class DDR extends Minigame {
         speed=level.getNotesSpeed();
 
         // rotation de l'image via ImageView
+        /*
         SnapshotParameters para=new SnapshotParameters();
         para.setFill(Color.TRANSPARENT);
 
@@ -104,6 +110,12 @@ public class DDR extends Minigame {
         this.lightDownArrow=ivArrow.snapshot(para, null);
         ivArrow.setRotate(180);
         this.lightRightArrow=ivArrow.snapshot(para, null);
+        */
+
+        leftArrow = new Arrow(0);
+        upArrow = new Arrow(1);
+        downArrow = new Arrow(2);
+        rightArrow = new Arrow(3);
 
 
         /**
@@ -209,10 +221,18 @@ public class DDR extends Minigame {
 
 
         // affichage des cases flèches
+        /*
         ctx.drawImage(leftArrow, Game.getInstance().getScreenWidth() * 2 / 3, Game.getInstance().getScreenHeight() - 150, 100, 100);
         ctx.drawImage(upArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 110, Game.getInstance().getScreenHeight() - 150, 100, 100);
         ctx.drawImage(downArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 220, Game.getInstance().getScreenHeight() - 150, 100, 100);
         ctx.drawImage(rightArrow, Game.getInstance().getScreenWidth() * 2 / 3 + 330, Game.getInstance().getScreenHeight() - 150, 100, 100);
+        */
+
+        leftArrow.render(ctx, " ");
+        upArrow.render(ctx, " ");
+        downArrow.render(ctx, " ");
+        rightArrow.render(ctx, " ");
+
 
         // affichage barre de vie
         ctx.drawImage(barreLp, 50, 25, Game.getInstance().getScreenWidth() - 100, 50);
