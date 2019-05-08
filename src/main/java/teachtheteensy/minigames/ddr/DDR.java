@@ -185,7 +185,6 @@ public class DDR extends Minigame {
         ctx.fillRect(Game.getInstance().getScreenWidth() * 2 / 3 + 110 * 3 - 2, 0, 104, Game.getInstance().getScreenHeight());
 
         // render toutes les notes
-        //noteLeft.render(ctx);
         for (int i = 1; i <= allNotes.size(); i++) {
             allNotes.get(i - 1).render(ctx);
         }
