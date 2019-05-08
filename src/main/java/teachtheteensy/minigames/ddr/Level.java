@@ -59,10 +59,6 @@ public class Level {
         return time;
     }
 
-    public void incTime() {
-        time++;
-    }
-
     public void addImage(Image image) {
         backgrounds.add(image);
     }
