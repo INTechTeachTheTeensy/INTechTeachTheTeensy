@@ -20,4 +20,6 @@ public abstract class Screen implements Renderable  {
     public void mouseDragged(double sceneX, double sceneY) {}
     public void keyPressed(KeyEvent event) {}
     public void keyReleased(KeyEvent event) {}
+
+    public void keyTyped(KeyEvent event) {}
 }

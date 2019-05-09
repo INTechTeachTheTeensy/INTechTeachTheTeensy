@@ -97,14 +97,19 @@ public class PseudoAssemblyEngine {
         }
     }
 
+    public static Map<String, Instruction> getInstructionTable() {
+        if(instructionTable.isEmpty()) {
+            initInstructionTable(); // recherche des instructions si besoin
+        }
+        return instructionTable;
+    }
+
     /**
      * Crées un nouveau moteur de simulation avec le code source donné
      * @param sourceCode le code source
      */
     public PseudoAssemblyEngine(String sourceCode) {
-        if(instructionTable.isEmpty()) {
-            initInstructionTable(); // recherche des instructions si besoin
-        }
+        getInstructionTable();
         // initialisation de l'état du moteur
         this.state = State.RUNNING;
         this.code = sourceCode;
@@ -157,17 +162,23 @@ public class PseudoAssemblyEngine {
                 return false;
             }
 
+            while(lines[programCounter].isEmpty()) {
+                programCounter++;
+            }
             String line = lines[programCounter];
+            CodeVerifier.VerificationResult result = CodeVerifier.verifyLine(line);
             String[] parts = line.split(" ");
             String command = parts[0];
             Instruction instruction = instructionTable.get(command.toLowerCase());
-            if(instruction == null) {
-                crash("Instruction non valide");
-                return false;
-            }
-            if(instruction.argumentCount() != parts.length-1) {
-                crash("L'instruction '"+instruction.name()+"' prend "+instruction.argumentCount()+" arguments mais en a reçu "+(parts.length-1));
-                return false;
+            switch (result) {
+                case INVALID_INSTRUCTION:
+                    crash("Instruction non valide");
+                    return false;
+
+                case INVALID_ARGUMENT_COUNT:
+                    crash("L'instruction '"+instruction.name()+"' prend "+instruction.argumentCount()+" arguments mais en a reçu "+(parts.length-1));
+                    return false;
+
             }
             instruction.execute(parts, this);
 

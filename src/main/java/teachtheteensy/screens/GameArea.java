@@ -1,6 +1,7 @@
 package teachtheteensy.screens;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import teachtheteensy.Game;
 import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.ElectricalComponent;

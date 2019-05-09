@@ -59,6 +59,7 @@ public class GameApp extends Application {
         stage.addEventFilter(MouseEvent.MOUSE_MOVED, game::mouseMoved);
         stage.addEventFilter(KeyEvent.KEY_PRESSED, game::keyPressed);
         stage.addEventFilter(KeyEvent.KEY_RELEASED, game::keyReleased);
+        stage.addEventFilter(KeyEvent.KEY_TYPED, game::keyTyped);
 
         timer.start();
         stage.show();

@@ -2,6 +2,7 @@ package teachtheteensy.electricalcomponents;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -141,4 +142,20 @@ public abstract class ElectricalComponent implements Renderable, Cloneable {
      * @param result le result de l'analyse/simulation
      */
     public void interpretResult(NodeMap nodeMap, SimulationResult result) {}
+
+    public boolean keyTyped(KeyEvent event) {
+        return false;
+    }
+
+    public boolean leftClick(double mouseX, double mouseY) {
+        return false;
+    }
+
+    public boolean keyPressed(KeyEvent event) {
+        return false;
+    }
+
+    public boolean keyReleased(KeyEvent event) {
+        return false;
+    }
 }

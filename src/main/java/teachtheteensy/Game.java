@@ -120,6 +120,10 @@ public class Game {
         }
     }
 
+    public void keyTyped(KeyEvent event) {
+        currentScreen.keyTyped(event);
+    }
+
     public double getMouseX() {
         return mouseX * xScale();
     }

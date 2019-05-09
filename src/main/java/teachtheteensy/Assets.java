@@ -1,6 +1,7 @@
 package teachtheteensy;
 
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,11 @@ public final class Assets {
     private static Map<String, Image> loadedImages = new HashMap<>();
 
     /**
+     * contient les polices déjà chargées
+     */
+    private static Map<Double, Font> loadedSizes = new HashMap<>();
+
+    /**
      * Renvoie l'image dans /assets/ correspondant au nom donné. Cette méthode fait aussi en sorte de ne pas charger deux fois la même image
      * @param name le nom du fichier de l'image
      * @return l'image correspondante
@@ -23,5 +29,14 @@ public final class Assets {
             loadedImages.put(name, img);
         }
         return loadedImages.get(name);
+    }
+
+    public static Font getConsolasFont(double size) {
+        if( ! loadedSizes.containsKey(size)) {
+            Font font = Font.loadFont(Assets.class.getResourceAsStream("/consolas.ttf"), size);
+            loadedSizes.put(size, font);
+            return font;
+        }
+        return loadedSizes.get(size);
     }
 }

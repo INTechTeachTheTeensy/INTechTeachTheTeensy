@@ -1,6 +1,7 @@
 package teachtheteensy.screens;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.Screen;
@@ -93,8 +94,31 @@ public class PrototypeScreen extends Screen {
             return;
         }
 
+        if(gameArea.leftClick(sceneX, sceneY)) {
+            return;
+        }
+
         if(drawer.leftClick(sceneX, sceneY)) // le tiroir a mangé le clic (on a cliqué sur le carré pour l'ouvrir)
             return;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent event) {
+        if(gameArea.keyPressed(event))
+            return;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent event) {
+        if(gameArea.keyReleased(event))
+            return;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent event) {
+        if(gameArea.keyTyped(event)) {
+            return;
+        }
     }
 
     public GameArea getGameArea() {

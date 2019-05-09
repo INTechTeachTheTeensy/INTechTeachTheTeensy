@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
+import javafx.scene.input.KeyEvent;
 import teachtheteensy.Game;
 import teachtheteensy.Renderable;
 import teachtheteensy.electricalcomponents.ElectricalComponent;
@@ -47,6 +48,38 @@ public abstract class ComponentHolder implements Renderable {
         } else {
             components.forEach(comp -> comp.render(ctx));
         }
+    }
+
+    public boolean keyReleased(KeyEvent event) {
+        for(ElectricalComponent component : components) {
+            if(component.keyReleased(event))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean keyPressed(KeyEvent event) {
+        for(ElectricalComponent component : components) {
+            if(component.keyPressed(event))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean keyTyped(KeyEvent event) {
+        for(ElectricalComponent component : components) {
+            if(component.keyTyped(event))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean leftClick(double mouseX, double mouseY) {
+        for(ElectricalComponent component : components) {
+            if(component.leftClick(mouseX, mouseY))
+                return true;
+        }
+        return false;
     }
 
     public List<ElectricalComponent> getComponents() {
