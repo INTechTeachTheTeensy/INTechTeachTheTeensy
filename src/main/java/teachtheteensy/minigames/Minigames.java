@@ -5,6 +5,7 @@ public enum Minigames {
     SNAKE(Snake.class),// mini-jeu example
     RUNNINGCHASE(RunningChase.class),
     DDR(teachtheteensy.minigames.ddr.DDR.class), // test copy Snake
+    DEFONCEUSE(teachtheteensy.minigames.defonceuse.Defonceuse.class),
     ;
 
     private Class<? extends Minigame> minigameClass;

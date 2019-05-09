@@ -11,13 +11,15 @@ import teachtheteensy.Game;
 public class Note {
     private final Image imageNote;
     private final Image imageMissed;
-    int col;
     int x;
     int y;
+    int col;
+    int v;  // vitesse initiale note
 
-    public Note (int x, int y){
+    public Note (int x, int y, int v){
         this.x=x;
         this.y=y;
+        this.v=v;
         this.imageNote = Assets.getImage("ddr/note.png");           // Assets.getImage appelle une image préchargée
         this.imageMissed = Assets.getImage("ddr/noteMissed.png");
     }
@@ -27,7 +29,7 @@ public class Note {
         if (rate()){
             image=imageMissed;
         }
-        ctx.drawImage(image, x, y, 100, 100);
+        ctx.drawImage(image, x+10, y, 80, 80);
     }
 
     public boolean rate (){
