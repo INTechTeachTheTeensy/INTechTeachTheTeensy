@@ -6,6 +6,8 @@ import org.knowm.jspice.component.source.DCVoltageArbitrary;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import teachtheteensy.electricalcomponents.Pin;
+import teachtheteensy.electricalcomponents.Teensy;
+import teachtheteensy.programming.PinState;
 
 import java.util.Map;
 
@@ -14,10 +16,12 @@ import java.util.Map;
  * Utiliser {@link PinSource#setValue(double)} pour changer la valeur de la tension
  */
 public class PinSource extends DCVoltageArbitrary {
+    private final Pin pin;
     private double value;
 
     public PinSource(Pin pin) {
         super(pin.toNodeName(), "<none>");
+        this.pin = pin;
     }
 
     public void setValue(double value) {
@@ -27,11 +31,11 @@ public class PinSource extends DCVoltageArbitrary {
 
     @Override
     public double getSweepableValue() {
-        return value;
+        return getValue();
     }
 
     public double getValue() {
-        return value;
+        return pin.getPinState() == PinState.UNKNOWN ? value : pin.getPinState().inVolts();
     }
 
     // Modifié pour pouvoir choisir la valeur programmatiquement (cf DCVoltageArbitrary)

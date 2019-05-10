@@ -85,5 +85,10 @@ public class GameArea extends ComponentHolder implements Renderable {
 
     public void removeComponent(ElectricalComponent component) {
         components.remove(component);
+        component.getPins().forEach(Pin::disconnect);
+    }
+
+    public void prepareComponents() {
+        components.forEach(ElectricalComponent::prepare);
     }
 }

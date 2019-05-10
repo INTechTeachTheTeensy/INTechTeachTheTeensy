@@ -79,5 +79,6 @@ public class Led extends ElectricalComponent {
 
         // changement de l'état
         isOn = plusPotential > minusPotential;
+//        System.out.println(" + = "+plusPotential+" / - = "+minusPotential);
     }
 }

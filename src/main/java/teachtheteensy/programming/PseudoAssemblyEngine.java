@@ -70,6 +70,11 @@ public class PseudoAssemblyEngine {
     private String errorMessage;
 
     /**
+     * Etats des pins de la Teensy simulée
+     */
+    private static PinState[] pins;
+
+    /**
      * Liste des instructions reconnues
      * @see InstructionTag
      */
@@ -115,6 +120,11 @@ public class PseudoAssemblyEngine {
         this.code = sourceCode;
         this.lines = sourceCode.split("\n");
         this.programCounter = 0;
+
+        pins = new PinState[40];
+        for (int i = 0; i < pins.length; i++) {
+            pins[i] = PinState.UNKNOWN;
+        }
     }
 
     /**
@@ -156,21 +166,20 @@ public class PseudoAssemblyEngine {
      */
     private boolean runLine() {
         if(time-lastLineExecutionTime >= lineExecutionTime) {
-            if(programCounter >= lines.length) {
+            /*if(programCounter >= lines.length) {
                 state = State.CRASHED;
                 errorMessage = "On exécute du code en dehors de la mémoire réservée!";
                 return false;
-            }
+            }*/
 
             while(lines[programCounter].isEmpty() || lines[programCounter].startsWith("#")) {
                 programCounter++;
                 if(programCounter >= lines.length) {
-                    state = State.CRASHED;
-                    errorMessage = "On exécute du code en dehors de la mémoire réservée!";
-                    return false;
+                    return true;
                 }
             }
             String line = lines[programCounter];
+            System.out.println("execute "+line);
             CodeVerifier.VerificationResult result = CodeVerifier.verifyLine(line);
             String[] parts = line.split(" ");
             String command = parts[0];
@@ -188,6 +197,7 @@ public class PseudoAssemblyEngine {
             instruction.execute(parts, this);
 
             programCounter++;
+            programCounter %= lines.length;
             lastLineExecutionTime += lineExecutionTime;
             return true;
         }
@@ -211,6 +221,24 @@ public class PseudoAssemblyEngine {
         this.delayCounter = delay;
         state = State.DELAY;
     }
+
+    /**
+     * Mets à HIGH ou LOW une pin donnée
+     * @param pin
+     * @param state
+     */
+    public void pinState(int pin, PinState state) {
+        if(pin < 0 || pin >= pins.length)
+            throw new IllegalArgumentException("pin doit être >= 0 et < "+pins.length);
+        pins[pin] = state;
+    }
+
+    public PinState getPinState(int pin) {
+        if(pin < 0 || pin >= pins.length)
+            return PinState.UNKNOWN;
+        return pins[pin];
+    }
+
 
     public State getState() {
         return state;

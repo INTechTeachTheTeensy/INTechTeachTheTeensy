@@ -1,21 +1,20 @@
 package teachtheteensy.electricalcomponents;
 
-import com.google.common.collect.Collections2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.knowm.jspice.netlist.NetlistComponent;
-import org.knowm.jspice.netlist.NetlistDCVoltage;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.electricalcomponents.simulation.NetlistTeensyPin;
 import teachtheteensy.electricalcomponents.simulation.NodeMap;
 import teachtheteensy.math.OffsetRectangle;
 import teachtheteensy.programming.CodeVerifier;
+import teachtheteensy.programming.PinState;
+import teachtheteensy.programming.PseudoAssemblyEngine;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,6 +59,8 @@ public class Teensy extends ElectricalComponent {
     private TextCursor cursor;
 
     private Font font = Assets.getConsolasFont(15);
+    private PseudoAssemblyEngine engine;
+    private long lastEngineStepTime;
 
     public Teensy() {
         super(Assets.getImage("components/teensy.png"));
@@ -107,11 +108,32 @@ public class Teensy extends ElectricalComponent {
                 })
                 .collect(Collectors.toList());
 
+        /*codeLines.add("DELAY 500");
+        codeLines.add("HIGH 1");
         codeLines.add("DELAY 500");
-        codeLines.add("NOP");
-        codeLines.add("HELLO");
-        codeLines.add("HIGH 13");
-     //   netlistPins.add(new NetlistDCVoltage(toString()+"("+hashCode()+").3.3->GND", 3.3, pinMap.get("+3.3").getId(), "0"));
+        codeLines.add("#HELLO");
+        codeLines.add("LOW 1");*/
+        // # BLINK x2
+        // HIGH 1
+        // DELAY 250
+        // LOW 1
+        // HIGH 2
+        // DELAY 250
+        // HIGH 1
+        // DELAY 250
+        // LOW 1
+        // LOW 2
+        // DELAY 250
+
+        codeLines.add("# BLINK x2");
+        codeLines.add("HIGH 1");
+        codeLines.add("DELAY 250");
+        codeLines.add("HIGH 2");
+        codeLines.add("DELAY 250");
+        codeLines.add("LOW 1");
+        codeLines.add("LOW 2");
+        codeLines.add("DELAY 250");
+        //   netlistPins.add(new NetlistDCVoltage(toString()+"("+hashCode()+").3.3->GND", 3.3, pinMap.get("+3.3").getId(), "0"));
     }
 
     @Override
@@ -125,10 +147,22 @@ public class Teensy extends ElectricalComponent {
     }
 
     @Override
+    public void prepare() {
+        engine = new PseudoAssemblyEngine(String.join("\n", codeLines));
+        lastEngineStepTime = System.currentTimeMillis();
+    }
+
+    @Override
     public void step() {
         super.step();
         if(pinMap.containsKey("+3.3"))
             pinMap.get("+3.3").getSource().setValue(3.3);
+        if(engine != null) {
+            long deltaTime = System.currentTimeMillis() - lastEngineStepTime;
+            System.out.println("delta: "+deltaTime);
+            engine.step(deltaTime/1000.0);
+            lastEngineStepTime = System.currentTimeMillis();
+        }
     }
 
     @Override
@@ -319,5 +353,11 @@ public class Teensy extends ElectricalComponent {
                     return true;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public PinState getPinState(int index) {
+        if(engine != null)
+            return engine.getPinState(index);
+        return PinState.UNKNOWN;
     }
 }

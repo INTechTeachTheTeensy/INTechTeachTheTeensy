@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import teachtheteensy.Game;
 import teachtheteensy.Renderable;
+import teachtheteensy.programming.PinState;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -158,5 +159,18 @@ public class Pin implements Renderable {
      */
     public boolean forcesNodeName() {
         return false;
+    }
+
+    public PinState getPinState() {
+        if(owner instanceof Teensy) {
+            return ((Teensy)owner).getPinState(index);
+        }
+        return PinState.UNKNOWN;
+    }
+
+    public void disconnect() {
+        for (Pin connection : connections) {
+            connection.connections.remove(this);
+        }
     }
 }

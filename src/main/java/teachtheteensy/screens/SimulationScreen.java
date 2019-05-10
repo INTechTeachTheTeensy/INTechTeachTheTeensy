@@ -32,11 +32,11 @@ public class SimulationScreen extends Screen {
     /**
      * Incrémentation du temps à chaque tick
      */
-    private final BigDecimal dt = new BigDecimal("0.016");
+    private final BigDecimal dt = new BigDecimal("2.0");
     /**
      * De combien en combien JSpice doit simuler? (résolution en temps)
      */
-    private final BigDecimal stepTime = new BigDecimal("0.0003");
+    private final BigDecimal stepTime = new BigDecimal("1.0");
     private final NodeMap nodeMap;
 
 
@@ -46,6 +46,7 @@ public class SimulationScreen extends Screen {
         this.pauseButton = new MutableRectangle(1920/2-50,1080-100,100,100);
 
         components = parent.getGameArea().getComponents();
+        parent.getGameArea().prepareComponents();
         analyser = createAnalyser();
     }
 
@@ -73,7 +74,7 @@ public class SimulationScreen extends Screen {
 
         System.out.println("!! "+netlist.toSpiceString());
         // initialisation de l'analyseur
-        TransientConfig transientConfig = new TransientConfig(".02", ".0002"); // TODO: changer les valeurs?
+        TransientConfig transientConfig = new TransientConfig(".02", ".002"); // TODO: changer les valeurs?
         netlist.setSimulationConfig(transientConfig);
         return new TransientAnalysis(netlist, transientConfig);
     }

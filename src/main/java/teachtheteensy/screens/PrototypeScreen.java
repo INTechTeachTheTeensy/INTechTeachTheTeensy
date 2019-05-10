@@ -15,6 +15,8 @@ public class PrototypeScreen extends Screen {
         Assets.getMusic("Inspired"),
         Assets.getMusic("Chill Wave"),
         Assets.getMusic("Windswept"),
+        Assets.getMusic("Deliberate Thought"),
+        Assets.getMusic("Unwritten Return"),
     };
 
     private final MutableRectangle playButton;

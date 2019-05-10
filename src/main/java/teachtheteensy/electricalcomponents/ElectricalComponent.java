@@ -19,6 +19,7 @@ import java.util.Optional;
  */
 public abstract class ElectricalComponent implements Renderable, Cloneable {
 
+    public static final double EPSILON = 10e-6;
     /**
      * La texture utilisée pour ce composant
      */
@@ -158,4 +159,6 @@ public abstract class ElectricalComponent implements Renderable, Cloneable {
     public boolean keyReleased(KeyEvent event) {
         return false;
     }
+
+    public void prepare() {}
 }

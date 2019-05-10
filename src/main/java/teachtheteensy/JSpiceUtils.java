@@ -2,6 +2,7 @@ package teachtheteensy;
 
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationResult;
+import teachtheteensy.electricalcomponents.ElectricalComponent;
 import teachtheteensy.electricalcomponents.Pin;
 import teachtheteensy.electricalcomponents.simulation.NodeMap;
 
@@ -21,6 +22,10 @@ public final class JSpiceUtils {
             return 0.0;
         String key = "V("+node+")";
         SimulationPlotData data = result.getSimulationPlotDataMap().get(key);
-        return data.getyData().get(0).doubleValue();
+        double value = data.getyData().get(0).doubleValue();
+        if(Math.abs(value) <= ElectricalComponent.EPSILON) {
+            return 0.0;
+        }
+        return value;
     }
 }
