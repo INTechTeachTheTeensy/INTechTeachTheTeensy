@@ -191,44 +191,34 @@ public class DDR extends Minigame {
 
 
         // affichage des cases flèches
-        leftArrow.render(ctx, " ");
-        upArrow.render(ctx, " ");
-        downArrow.render(ctx, " ");
-        rightArrow.render(ctx, " ");
-        switch (arrowStatus) {
-            case 1:
-                leftArrow.render(ctx, "LIGHT");
-                leftArrow.decCounter();
-                if (leftArrow.getCounter()==0) {
-                    arrowStatus=0;
-                    leftArrow.setCounter(4);
-                }
-                break;
-            case 2:
-                upArrow.render(ctx, "LIGHT");
-                upArrow.decCounter();
-                if (upArrow.getCounter()==0) {
-                    arrowStatus=0;
-                    upArrow.setCounter(4);
-                }
-                break;
-            case 3:
-                downArrow.render(ctx, "LIGHT");
-                downArrow.decCounter();
-                if (downArrow.getCounter()==0) {
-                    arrowStatus=0;
-                    downArrow.setCounter(4);
-                }
-                break;
-            case 4:
-                rightArrow.render(ctx, "LIGHT");
-                rightArrow.decCounter();
-                if (rightArrow.getCounter()==0) {
-                    arrowStatus=0;
-                    rightArrow.setCounter(4);
-                }
-                break;
+        leftArrow.render(ctx);
+        upArrow.render(ctx);
+        downArrow.render(ctx);
+        rightArrow.render(ctx);
+        if (leftArrow.getCounter()==0) {
+            arrowStatus=0;
+            leftArrow.setStatus("OFF");
+            leftArrow.setCounter(4);
         }
+
+
+        if (upArrow.getCounter()==0) {
+            arrowStatus=0;
+            upArrow.setStatus("OFF");
+            upArrow.setCounter(4);
+        }
+        if (downArrow.getCounter()==0) {
+            arrowStatus=0;
+            downArrow.setStatus("OFF");
+            downArrow.setCounter(4);
+        }
+
+        if (rightArrow.getCounter()==0) {
+            arrowStatus=0;
+            rightArrow.setStatus("OFF");
+            rightArrow.setCounter(4);
+        }
+
 
 
 
@@ -281,6 +271,7 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==1) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
+                        leftArrow.setStatus("ON");
                         arrowStatus=1;
                     }
                 }
@@ -294,7 +285,8 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==2) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=2;
+                        upArrow.setStatus("ON");
+                        arrowStatus=1;
                     }
                 }
                 if (arrowStatus==0) {
@@ -307,7 +299,8 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==3) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=3;
+                        downArrow.setStatus("ON");
+                        arrowStatus=1;
                     }
                 }
                 if (arrowStatus==0) {
@@ -320,7 +313,8 @@ public class DDR extends Minigame {
                     if ((allNotes.get(i-1).col==4) && (Game.getInstance().getScreenHeight()-240 <= allNotes.get(i-1).y) && (allNotes.get(i-1).y <= Game.getInstance().getScreenHeight()-100)){
                         allNotes.remove(i-1);
                         count++;
-                        arrowStatus=4;
+                        rightArrow.setStatus("ON");
+                        arrowStatus=1;
                     }
                 }
                 if (arrowStatus==0) {
