@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import teachtheteensy.music.MusicHandle;
+import teachtheteensy.music.MusicThread;
 import teachtheteensy.screens.PrototypeScreen;
 import teachtheteensy.screens.TitleScreen;
 
@@ -17,6 +19,11 @@ public class Game {
      * Permet de ne pas avoir à balader un objet Game partout
      */
     private static Game INSTANCE;
+
+    /**
+     * Thread qui joue la musique
+     */
+    private final MusicThread musicPlayer;
 
     private double mouseX;
     private double mouseY;
@@ -35,6 +42,8 @@ public class Game {
         INSTANCE = this;
 
         currentScreen = new TitleScreen();
+        musicPlayer = new MusicThread();
+        musicPlayer.start();
     }
 
     /**
@@ -137,6 +146,24 @@ public class Game {
     }
 
     public void showScreen(Screen screen) {
+        if(currentScreen != null) {
+            currentScreen.close(screen);
+        }
+        if(currentScreen != screen) {
+            screen.open(currentScreen);
+        }
         currentScreen = screen;
+    }
+
+    public void playMusic(MusicHandle music) {
+        musicPlayer.play(music);
+    }
+
+    public void stopMusic() {
+        musicPlayer.stopMusic();
+    }
+
+    public boolean isMusicPlaying(MusicHandle handle) {
+        return musicPlayer.getCurrentMusic() == handle;
     }
 }

@@ -25,6 +25,8 @@ public class CodeVerifier {
     public static VerificationResult verifyLine(String line) {
         if(line.isEmpty())
             return VerificationResult.OK;
+        if(line.startsWith("#")) // commentaires
+            return VerificationResult.OK;
         Map<String, Instruction> instructionTable = PseudoAssemblyEngine.getInstructionTable();
         String[] parts = line.split(" ");
         String command = parts[0];

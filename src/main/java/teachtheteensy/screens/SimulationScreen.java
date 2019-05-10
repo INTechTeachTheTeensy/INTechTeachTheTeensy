@@ -68,6 +68,9 @@ public class SimulationScreen extends Screen {
             }
         };
 
+        if(netlist.getNetlistComponents().size() < 2)
+            return null; // on a pas assez de composants pour faire une simulation
+
         System.out.println("!! "+netlist.toSpiceString());
         // initialisation de l'analyseur
         TransientConfig transientConfig = new TransientConfig(".02", ".0002"); // TODO: changer les valeurs?
@@ -78,8 +81,14 @@ public class SimulationScreen extends Screen {
     @Override
     public void tick() {
         components.forEach(ElectricalComponent::step);
-        SimulationResult result = analyser.stepFor(dt, stepTime);
-        components.forEach(c -> c.interpretResult(nodeMap, result));
+        try {
+            if(analyser != null) {
+                SimulationResult result = analyser.stepFor(dt, stepTime);
+                components.forEach(c -> c.interpretResult(nodeMap, result));
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO: gérer les cas d'erreur
+        }
     }
 
     @Override

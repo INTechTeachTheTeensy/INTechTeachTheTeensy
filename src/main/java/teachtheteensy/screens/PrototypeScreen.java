@@ -7,8 +7,15 @@ import teachtheteensy.Game;
 import teachtheteensy.Screen;
 import teachtheteensy.electricalcomponents.ElectricalComponent;
 import teachtheteensy.math.MutableRectangle;
+import teachtheteensy.music.MusicHandle;
 
 public class PrototypeScreen extends Screen {
+
+    private static final MusicHandle[] BACKGROUND_MUSICS = new MusicHandle[]{
+        Assets.getMusic("Inspired"),
+        Assets.getMusic("Chill Wave"),
+        Assets.getMusic("Windswept"),
+    };
 
     private final MutableRectangle playButton;
     private Drawer drawer = new Drawer(this);
@@ -34,6 +41,31 @@ public class PrototypeScreen extends Screen {
         if(heldComponent != null) {
             heldComponent.render(ctx);
         }
+    }
+
+    @Override
+    public void open(Screen previousScreen) {
+        // on vérifie qu'une des musiques n'est pas déjà en train de jouer
+        for (MusicHandle music : BACKGROUND_MUSICS) {
+            if(Game.getInstance().isMusicPlaying(music)) {
+                return;
+            }
+        }
+        playRandomMusic();
+    }
+
+    private void playRandomMusic() {
+        // choisi une musique au hasard
+        int rand = (int) (Math.random()*(BACKGROUND_MUSICS.length-1));
+        Game.getInstance().playMusic(BACKGROUND_MUSICS[rand]);
+    }
+
+    @Override
+    public void close(Screen newScreen) {
+        if(newScreen instanceof PrototypeScreen || newScreen instanceof SimulationScreen) {
+            return; // on n'arrête pas la musique si on lance la simulation
+        }
+        Game.getInstance().stopMusic();
     }
 
     @Override

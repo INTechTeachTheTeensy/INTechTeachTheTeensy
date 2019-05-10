@@ -162,8 +162,13 @@ public class PseudoAssemblyEngine {
                 return false;
             }
 
-            while(lines[programCounter].isEmpty()) {
+            while(lines[programCounter].isEmpty() || lines[programCounter].startsWith("#")) {
                 programCounter++;
+                if(programCounter >= lines.length) {
+                    state = State.CRASHED;
+                    errorMessage = "On exécute du code en dehors de la mémoire réservée!";
+                    return false;
+                }
             }
             String line = lines[programCounter];
             CodeVerifier.VerificationResult result = CodeVerifier.verifyLine(line);

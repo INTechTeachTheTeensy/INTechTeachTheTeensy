@@ -22,4 +22,16 @@ public abstract class Screen implements Renderable  {
     public void keyReleased(KeyEvent event) {}
 
     public void keyTyped(KeyEvent event) {}
+
+    /**
+     * Appelé quand on ferme ce menu, permet de faire des transitions, sauvegarder des changements, couper une musique etc.
+     * @param newScreen
+     */
+    public void close(Screen newScreen) {}
+
+    /**
+     * Appelé quand on ouvre ce menu, permet de faire des transitions, sauvegarder des changements, lancer une musique etc.
+     * @param previousScreen
+     */
+    public void open(Screen previousScreen) {}
 }

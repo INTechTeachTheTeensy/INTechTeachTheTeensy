@@ -29,6 +29,8 @@ public class Teensy extends ElectricalComponent {
 
     private static final Color HOVERED_BACKGROUND_COLOR = new Color(0.5, 0.5, 0.5, 0.5);
     private static final Color HOVERED_TEXT_COLOR = new Color(1, 1, 1, 0.5);
+    private static final Color COMMENT_COLOR = new Color(0.8, 0.8, 0.8, 1.0);
+    private static final Color HOVERED_COMMENT_COLOR = new Color(0.8, 0.8, 0.8, 0.5);
 
     /**
      * Liste des componsants JSpice correspondants aux pins
@@ -137,9 +139,11 @@ public class Teensy extends ElectricalComponent {
         if(focused || codeArea.isPointIn(Game.getInstance().getMouseX(), Game.getInstance().getMouseY())) {
             Color backgroundColor = Color.GRAY;
             Color textColor = Color.WHITE;
+            Color commentColor = COMMENT_COLOR;
             if( ! focused) { // on fait que survoler le composant
                 backgroundColor = HOVERED_BACKGROUND_COLOR;
                 textColor = HOVERED_TEXT_COLOR;
+                commentColor = HOVERED_COMMENT_COLOR;
             }
             ctx.setFill(backgroundColor);
             ctx.fillRect(codeArea.getX(), codeArea.getY(), codeArea.getWidth(), codeArea.getHeight());
@@ -150,6 +154,9 @@ public class Teensy extends ElectricalComponent {
             for (int i = 0; i < codeLines.size(); i++) {
                 ctx.setFill(textColor);
                 String line = codeLines.get(i);
+                if(line.startsWith("#")) {
+                    ctx.setFill(commentColor);
+                }
                 ctx.fillText(line, codeArea.getX(), codeArea.getY()+fontHeight+codeLineOffset);
 
                 if(verifications.size() > i) {

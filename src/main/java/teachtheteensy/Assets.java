@@ -2,6 +2,7 @@ package teachtheteensy;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
+import teachtheteensy.music.MusicHandle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,11 @@ public final class Assets {
      * contient les polices déjà chargées
      */
     private static Map<Double, Font> loadedSizes = new HashMap<>();
+
+    /**
+     * contient les musiques déjà chargées
+     */
+    private static Map<String, MusicHandle> loadedMusics = new HashMap<>();
 
     /**
      * Renvoie l'image dans /assets/ correspondant au nom donné. Cette méthode fait aussi en sorte de ne pas charger deux fois la même image
@@ -38,5 +44,18 @@ public final class Assets {
             return font;
         }
         return loadedSizes.get(size);
+    }
+
+    public static MusicHandle getMusic(String name) {
+        return getMusic(name, "mp3");
+    }
+
+    public static MusicHandle getMusic(String name, String extension) {
+        if( ! loadedMusics.containsKey(name)) {
+            MusicHandle handle = new MusicHandle(name, extension);
+            loadedMusics.put(name, handle);
+            return handle;
+        }
+        return loadedMusics.get(name);
     }
 }

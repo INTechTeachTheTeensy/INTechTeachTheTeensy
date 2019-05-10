@@ -43,6 +43,19 @@ dependencies {
     compile "org.slf4j:slf4j-simple:1.7.25"
 
     compile 'org.reflections:reflections:0.9.11'
+    
+    // Codecs audio
+    
+    // mp3
+    compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5.4'
+    compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
+
+    // ogg
+    compile group: 'org.jcraft', name: 'jorbis', version: '0.0.17'
+    compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version: '0.3.7.4'
+    compile group: 'com.googlecode.soundlibs', name: 'vorbisspi', version: '1.0.3.3'
+
+    compile group: 'com.jcraft', name: 'jogg', version: '0.0.7'
 
     testCompile "junit:junit:4.12"
 }
