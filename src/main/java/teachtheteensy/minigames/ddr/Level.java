@@ -32,6 +32,7 @@ public class Level {
         backgrounds.add(background3);
         spaceBarLevel=false;
     }
+
     public void getLevel1() {
         num=1;
         notesSpeed=10;
