@@ -12,10 +12,12 @@ public class Arrow {
     private int col;
     Image imageArrow;
     Image imageActivatedArrow;
+    private String status;
     private int counter;
 
     public Arrow(int col) {
         this.col=col;
+        this.status="OFF";
         this.counter=4;
         Image leftArrow = Assets.getImage("ddr/leftArrow.png");
         Image lightLeftArrow = Assets.getImage("ddr/lightLeftArrow.png");
@@ -51,12 +53,21 @@ public class Arrow {
     }
 
 
-    public void render(GraphicsContext ctx, String status) {
-        if (status.equals("LIGHT")) {
+    public void render(GraphicsContext ctx) {
+        if (status.equals("ON")) {
             ctx.drawImage(imageActivatedArrow, Game.getInstance().getScreenWidth() * 2 / 3 + col*110, Game.getInstance().getScreenHeight() - 150, 100, 100);
+            counter--;
         } else {
             ctx.drawImage(imageArrow, Game.getInstance().getScreenWidth() * 2 / 3 + col*110, Game.getInstance().getScreenHeight() - 150, 100, 100);
         }
+    }
+
+    public void setStatus(String state) {
+        status=state;
+    }
+
+    public String getStatus() {
+        return (status);
     }
 
     public int getCounter() {

@@ -35,7 +35,7 @@ public class Level {
     public void getLevel1() {
         num=1;
         notesSpeed=10;
-        time=200;
+        time=100;
         Image background = Assets.getImage("ddr/Backgroundlvl1.jpg");
         backgrounds.add(background);
         spaceBarLevel=false;
