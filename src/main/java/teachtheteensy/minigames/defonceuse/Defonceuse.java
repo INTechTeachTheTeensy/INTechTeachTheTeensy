@@ -12,7 +12,9 @@ import java.util.List;
 public class Defonceuse extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     public Defonceuse () {
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 500, 500, Math.round(200*1.5f), Math.round(280*1.5f),"droite"));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 400, 400));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 1000, 400));
+        //listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 400, 400));
 
     }
 
@@ -20,6 +22,7 @@ public class Defonceuse extends Minigame {
     public void tick() {
         for (Taupe taupe: listTaupe) {
             taupe.tick();
+
         }
 
     }
@@ -36,9 +39,18 @@ public class Defonceuse extends Minigame {
     }
     @Override
     public void leftClick(double sceneX, double sceneY){
-        for (Taupe taupe:listTaupe) {
+        System.out.println(sceneX);
+        System.out.println(sceneY);
+        for (Taupe taupe:listTaupe)
+        {
+            System.out.println(taupe.isPositionInTaupe(sceneX,sceneY));
+
             if(taupe.isPositionInTaupe(sceneX,sceneY)){
                 taupe.rotateTete =true;
+                return;
+            }
+            else {
+                taupe.rotateTete=false;
                 return;
             }
 
