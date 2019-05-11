@@ -22,6 +22,8 @@ public class Taupe {
     float angleRotation = 0;
     boolean droite=true;
     int tick;
+    double i;
+    boolean go;
 
 
     public Taupe (Image imageTete, int x, int y){
@@ -30,11 +32,13 @@ public class Taupe {
     }
 
     public void render (GraphicsContext ctx){
-        ctx.strokeRect(rectangle.getX(),rectangle.getY(),rectangle.getWidth(), rectangle.getHeight());
+        i=Math.random()*100;
+        //ctx.strokeRect(rectangle.getX(),rectangle.getY(),rectangle.getWidth(), rectangle.getHeight());
         //ctx.drawImage(silhouette, rectangle.getX()-rectangle.getWidth()*0.25,rectangle.getY()-rectangle.getHeight()*0.2,rectangle.getWidth()*1.5, rectangle.getHeight()*1.5);
-        turnTete(ctx,angleRotation);
-        cacheToiTaupe(ctx);
-
+        if (i<=10){
+            turnTete(ctx,angleRotation);
+            cacheToiTaupe(ctx);
+        }
     }
 
 
@@ -47,16 +51,18 @@ public class Taupe {
     }
 
     public void turnTete(GraphicsContext ctx, float angle){
-        ctx.save();
-        //ctx.translate(rectangle.getX()+rectangle.getWidth()/4+imageTete.getWidth()/2,rectangle.getY()-rectangle.getHeight()/6+imageTete.getHeight()/2);
-        ctx.translate(rectangle.getX()+imageTete.getWidth()/2,rectangle.getY()+imageTete.getHeight()/2);
-        ctx.rotate(angle);
-        ctx.drawImage(imageTete, -imageTete.getWidth()/2,-imageTete.getHeight()*0.7,imageTete.getWidth(),imageTete.getHeight());
-        ctx.restore();
+
+                ctx.save();
+                //ctx.translate(rectangle.getX()+rectangle.getWidth()/4+imageTete.getWidth()/2,rectangle.getY()-rectangle.getHeight()/6+imageTete.getHeight()/2);
+                ctx.translate(rectangle.getX() + imageTete.getWidth() / 2, rectangle.getY() + imageTete.getHeight() / 2);
+                ctx.rotate(angle);
+                ctx.drawImage(imageTete, -imageTete.getWidth() / 2, -imageTete.getHeight() * 0.7, imageTete.getWidth(), imageTete.getHeight());
+                ctx.restore();
+
     }
 
     public void tick(){
-        if (rotateTete && tick<40)
+        if (rotateTete && tick<20)
         {
             if (angleRotation<angleTete && droite==true){
                 angleRotation=angleRotation+2;

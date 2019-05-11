@@ -12,9 +12,13 @@ import java.util.List;
 public class Defonceuse extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     public Defonceuse () {
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 400, 400));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 1000, 400));
-        //listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 400, 400));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 200, 400));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 1500, 400));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 850, 400));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 525, 100));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 525, 700));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 100));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 700));
 
     }
 
@@ -33,7 +37,6 @@ public class Defonceuse extends Minigame {
         for (Taupe taupe:listTaupe)
         {
             taupe.render(ctx);
-
         };
 
     }
@@ -41,17 +44,15 @@ public class Defonceuse extends Minigame {
     public void leftClick(double sceneX, double sceneY){
         System.out.println(sceneX);
         System.out.println(sceneY);
+        System.out.println(listTaupe.size());
         for (Taupe taupe:listTaupe)
         {
             System.out.println(taupe.isPositionInTaupe(sceneX,sceneY));
-
             if(taupe.isPositionInTaupe(sceneX,sceneY)){
                 taupe.rotateTete =true;
-                return;
             }
             else {
                 taupe.rotateTete=false;
-                return;
             }
 
         }
