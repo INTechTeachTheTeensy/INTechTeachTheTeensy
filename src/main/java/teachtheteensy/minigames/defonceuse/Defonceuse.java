@@ -33,7 +33,7 @@ public class Defonceuse extends Minigame {
             System.out.println(taupe.tac);
 
         }
-
+        success();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Defonceuse extends Minigame {
             taupe.render(ctx);
         };
         if (success){
-            ctx.drawImage(Assets.getImage("issertName"),0,0,1920,1080);
+            ctx.drawImage(Assets.getImage("defonceuse/victory.png"),0,0,1920,1080);
         }
 
     }
@@ -63,10 +63,11 @@ public class Defonceuse extends Minigame {
     public void success(){
         for (Taupe taupe:listTaupe)
         {
-            if(taupe.cacheTaupe){
-                success=true;
+            if(!taupe.cacheTaupe){
+                return;
             }
 
         }
+        success=true;
     }
 }
