@@ -23,7 +23,7 @@ public class Taupe {
     boolean droite=true;
     int tick;
     double i;
-    boolean go;
+    int tac;
 
 
     public Taupe (Image imageTete, int x, int y){
@@ -32,13 +32,10 @@ public class Taupe {
     }
 
     public void render (GraphicsContext ctx){
-        i=Math.random()*100;
         //ctx.strokeRect(rectangle.getX(),rectangle.getY(),rectangle.getWidth(), rectangle.getHeight());
         //ctx.drawImage(silhouette, rectangle.getX()-rectangle.getWidth()*0.25,rectangle.getY()-rectangle.getHeight()*0.2,rectangle.getWidth()*1.5, rectangle.getHeight()*1.5);
-        if (i<=10){
-            turnTete(ctx,angleRotation);
-            cacheToiTaupe(ctx);
-        }
+        turnTete(ctx,angleRotation);
+        cacheToiTaupe(ctx);
     }
 
 
@@ -51,17 +48,16 @@ public class Taupe {
     }
 
     public void turnTete(GraphicsContext ctx, float angle){
-
                 ctx.save();
                 //ctx.translate(rectangle.getX()+rectangle.getWidth()/4+imageTete.getWidth()/2,rectangle.getY()-rectangle.getHeight()/6+imageTete.getHeight()/2);
                 ctx.translate(rectangle.getX() + imageTete.getWidth() / 2, rectangle.getY() + imageTete.getHeight() / 2);
                 ctx.rotate(angle);
                 ctx.drawImage(imageTete, -imageTete.getWidth() / 2, -imageTete.getHeight() * 0.7, imageTete.getWidth(), imageTete.getHeight());
                 ctx.restore();
-
     }
 
     public void tick(){
+        tick= tick +1;
         if (rotateTete && tick<20)
         {
             if (angleRotation<angleTete && droite==true){
@@ -73,14 +69,24 @@ public class Taupe {
             if (angleRotation>-angleTete && droite==false){
                 angleRotation=angleRotation-2;
             }
-            tick= tick +1;
+
         }
-        if(rotateTete==false){
+        if(rotateTete && tick>=20 && !cacheTaupe){
+            cacheTaupe=true;
+            i=Math.random()*100;
+            tac = tick + (int)i+50;
+        }
+        if(!rotateTete){
             tick=0;
         }
-        if(rotateTete && tick>=20){
-            cacheTaupe=true;
+        if (tick>=tac && cacheTaupe){
+            cacheTaupe=false;
+            rotateTete=false;
+            tick=0;
+            angleRotation=0;
+            tac=0;
         }
+
 
     }
 

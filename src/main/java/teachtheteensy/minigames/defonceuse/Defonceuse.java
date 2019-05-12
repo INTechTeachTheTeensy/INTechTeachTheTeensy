@@ -21,11 +21,16 @@ public class Defonceuse extends Minigame {
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 700));
 
     }
+    boolean success;
 
     @Override
     public void tick() {
         for (Taupe taupe: listTaupe) {
             taupe.tick();
+            System.out.println(taupe.cacheTaupe);
+            System.out.println(taupe.i);
+            System.out.println(taupe.tick);
+            System.out.println(taupe.tac);
 
         }
 
@@ -38,24 +43,30 @@ public class Defonceuse extends Minigame {
         {
             taupe.render(ctx);
         };
+        if (success){
+            ctx.drawImage(Assets.getImage("issertName"),0,0,1920,1080);
+        }
 
     }
     @Override
     public void leftClick(double sceneX, double sceneY){
-        System.out.println(sceneX);
-        System.out.println(sceneY);
-        System.out.println(listTaupe.size());
+
         for (Taupe taupe:listTaupe)
         {
-            System.out.println(taupe.isPositionInTaupe(sceneX,sceneY));
             if(taupe.isPositionInTaupe(sceneX,sceneY)){
                 taupe.rotateTete =true;
-            }
-            else {
-                taupe.rotateTete=false;
             }
 
         }
 
+    }
+    public void success(){
+        for (Taupe taupe:listTaupe)
+        {
+            if(taupe.cacheTaupe){
+                success=true;
+            }
+
+        }
     }
 }
