@@ -6,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 
-public class Level {
+public class Level extends Script {
     private int num;
-    private final List<Image> backgrounds;
     private int notesSpeed;
     private int time;
     private boolean spaceBarLevel;
 
     public Level(int num, int speed, int time) {
         this.num = num;
-        backgrounds = new ArrayList<>();
         this.notesSpeed = speed;
         this.time=time;
     }
@@ -23,7 +21,7 @@ public class Level {
     public void getLevelIntro() {
         num=0;
         notesSpeed=10;
-        time=25;
+        time=28;
         Image background1 = Assets.getImage("ddr/Background.png");
         Image background2 = Assets.getImage("ddr/BackgroundAllo.png");
         Image background3 = Assets.getImage("ddr/BackgroundJavaS.jpg");
@@ -36,7 +34,7 @@ public class Level {
     public void getLevel1() {
         num=1;
         notesSpeed=10;
-        time=100;
+        time=103;
         Image background = Assets.getImage("ddr/Backgroundlvl1.jpg");
         backgrounds.add(background);
         spaceBarLevel=false;
@@ -50,10 +48,6 @@ public class Level {
 
     public int getNotesSpeed() {
         return notesSpeed;
-    }
-
-    public List<Image> getBackgrounds() {
-        return backgrounds;
     }
 
     public int getTime() {

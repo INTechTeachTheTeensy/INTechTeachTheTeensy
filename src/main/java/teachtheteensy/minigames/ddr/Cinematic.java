@@ -8,13 +8,13 @@ import teachtheteensy.Game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cinematic{
-    private final List<Image> backgrounds;
+public class Cinematic extends Script{
     private String text;
+    private int timer;
 
     public Cinematic (String text, Image... images) {
         this.text=text;
-        backgrounds = new ArrayList<>();
+        timer=25;
         for(Image image:images) {
             backgrounds.add(image);
         }
@@ -32,9 +32,16 @@ public class Cinematic{
     }
 
     public void lauchCinematic(GraphicsContext ctx, Cinematic cinematic) {
-        for (int i=0; i<=(cinematic.backgrounds.size()-1); i++) {
+        int time = timer;
+        int i = 0;
+        if (i<(cinematic.backgrounds.size()-1)) {
+            time--;
             Image currBackground = cinematic.backgrounds.get(i);
             ctx.drawImage(currBackground, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+            if (time == 0) {
+                i++;
+                time=timer;
+            }
         }
     }
 
