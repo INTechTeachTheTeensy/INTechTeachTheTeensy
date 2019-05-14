@@ -14,6 +14,7 @@ public class Defonceuse extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     boolean success;
     boolean gameOver;
+    boolean gameOverBis;
     int i;                                                 // on stocke la place de la tête associée à la bulle
     Teo teo = new Teo();
     private List<Bulle> listBulle= new ArrayList<Bulle>();
@@ -66,10 +67,10 @@ public class Defonceuse extends Minigame {
         {
             taupe.render(ctx);
                 for (Bulle bulle:listBulle) {
-                    //if (!taupe.cacheTaupe) {
+                     if(bulle.i==listTaupe.indexOf(taupe) && !taupe.cacheTaupe) {
                        bulle.render(ctx);
-                      //  break;
-                    //}
+                       break;
+                        }
                 }
                 for (Compliment compliment:listCompliment){
                     compliment.render(ctx);
@@ -82,6 +83,9 @@ public class Defonceuse extends Minigame {
         }
         if(gameOver){
             ctx.drawImage(Assets.getImage("defonceuse/game_over.png"),0,0,1920,1080);
+        }
+        if(gameOverBis){
+            ctx.drawImage(Assets.getImage("defonceuse/game_over2.png"),0,0,1920,1080);
         }
 
 
@@ -98,7 +102,7 @@ public class Defonceuse extends Minigame {
                 for (Compliment compliment:listCompliment)
                 {
                     if (i==compliment.i){
-                        gameOver=true;
+                        gameOverBis=true;
                     }
                 }
             }

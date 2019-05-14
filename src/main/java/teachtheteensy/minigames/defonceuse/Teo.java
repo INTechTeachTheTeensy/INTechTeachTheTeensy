@@ -28,7 +28,7 @@ public class Teo {
 
     public void tick(){
         tick=tick+1;
-        if (tick>=100){
+        if (tick>=500){
             i=(int)(Math.random()*6);
             rectangle.setX(positionTeo[i][0]);
             rectangle.setY(positionTeo[i][1]);

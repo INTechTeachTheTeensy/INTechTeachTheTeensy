@@ -17,7 +17,7 @@ public class Compliment {
 
     public Compliment (Image imageCompliment){
         this.imageCompliment =imageCompliment;
-        this.rectangle=new MutableRectangle(-1000, -1000,960/2,510/2);
+        this.rectangle=new MutableRectangle(-100000, -100000,960/2,510/2);
     }
 
     public void render (GraphicsContext ctx){
@@ -28,7 +28,7 @@ public class Compliment {
 
     public void tick(){
         tick=tick+1;
-        if (tick>=200){
+        if (tick>=1000){
             i=(int)(Math.random()*6);
             rectangle.setX(positionBulle[i][0]);
             rectangle.setY(positionBulle[i][1]);
