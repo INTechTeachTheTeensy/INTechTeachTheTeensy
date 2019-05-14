@@ -14,8 +14,11 @@ public class Defonceuse extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     boolean success;
     boolean gameOver;
+    int i;                                                 // on stocke la place de la tête associée à la bulle
     Teo teo = new Teo();
     private List<Bulle> listBulle= new ArrayList<Bulle>();
+    private List<Compliment> listCompliment= new ArrayList<Compliment>();
+
     public Defonceuse () {
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 200, 400));
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 1500, 400));
@@ -28,6 +31,9 @@ public class Defonceuse extends Minigame {
         listBulle.add(new Bulle(Assets.getImage("defonceuse/datasheet.png")));
         listBulle.add(new Bulle(Assets.getImage("defonceuse/infos.png")));
         listBulle.add(new Bulle(Assets.getImage("defonceuse/personnellement.png")));
+        listCompliment.add(new Compliment(Assets.getImage("defonceuse/beau_travail.png")));
+        listCompliment.add(new Compliment(Assets.getImage("defonceuse/Bien_joué.png")));
+        listCompliment.add(new Compliment(Assets.getImage("defonceuse/bravo.png")));
 
     }
 
@@ -45,6 +51,9 @@ public class Defonceuse extends Minigame {
         for (Bulle bulle: listBulle) {
             bulle.tick();
         }
+        for (Compliment compliment: listCompliment){
+            compliment.tick();
+        }
         teo.tick();
 
     }
@@ -61,6 +70,9 @@ public class Defonceuse extends Minigame {
                        bulle.render(ctx);
                       //  break;
                     //}
+                }
+                for (Compliment compliment:listCompliment){
+                    compliment.render(ctx);
                 }
         };
         teo.render(ctx);
@@ -82,6 +94,13 @@ public class Defonceuse extends Minigame {
         {
             if(taupe.isPositionInTaupe(sceneX,sceneY)){
                 taupe.rotateTete =true;
+                i=listTaupe.indexOf(taupe);
+                for (Compliment compliment:listCompliment)
+                {
+                    if (i==compliment.i){
+                        gameOver=true;
+                    }
+                }
             }
 
         }
