@@ -9,14 +9,59 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import teachtheteensy.Assets;
 import teachtheteensy.Game;
 
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Classe contenant l'Application JavaFX. Initialises la fenêtre et le jeu et laisse ce dernier prendre le contrôle
  */
 public class GameApp extends Application {
+
+    @Override
+    public void init() throws Exception {
+        // Prototypage
+        Assets.getImage("components/led_eteinte.png");
+        Assets.getImage("components/led_rouge.png");
+        Assets.getImage("components/resistor.PNG");
+        Assets.getImage("components/teensy.png");
+        Assets.getMusic("Chill Wave");
+        Assets.getMusic("Deliberate Thought");
+        Assets.getMusic("Inspired");
+        Assets.getMusic("Unwritten Return");
+        Assets.getMusic("Windswept");
+
+        // DDR
+        Assets.getImage("ddr/Background.png");
+        Assets.getImage("ddr/BackgroundAllo.png");
+        Assets.getImage("ddr/BackgroundJavaS.jpg");
+        Assets.getImage("ddr/Backgroundlvl1.jpg");
+        Assets.getImage("ddr/barreLp.png");
+        Assets.getImage("ddr/cadreBarreLp.png");
+        Assets.getImage("ddr/leftArrow.png");
+        Assets.getImage("ddr/lightLeftArrow.png");
+        Assets.getImage("ddr/note.png");
+        Assets.getImage("ddr/noteMissed.png");
+        Assets.getMusic("ddr/sheep.wav");
+
+        // defonceuse
+        Assets.getImage("defonceuse/rose.png");
+        Assets.getImage("defonceuse/silhouette.png");
+        Assets.getImage("defonceuse/victorPatate.png");
+        Assets.getImage("defonceuse/victory.png");
+        Assets.getImage("defonceuse/william.png");
+
+
+        Assets.getImage("elements/drawer.png");
+        Assets.getImage("screens/proto_background.png");
+        Assets.getImage("screens/simulation_background.png");
+        Assets.getImage("screens/title.png");
+        Assets.getImage("ui/pause_button.png");
+        Assets.getImage("ui/play_button.png");
+//        Thread.sleep(5000);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,6 +94,7 @@ public class GameApp extends Application {
                 }
                 game.render(ctx);
             }
+
         };
 
         // events utiles pour le jeu
@@ -63,5 +109,6 @@ public class GameApp extends Application {
 
         timer.start();
         stage.show();
+        LoadingWindow.close();
     }
 }

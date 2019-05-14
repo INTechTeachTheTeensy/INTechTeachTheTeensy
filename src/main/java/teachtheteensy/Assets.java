@@ -31,6 +31,7 @@ public final class Assets {
      */
     public static Image getImage(String name) {
         if( ! loadedImages.containsKey(name)) {
+            System.out.println("[Assets] Loading image "+name);
             Image img = new Image("/"+name);
             loadedImages.put(name, img);
         }

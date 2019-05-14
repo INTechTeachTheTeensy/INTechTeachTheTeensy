@@ -1,6 +1,6 @@
 package teachtheteensy.boot;
 
-import javafx.application.Application;
+import com.sun.javafx.application.LauncherImpl;
 
 /**
  * Classe de bootstrap du jeu: lance l'appli JavaFX correspondante
@@ -8,6 +8,6 @@ import javafx.application.Application;
 public class Bootstrap {
 
     public static void main(String[] args) {
-        Application.launch(GameApp.class);
+        LauncherImpl.launchApplication(GameApp.class, LoadingWindow.class, args);
     }
 }
