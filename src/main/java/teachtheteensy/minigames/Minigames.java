@@ -1,5 +1,7 @@
 package teachtheteensy.minigames;
 
+import teachtheteensy.minigames.runningChase.RunningChase;
+
 public enum Minigames {
 
     SNAKE(Snake.class),// mini-jeu example
