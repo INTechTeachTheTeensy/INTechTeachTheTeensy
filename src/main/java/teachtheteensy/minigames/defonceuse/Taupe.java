@@ -74,7 +74,7 @@ public class Taupe {
         if(rotateTete && tick>=20 && !cacheTaupe){
             cacheTaupe=true;
             i=Math.random()*100;
-            tac = tick + (int)i+1000;
+            tac = tick + (int)i+70;
         }
         if(!rotateTete){
             tick=0;
