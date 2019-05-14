@@ -1,11 +1,6 @@
 package teachtheteensy.boot;
 
-import com.sun.javafx.tk.Toolkit;
-import com.sun.scenario.animation.shared.PulseReceiver;
-import com.sun.scenario.animation.shared.TimerReceiver;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,7 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+import static javafx.stage.StageStyle.TRANSPARENT;
 
 public class LoadingWindow extends Preloader {
 
@@ -36,21 +32,26 @@ public class LoadingWindow extends Preloader {
         Image gear = new Image(getClass().getResourceAsStream("/loading/gear.png"));
         Image gearBlack = new Image(getClass().getResourceAsStream("/loading/gear_black.png"));
 
+        Group group = new Group();
         int margin = 50;
         int width = (int) intech.getWidth() + margin*2;
         int height = (int) intech.getHeight() + margin*2;
         Canvas canvas = new Canvas(width, height);
-        Group group = new Group();
+        group.setStyle("-fx-background-color: transparent ;");
+        canvas.setStyle("-fx-background-color: transparent ;");
         group.getChildren().add(canvas);
         Scene scene = new Scene(group, Color.TRANSPARENT);
+        scene.getRoot().setStyle("-fx-background-color: transparent");
+
+        scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setOpacity(0.0);
+
         stage.centerOnScreen();
 
-        GraphicsContext ctx = canvas.getGraphicsContext2D();
+        stage.initStyle(TRANSPARENT);
 
-        stage.initStyle(StageStyle.TRANSPARENT);
+        GraphicsContext ctx = canvas.getGraphicsContext2D();
 
         AnimationTimer timer = new AnimationTimer() {
             private long lastUpdate = 0;
@@ -60,6 +61,8 @@ public class LoadingWindow extends Preloader {
                 if(now - lastUpdate >= 16_000_000) { // 16ms
                     newFrame();
                     lastUpdate = now;
+
+                    ctx.setFill(Color.TRANSPARENT);
 
                     ctx.clearRect(0,0,width,height);
                     ctx.save();
@@ -81,7 +84,6 @@ public class LoadingWindow extends Preloader {
 
                     ctx.restore();
                 }
-                System.out.println("handle "+now);
             }
 
         };

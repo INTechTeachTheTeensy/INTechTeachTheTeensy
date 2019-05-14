@@ -32,6 +32,12 @@ public class GameApp extends Application {
         Assets.getMusic("Inspired");
         Assets.getMusic("Unwritten Return");
         Assets.getMusic("Windswept");
+        Assets.getImage("elements/drawer.png");
+        Assets.getImage("screens/proto_background.png");
+        Assets.getImage("screens/simulation_background.png");
+        Assets.getImage("screens/title.png");
+        Assets.getImage("ui/pause_button.png");
+        Assets.getImage("ui/play_button.png");
 
         // DDR
         Assets.getImage("ddr/Background.png");
@@ -46,7 +52,7 @@ public class GameApp extends Application {
         Assets.getImage("ddr/noteMissed.png");
         Assets.getMusic("ddr/sheep.wav");
 
-        // defonceuse
+        // taupes
         Assets.getImage("defonceuse/rose.png");
         Assets.getImage("defonceuse/silhouette.png");
         Assets.getImage("defonceuse/victorPatate.png");
@@ -54,13 +60,7 @@ public class GameApp extends Application {
         Assets.getImage("defonceuse/william.png");
 
 
-        Assets.getImage("elements/drawer.png");
-        Assets.getImage("screens/proto_background.png");
-        Assets.getImage("screens/simulation_background.png");
-        Assets.getImage("screens/title.png");
-        Assets.getImage("ui/pause_button.png");
-        Assets.getImage("ui/play_button.png");
-//        Thread.sleep(5000);
+        Thread.sleep(5000);
     }
 
     @Override
