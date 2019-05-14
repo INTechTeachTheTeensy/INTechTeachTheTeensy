@@ -13,6 +13,8 @@ import java.util.List;
 public class Defonceuse extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     boolean success;
+    boolean gameOver;
+    Teo teo = new Teo();
     private List<Bulle> listBulle= new ArrayList<Bulle>();
     public Defonceuse () {
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 200, 400));
@@ -20,7 +22,7 @@ public class Defonceuse extends Minigame {
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/ug.png"), 850, 400));
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/remi.png"), 525, 100));
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/lucasdetoure.png"), 525, 700));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/remi.png"), 1175, 100));
+        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 100));
         listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 700));
         listBulle.add(new Bulle(Assets.getImage("defonceuse/bulle_nul.png")));
         listBulle.add(new Bulle(Assets.getImage("defonceuse/datasheet.png")));
@@ -33,18 +35,18 @@ public class Defonceuse extends Minigame {
 
     @Override
     public void tick() {
+
         for (Taupe taupe: listTaupe) {
             taupe.tick();
             System.out.println(taupe.cacheTaupe);
-            System.out.println(taupe.i);
-            System.out.println(taupe.tick);
-            System.out.println(taupe.tac);
 
         }
         success();
         for (Bulle bulle: listBulle) {
             bulle.tick();
         }
+        teo.tick();
+
     }
 
     @Override
@@ -54,14 +56,23 @@ public class Defonceuse extends Minigame {
         for (Taupe taupe:listTaupe)
         {
             taupe.render(ctx);
+                for (Bulle bulle:listBulle) {
+                    //if (!taupe.cacheTaupe) {
+                       bulle.render(ctx);
+                      //  break;
+                    //}
+                }
         };
+        teo.render(ctx);
         if (success){
             ctx.drawImage(Assets.getImage("defonceuse/rose.png"), 0, 0, 1920, 1080);
-            ctx.drawImage(Assets.getImage("defonceuse/victory.png"),0,0,1920,1080);
+            ctx.drawImage(Assets.getImage("defonceuse/success.png"),0,0,1920,1080);
         }
-        for (Bulle bulle:listBulle) {
-            bulle.render(ctx);
+        if(gameOver){
+            ctx.drawImage(Assets.getImage("defonceuse/game_over.png"),0,0,1920,1080);
         }
+
+
 
     }
     @Override
@@ -73,6 +84,9 @@ public class Defonceuse extends Minigame {
                 taupe.rotateTete =true;
             }
 
+        }
+        if(teo.isPositionInTeo(sceneX,sceneY)){
+            gameOver=true;
         }
 
     }
@@ -86,4 +100,5 @@ public class Defonceuse extends Minigame {
         }
         success=true;
     }
+
 }
