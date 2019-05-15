@@ -2,6 +2,7 @@ package teachtheteensy.minigames.runningChase;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
@@ -53,7 +54,8 @@ public class RunningChase extends Minigame {
 
     @Override
     public void render(GraphicsContext ctx) {
-        ctx.drawImage(road, -2*(tick%Game.getInstance().getScreenWidth()), 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+        ctx.setFill(Color.GREEN);
+        ctx.drawImage(road, Game.getInstance().getScreenWidth()-2*((tick+Game.getInstance().getScreenWidth()/2)%Game.getInstance().getScreenWidth()), 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
         ctx.drawImage(road2, Game.getInstance().getScreenWidth()-2*(tick%Game.getInstance().getScreenWidth()), 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
     }
 
