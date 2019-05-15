@@ -70,7 +70,7 @@ public class Defonceuse extends Minigame {
                      if(bulle.i==listTaupe.indexOf(taupe) && !taupe.cacheTaupe) {
                        bulle.render(ctx);
                        break;
-                        }
+                     }
                 }
                 for (Compliment compliment:listCompliment){
                     compliment.render(ctx);
