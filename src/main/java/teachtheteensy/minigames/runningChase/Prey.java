@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import teachtheteensy.Assets;
 
+import java.util.List;
+
 
 public class Prey {
     private int tick=0;
@@ -17,12 +19,24 @@ public class Prey {
     private Image run3 = Assets.getImage("runningChase/playerBrownHairleft3.png");
     private Image run4 = Assets.getImage("runningChase/playerBrownHairleft4.png");
     private boolean touchABox = false;
+    private int sizeOfPlayer=200;
+    private int abscisseOfPlayer=1000;
+    private int numberOfLife=3;
     private int hit=0;
     private int retour=0;
     private int line=2; // 1, 2 ou 3 -->ligne sur laquelle se trouve le joueur
 
 
-    public void tick(int line) {
+    public void tick(int line, List<box> boxOnTheScreen) {
+        int[] placeOfTheBox;
+        for(box Box:boxOnTheScreen){
+            placeOfTheBox = Box.whereIsTheBox();
+            if(placeOfTheBox[1]==line && (placeOfTheBox[0]+placeOfTheBox[2])>=(abscisseOfPlayer-this.retour) && (placeOfTheBox[0])<=(abscisseOfPlayer+sizeOfPlayer-this.retour) && Box.hittable()){
+                touchABox=true;
+                Box.cantBeHit();
+                numberOfLife--;
+            }
+        }
         this.line=line;
         tick++;
         if(touchABox){
@@ -58,7 +72,7 @@ public class Prey {
             else if(this.hit==21){
                 imageInRealTime=boom4;
             }
-            else if(hit==32){
+            else if(hit==28){
                 imageInRealTime=boom4;
                 hit=0;
                 touchABox=false;
@@ -66,9 +80,13 @@ public class Prey {
         }
     }
 
+    public int getNumberOfLife(){
+        return numberOfLife;
+    }
+
     public void render(GraphicsContext ctx) {
 
-        ctx.drawImage(imageInRealTime,1000-this.retour, 80+((line-1)*355), 200,200);
+        ctx.drawImage(imageInRealTime,abscisseOfPlayer-this.retour, 80+((line-1)*355), sizeOfPlayer,sizeOfPlayer);
     }
 
 

@@ -16,6 +16,7 @@ public class life {
         tick++;
     }
 
+
     public void render(GraphicsContext ctx) {
         if(numberOfLife==3){
             ctx.drawImage(lifeUp, 30, 30, 50, 50);
