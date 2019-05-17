@@ -11,6 +11,7 @@ public class box {
     private int abscisse= (int) Math.ceil(Math.random()*3);  //1,2 ou 3 (3 lignes)
     private int ordonnee;
     private int sizeBox = 200;
+    private int tick=0;
 
     public void render (GraphicsContext ctx){
         Image boxInRealTime = imageBox;
@@ -27,4 +28,10 @@ public class box {
         placeOfTheBox[2]=sizeBox;
         return placeOfTheBox;
     }
+    public void tick(){
+        tick++;
+    }
+
+
+
 }
