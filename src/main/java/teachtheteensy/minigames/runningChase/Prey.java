@@ -16,7 +16,7 @@ public class Prey {
     private Image run2 = Assets.getImage("runningChase/playerBrownHairleft2.png");
     private Image run3 = Assets.getImage("runningChase/playerBrownHairleft3.png");
     private Image run4 = Assets.getImage("runningChase/playerBrownHairleft4.png");
-    private boolean touchABox = true;
+    private boolean touchABox = false;
     private int hit=0;
     private int retour=0;
     private int line=2; // 1, 2 ou 3 -->ligne sur laquelle se trouve le joueur
@@ -27,10 +27,10 @@ public class Prey {
         tick++;
         if(touchABox){
             hit++;
+            if(hit%7==0){
+                retour+=75;
+            }
         }
-    }
-
-    public void render(GraphicsContext ctx) {
         if(!touchABox){
             if (this.tick%28<=7){
                 imageInRealTime=run1;
@@ -46,37 +46,28 @@ public class Prey {
             }
         }
         else {
-            if(0<=this.hit && this.hit<7){
+            if(this.hit==0){
                 imageInRealTime=boom1;
-                if(this.hit==0){
-                    retour+=100;
-                }
             }
-            else if(7<=this.hit && this.hit<14){
+            else if(this.hit==7){
                 imageInRealTime=boom2;
-                if(this.hit==7){
-                    retour+=100;
-                }
             }
-            else if(14<=this.hit && this.hit<21){
+            else if(this.hit==14){
                 imageInRealTime=boom3;
-                if(this.hit==14){
-                    retour+=100;
-                }
             }
-            else if(21<=this.hit && this.hit<28){
+            else if(this.hit==21){
                 imageInRealTime=boom4;
-                if(this.hit==21){
-                    retour+=100;
-                }
             }
-            else{
+            else if(hit==32){
                 imageInRealTime=boom4;
                 hit=0;
                 touchABox=false;
-                retour+=100;
             }
         }
+    }
+
+    public void render(GraphicsContext ctx) {
+
         ctx.drawImage(imageInRealTime,1000-this.retour, 80+((line-1)*355), 200,200);
     }
 
