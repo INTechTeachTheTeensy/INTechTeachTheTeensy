@@ -67,11 +67,11 @@ public class Game {
     }
 
     public int getScreenWidth() {
-        return screenWidth;
+        return 1920;
     }
 
     public int getScreenHeight() {
-        return screenHeight;
+        return 1080;
     }
 
     public static Game getInstance() {

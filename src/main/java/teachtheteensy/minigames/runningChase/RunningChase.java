@@ -41,7 +41,7 @@ public class RunningChase extends Minigame {
     public void tick() {
         System.out.println(">> dt: "+(System.currentTimeMillis()-lastUpdate));
         lastUpdate = System.currentTimeMillis();
-        if(tick%((int)(800/speedOfTheGame))==0 && startOfGame){
+        if(tick% (800/speedOfTheGame) ==0 && startOfGame){
             boxOnTheScreen.add(new Box());
         }
 
@@ -75,13 +75,17 @@ public class RunningChase extends Minigame {
         else {
             if (startOfGame) {
                 ctx.setFill(Color.GREEN);
-                for (int k = 0; k < speedOfTheGame; k++) {
-                    ctx.drawImage(road, Game.getInstance().getScreenWidth() - speedOfTheGame * ((tick + k * Game.getInstance().getScreenWidth() / speedOfTheGame) % Game.getInstance().getScreenWidth()), 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());
+                int position = -(speedOfTheGame*tick);
+                if(position+Game.getInstance().getScreenWidth() < 0) {
+                    position += Game.getInstance().getScreenWidth();
+                    position %= Game.getInstance().getScreenWidth();
                 }
+                ctx.drawImage(road, position, 0);
+                ctx.drawImage(road, position+Game.getInstance().getScreenWidth(), 0);
                 player.render(ctx);
                 life.render(ctx);
-                for (teachtheteensy.minigames.runningChase.Box Box : boxOnTheScreen) {
-                    Box.render(ctx);
+                for (Box box : boxOnTheScreen) {
+                    box.render(ctx);
                 }
             } else {
                 ctx.drawImage(ecranTitre, 0, 0, Game.getInstance().getScreenWidth(), Game.getInstance().getScreenHeight());

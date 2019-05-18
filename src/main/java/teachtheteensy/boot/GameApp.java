@@ -2,6 +2,7 @@ package teachtheteensy.boot;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -82,20 +83,47 @@ public class GameApp extends Application {
         Game game = new Game(width, height);
 
         // main loop
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
 
             private long lastUpdate = System.nanoTime();
 
+            private long dt = 16_000_000;
+
             @Override
             public void handle(long now) {
-                while(now - lastUpdate >= 16_000_000) { // 16ms
+                while(now - lastUpdate >= dt) { // 16ms
                     game.tick();
-                    lastUpdate += 16_000_000;
+                    lastUpdate += dt;
+                    game.render(ctx);
                 }
-                game.render(ctx);
             }
 
+        };*/
+        Thread animThread = new Thread("Update thread") {
+            private long lastUpdate = System.nanoTime();
+
+            private long dt = 16_000_000;
+
+            {
+                setDaemon(true);
+                setPriority(Thread.MAX_PRIORITY);
+            }
+
+            @Override
+            public void run() {
+                while(true) {
+                    long now = System.nanoTime();
+                    while(now - lastUpdate >= dt) { // 16ms
+                        game.tick();
+                        lastUpdate += dt;
+                        Platform.runLater(() -> game.render(ctx));
+                    }
+
+                    Thread.yield();
+                }
+            }
         };
+        animThread.start();
 
         // events utiles pour le jeu
         stage.addEventFilter(MouseEvent.MOUSE_CLICKED, game::mouseClick);
@@ -107,7 +135,7 @@ public class GameApp extends Application {
         stage.addEventFilter(KeyEvent.KEY_RELEASED, game::keyReleased);
         stage.addEventFilter(KeyEvent.KEY_TYPED, game::keyTyped);
 
-        timer.start();
+        //timer.start();
         stage.show();
         LoadingWindow.close();
     }
