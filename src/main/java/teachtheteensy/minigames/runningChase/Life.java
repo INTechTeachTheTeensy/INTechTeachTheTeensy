@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import teachtheteensy.Assets;
 
-public class life {
+public class Life {
     private Image lifeUp = Assets.getImage("runningChase/heart.png");
     private Image lifeDown = Assets.getImage("runningChase/brokenHeart.png");
     private int tick=0;

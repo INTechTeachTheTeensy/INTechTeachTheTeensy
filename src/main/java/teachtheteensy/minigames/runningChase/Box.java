@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 
-public class box {
+public class Box {
     Image imageBox = Assets.getImage("runningChase/box.png");
     Image imageBreakBox = Assets.getImage("runningChase/breakBox.png");
     private boolean playerInTheBox;

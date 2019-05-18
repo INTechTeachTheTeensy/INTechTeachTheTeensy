@@ -9,6 +9,7 @@ import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class RunningChase extends Minigame {
     private Image gameOver = Assets.getImage("runningChase/gameover.png");
     private int numberOfLife;
 
-    private List<box> boxOnTheScreen= new ArrayList<>();
+    private List<Box> boxOnTheScreen= new ArrayList<>();
 
     private int tick=0;
 
@@ -32,12 +33,16 @@ public class RunningChase extends Minigame {
     private boolean gameover;
     private Prey player=new Prey();
     private boolean startOfGame=false;
-    private life life=new life();
+    private Life life=new Life();
+
+    private long lastUpdate;
 
     @Override
     public void tick() {
+        System.out.println(">> dt: "+(System.currentTimeMillis()-lastUpdate));
+        lastUpdate = System.currentTimeMillis();
         if(tick%((int)(800/speedOfTheGame))==0 && startOfGame){
-            boxOnTheScreen.add(new box());
+            boxOnTheScreen.add(new Box());
         }
 
         if(tick%1000==0){
@@ -47,10 +52,13 @@ public class RunningChase extends Minigame {
         player.tick(abscissePlayer,boxOnTheScreen);
         numberOfLife=player.getNumberOfLife();
         life.tick(numberOfLife);
-        for(box Box:boxOnTheScreen){
-            Box.tick(speedOfTheGame);
-            if((Box.whereIsTheBox()[0]+Box.whereIsTheBox()[2])<=0){
-                boxOnTheScreen.remove(Box);
+
+        Iterator<Box> iterator = boxOnTheScreen.iterator();
+        while(iterator.hasNext()) {
+            Box box = iterator.next();
+            box.tick(speedOfTheGame);
+            if((box.whereIsTheBox()[0]+box.whereIsTheBox()[2])<=0){
+                iterator.remove();
             }
         }
         if(numberOfLife==0){
@@ -72,7 +80,7 @@ public class RunningChase extends Minigame {
                 }
                 player.render(ctx);
                 life.render(ctx);
-                for (box Box : boxOnTheScreen) {
+                for (teachtheteensy.minigames.runningChase.Box Box : boxOnTheScreen) {
                     Box.render(ctx);
                 }
             } else {

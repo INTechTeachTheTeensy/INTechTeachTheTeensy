@@ -60,7 +60,7 @@ public class GameApp extends Application {
         Assets.getImage("defonceuse/william.png");
 
 
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
     }
 
     @Override
@@ -84,13 +84,13 @@ public class GameApp extends Application {
         // main loop
         AnimationTimer timer = new AnimationTimer() {
 
-            private long lastUpdate = 0;
+            private long lastUpdate = System.nanoTime();
 
             @Override
             public void handle(long now) {
-                if(now - lastUpdate >= 16_000_000) { // 16ms
+                while(now - lastUpdate >= 16_000_000) { // 16ms
                     game.tick();
-                    lastUpdate = now;
+                    lastUpdate += 16_000_000;
                 }
                 game.render(ctx);
             }

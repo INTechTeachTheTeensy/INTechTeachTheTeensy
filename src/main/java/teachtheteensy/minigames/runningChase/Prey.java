@@ -10,6 +10,7 @@ import java.util.List;
 public class Prey {
     private int tick=0;
     private Image imageInRealTime;
+    private int sizeOfPlayer=200;
     private Image boom1 = Assets.getImage("runningChase/playerBrownHairroll1.png");
     private Image boom2 = Assets.getImage("runningChase/playerBrownHairroll2.png");
     private Image boom3 = Assets.getImage("runningChase/playerBrownHairroll3.png");
@@ -19,7 +20,6 @@ public class Prey {
     private Image run3 = Assets.getImage("runningChase/playerBrownHairleft3.png");
     private Image run4 = Assets.getImage("runningChase/playerBrownHairleft4.png");
     private boolean touchABox = false;
-    private int sizeOfPlayer=200;
     private int abscisseOfPlayer=1000;
     private int numberOfLife=3;
     private int hit=0;
@@ -27,13 +27,13 @@ public class Prey {
     private int line=2; // 1, 2 ou 3 -->ligne sur laquelle se trouve le joueur
 
 
-    public void tick(int line, List<box> boxOnTheScreen) {
+    public void tick(int line, List<Box> boxOnTheScreen) {
         int[] placeOfTheBox;
-        for(box Box:boxOnTheScreen){
-            placeOfTheBox = Box.whereIsTheBox();
-            if(placeOfTheBox[1]==line && (placeOfTheBox[0]+placeOfTheBox[2]-20)>=(abscisseOfPlayer-this.retour) && (placeOfTheBox[0]+10)<=(abscisseOfPlayer+sizeOfPlayer-this.retour) && Box.hittable()){
+        for(Box box:boxOnTheScreen){
+            placeOfTheBox = box.whereIsTheBox();
+            if(placeOfTheBox[1]==line && (placeOfTheBox[0]+placeOfTheBox[2]-20)>=(abscisseOfPlayer-this.retour) && (placeOfTheBox[0]+10)<=(abscisseOfPlayer+sizeOfPlayer-this.retour) && box.hittable()){
                 touchABox=true;
-                Box.cantBeHit();
+                box.cantBeHit();
                 numberOfLife--;
             }
         }
@@ -85,7 +85,6 @@ public class Prey {
     }
 
     public void render(GraphicsContext ctx) {
-
         ctx.drawImage(imageInRealTime,abscisseOfPlayer-this.retour, 80+((line-1)*355), sizeOfPlayer,sizeOfPlayer);
     }
 
