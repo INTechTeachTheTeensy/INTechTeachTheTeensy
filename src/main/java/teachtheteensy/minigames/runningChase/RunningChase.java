@@ -27,7 +27,7 @@ public class RunningChase extends Minigame {
 
     private int tick=0;
 
-    private int speedOfTheGame=10; //fois 4 par rapport à tick
+    private int speedOfTheGame=20; //fois 20 par rapport à tick
 
 
     private boolean gameover;
@@ -45,8 +45,8 @@ public class RunningChase extends Minigame {
             boxOnTheScreen.add(new Box());
         }
 
-        if(tick%1000==0){
-            speedOfTheGame++;
+        if(tick%300==0 && startOfGame){
+            speedOfTheGame+=1;
         }
 
         player.tick(abscissePlayer,boxOnTheScreen);

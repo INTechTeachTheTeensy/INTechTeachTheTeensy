@@ -8,7 +8,6 @@ import teachtheteensy.Game;
 public class Box {
     Image imageBox = Assets.getImage("runningChase/box.png");
     Image imageBreakBox = Assets.getImage("runningChase/breakBox.png");
-    private boolean playerInTheBox;
     private int line= (int) Math.ceil(Math.random()*3);  //1,2 ou 3 (3 lignes)
     private int abscisse= Game.getInstance().getScreenWidth();
     private int sizeBox = 200;
