@@ -39,6 +39,11 @@ public class RunningChase extends Minigame {
         if(tick%((int)(800/speedOfTheGame))==0 && startOfGame){
             boxOnTheScreen.add(new box());
         }
+
+        if(tick%1000==0){
+            speedOfTheGame++;
+        }
+
         player.tick(abscissePlayer,boxOnTheScreen);
         numberOfLife=player.getNumberOfLife();
         life.tick(numberOfLife);

@@ -31,7 +31,7 @@ public class Prey {
         int[] placeOfTheBox;
         for(box Box:boxOnTheScreen){
             placeOfTheBox = Box.whereIsTheBox();
-            if(placeOfTheBox[1]==line && (placeOfTheBox[0]+placeOfTheBox[2])>=(abscisseOfPlayer-this.retour) && (placeOfTheBox[0])<=(abscisseOfPlayer+sizeOfPlayer-this.retour) && Box.hittable()){
+            if(placeOfTheBox[1]==line && (placeOfTheBox[0]+placeOfTheBox[2]-20)>=(abscisseOfPlayer-this.retour) && (placeOfTheBox[0]+10)<=(abscisseOfPlayer+sizeOfPlayer-this.retour) && Box.hittable()){
                 touchABox=true;
                 Box.cantBeHit();
                 numberOfLife--;
