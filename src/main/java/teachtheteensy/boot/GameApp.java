@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
  * Classe contenant l'Application JavaFX. Initialises la fenêtre et le jeu et laisse ce dernier prendre le contrôle
  */
 public class GameApp extends Application {
+    public static Scene scene;
+    public static Stage stage;
 
     @Override
     public void init() throws Exception {
@@ -67,6 +69,7 @@ public class GameApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // initialisation de JavaFX et de la fenêtre
+        this.stage=stage;
         stage.setFullScreen(true);
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
         int width = resolution.width;
@@ -75,7 +78,7 @@ public class GameApp extends Application {
         Canvas canvas = new Canvas(width, height);
         Group group = new Group();
         group.getChildren().add(canvas);
-        Scene scene = new Scene(group);
+        scene = new Scene(group);
         stage.setScene(scene);
         stage.setResizable(false);
 

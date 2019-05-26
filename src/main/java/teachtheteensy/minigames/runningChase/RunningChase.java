@@ -1,16 +1,21 @@
 package teachtheteensy.minigames.runningChase;
 
+import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
+import teachtheteensy.Screen;
 import teachtheteensy.minigames.Minigame;
+import teachtheteensy.screens.TitleScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static teachtheteensy.boot.GameApp.scene;
 
 
 public class RunningChase extends Minigame {
@@ -46,7 +51,7 @@ public class RunningChase extends Minigame {
         }
 
         if(tick%300==0 && startOfGame){
-            speedOfTheGame+=1;
+            speedOfTheGame++;
         }
 
         player.tick(abscissePlayer,boxOnTheScreen);
@@ -111,6 +116,22 @@ public class RunningChase extends Minigame {
                 break;
             case ENTER:
                 startOfGame=true;
+                break;
+            case Q:
+                Game.getInstance().showScreen(new TitleScreen());
+                break;
         }
+    }
+
+    @Override
+    public void open(Screen previousScreen) {
+        super.open(previousScreen);
+        scene.setCursor(Cursor.NONE);
+    }
+
+    @Override
+    public void close(Screen newScreen) {
+        super.close(newScreen);
+        scene.setCursor(Cursor.DEFAULT);
     }
 }

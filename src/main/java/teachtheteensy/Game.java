@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import teachtheteensy.boot.GameApp;
 import teachtheteensy.music.MusicHandle;
 import teachtheteensy.music.MusicThread;
 import teachtheteensy.screens.PrototypeScreen;
@@ -96,7 +97,13 @@ public class Game {
     }
 
     public void keyReleased(KeyEvent event) {
-        currentScreen.keyReleased(event);
+        switch (event.getCode()){
+            case ESCAPE:
+                GameApp.stage.close();
+                break;
+            default:
+                currentScreen.keyReleased(event);
+        }
     }
 
     public void mouseClick(MouseEvent event) {
