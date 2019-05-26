@@ -4,7 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
+import teachtheteensy.Game;
+import teachtheteensy.Screen;
 import teachtheteensy.minigames.Minigame;
+import teachtheteensy.screens.TitleScreen;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -124,4 +127,12 @@ public class Defonceuse extends Minigame {
         success=true;
     }
 
+    @Override
+    public void keyPressed(KeyEvent event) {
+        switch (event.getCode()) {
+            case Q:
+                Game.getInstance().showScreen(new TitleScreen());
+                break;
+        }
+    }
 }
