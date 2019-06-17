@@ -40,11 +40,15 @@ public class RunningChase extends Minigame {
     private boolean startOfGame=false;
     private Life life=new Life();
 
+    private float defilement=speedOfTheGame;
+
     private long lastUpdate;
 
     @Override
     public void tick() {
         System.out.println(">> dt: "+(System.currentTimeMillis()-lastUpdate));
+        //defilement+=(System.currentTimeMillis()-lastUpdate)/speedOfTheGame;
+        System.out.println(defilement);
         lastUpdate = System.currentTimeMillis();
         if(tick% (800/speedOfTheGame) ==0 && startOfGame){
             boxOnTheScreen.add(new Box());
@@ -81,6 +85,7 @@ public class RunningChase extends Minigame {
             if (startOfGame) {
                 ctx.setFill(Color.GREEN);
                 int position = -(speedOfTheGame*tick);
+                //int position = -(int)(speedOfTheGame*defilement);
                 if(position+Game.getInstance().getScreenWidth() < 0) {
                     position += Game.getInstance().getScreenWidth();
                     position %= Game.getInstance().getScreenWidth();

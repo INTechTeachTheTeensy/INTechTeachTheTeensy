@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import teachtheteensy.Game;
+import teachtheteensy.screens.TitleScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -391,6 +392,9 @@ public class Snake extends Minigame {
 
             case SPACE:
                 reset();
+                break;
+            case Q:
+                Game.getInstance().showScreen(new TitleScreen());
                 break;
         }
     }

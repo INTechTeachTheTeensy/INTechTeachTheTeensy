@@ -13,6 +13,8 @@ import javafx.scene.text.Font;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
 import teachtheteensy.minigames.Minigame;
+import teachtheteensy.screens.TitleScreen;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -320,6 +322,9 @@ public class DDR extends Minigame {
                 if (arrowStatus==0) {
                     ouch=true;
                 }
+                break;
+            case Q:
+                Game.getInstance().showScreen(new TitleScreen());
                 break;
         }
     }
