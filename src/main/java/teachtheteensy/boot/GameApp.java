@@ -1,6 +1,5 @@
 package teachtheteensy.boot;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -14,7 +13,6 @@ import teachtheteensy.Assets;
 import teachtheteensy.Game;
 
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Classe contenant l'Application JavaFX. Initialises la fenêtre et le jeu et laisse ce dernier prendre le contrôle
@@ -56,11 +54,11 @@ public class GameApp extends Application {
         Assets.getMusic("ddr/sheep.wav");
 
         // taupes
-        Assets.getImage("defonceuse/rose.png");
-        Assets.getImage("defonceuse/silhouette.png");
-        Assets.getImage("defonceuse/victorPatate.png");
-        Assets.getImage("defonceuse/victory.png");
-        Assets.getImage("defonceuse/william.png");
+        Assets.getImage("chasse taupe/rose.png");
+        Assets.getImage("chasse taupe/silhouette.png");
+        Assets.getImage("chasse taupe/victorPatate.png");
+        Assets.getImage("chasse taupe/victory.png");
+        Assets.getImage("chasse taupe/william.png");
 
 
 //        Thread.sleep(5000);

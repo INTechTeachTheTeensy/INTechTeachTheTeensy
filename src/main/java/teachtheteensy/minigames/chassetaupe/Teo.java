@@ -1,16 +1,11 @@
-package teachtheteensy.minigames.defonceuse;
+package teachtheteensy.minigames.chassetaupe;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
-import teachtheteensy.Game;
 import teachtheteensy.math.MutableRectangle;
 
-import java.awt.*;
 public class Teo {
-    private final Image imageTeo=Assets.getImage("defonceuse/teo.png");
+    private final Image imageTeo=Assets.getImage("chasse taupe/teo.png");
     MutableRectangle rectangle;
     private int positionTeo[][]={{200, -150+600},{1500, -180+600},{840, -230+600},{525, -550+600},{525, 100+600},{1175, -450+600},{1175, 100+600}};
     int tick;

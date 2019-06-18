@@ -1,19 +1,16 @@
-package teachtheteensy.minigames.defonceuse;
+package teachtheteensy.minigames.chassetaupe;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
 import teachtheteensy.Game;
-import teachtheteensy.Screen;
 import teachtheteensy.minigames.Minigame;
 import teachtheteensy.screens.TitleScreen;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Defonceuse extends Minigame {
+public class ChasseTaupe extends Minigame {
     private List<Taupe> listTaupe= new ArrayList<Taupe>();
     boolean success;
     boolean gameOver;
@@ -23,21 +20,21 @@ public class Defonceuse extends Minigame {
     private List<Bulle> listBulle= new ArrayList<Bulle>();
     private List<Compliment> listCompliment= new ArrayList<Compliment>();
 
-    public Defonceuse () {
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 200, 400));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/william.png"), 1500, 400));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/ug.png"), 850, 400));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/remi.png"), 525, 100));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/lucasdetoure.png"), 525, 700));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 100));
-        listTaupe.add(new Taupe(Assets.getImage("defonceuse/victorPatate.png"), 1175, 700));
-        listBulle.add(new Bulle(Assets.getImage("defonceuse/bulle_nul.png")));
-        listBulle.add(new Bulle(Assets.getImage("defonceuse/datasheet.png")));
-        listBulle.add(new Bulle(Assets.getImage("defonceuse/infos.png")));
-        listBulle.add(new Bulle(Assets.getImage("defonceuse/personnellement.png")));
-        listCompliment.add(new Compliment(Assets.getImage("defonceuse/beau_travail.png")));
-        listCompliment.add(new Compliment(Assets.getImage("defonceuse/Bien_joué.png")));
-        listCompliment.add(new Compliment(Assets.getImage("defonceuse/bravo.png")));
+    public ChasseTaupe() {
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/victorPatate.png"), 200, 400));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/william.png"), 1500, 400));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/ug.png"), 850, 400));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/remi.png"), 525, 100));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/lucasdetoure.png"), 525, 700));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/victorPatate.png"), 1175, 100));
+        listTaupe.add(new Taupe(Assets.getImage("chasse taupe/victorPatate.png"), 1175, 700));
+        listBulle.add(new Bulle(Assets.getImage("chasse taupe/bulle_nul.png")));
+        listBulle.add(new Bulle(Assets.getImage("chasse taupe/datasheet.png")));
+        listBulle.add(new Bulle(Assets.getImage("chasse taupe/infos.png")));
+        listBulle.add(new Bulle(Assets.getImage("chasse taupe/personnellement.png")));
+        listCompliment.add(new Compliment(Assets.getImage("chasse taupe/beau_travail.png")));
+        listCompliment.add(new Compliment(Assets.getImage("chasse taupe/Bien_joué.png")));
+        listCompliment.add(new Compliment(Assets.getImage("chasse taupe/bravo.png")));
 
     }
 
@@ -65,7 +62,7 @@ public class Defonceuse extends Minigame {
     @Override
     public void render(GraphicsContext ctx) {
 
-        ctx.drawImage(Assets.getImage("defonceuse/rose.png"), 0, 0, 1920, 1080);
+        ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
         for (Taupe taupe:listTaupe)
         {
             taupe.render(ctx);
@@ -81,14 +78,14 @@ public class Defonceuse extends Minigame {
         };
         teo.render(ctx);
         if (success){
-            ctx.drawImage(Assets.getImage("defonceuse/rose.png"), 0, 0, 1920, 1080);
-            ctx.drawImage(Assets.getImage("defonceuse/success.png"),0,0,1920,1080);
+            ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
+            ctx.drawImage(Assets.getImage("chasse taupe/success.png"),0,0,1920,1080);
         }
         if(gameOver){
-            ctx.drawImage(Assets.getImage("defonceuse/game_over.png"),0,0,1920,1080);
+            ctx.drawImage(Assets.getImage("chasse taupe/game_over.png"),0,0,1920,1080);
         }
         if(gameOverBis){
-            ctx.drawImage(Assets.getImage("defonceuse/game_over2.png"),0,0,1920,1080);
+            ctx.drawImage(Assets.getImage("chasse taupe/game_over2.png"),0,0,1920,1080);
         }
 
 

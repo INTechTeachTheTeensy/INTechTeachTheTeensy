@@ -1,5 +1,6 @@
 package teachtheteensy.minigames;
 
+import teachtheteensy.minigames.chassetaupe.ChasseTaupe;
 import teachtheteensy.minigames.runningChase.RunningChase;
 
 public enum Minigames {
@@ -7,7 +8,7 @@ public enum Minigames {
     SNAKE(Snake.class, "snake"),// mini-jeu example
     RUNNINGCHASE(RunningChase.class, "running chase"),
     DDR(teachtheteensy.minigames.ddr.DDR.class, "ddr"), // test copy Snake
-    DEFONCEUSE(teachtheteensy.minigames.defonceuse.Defonceuse.class, "chasse taupe"),
+    CHASSETAUPE(ChasseTaupe.class, "chasse taupe"),
     ;
 
     private Class<? extends Minigame> minigameClass;

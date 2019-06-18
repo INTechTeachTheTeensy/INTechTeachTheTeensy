@@ -1,12 +1,8 @@
-package teachtheteensy.minigames.defonceuse;
+package teachtheteensy.minigames.chassetaupe;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import teachtheteensy.math.MutableRectangle;
-import java.awt.*;
 
 public class Compliment {
     private final Image imageCompliment;

@@ -1,20 +1,14 @@
-package teachtheteensy.minigames.defonceuse;
+package teachtheteensy.minigames.chassetaupe;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import teachtheteensy.Assets;
-import teachtheteensy.Game;
 import teachtheteensy.math.MutableRectangle;
-
-import java.awt.*;
 
 public class Taupe {
     private final Image imageTete;
-    //private final Image silhouette = Assets.getImage("defonceuse/silhouette.png");
-    private final Image cache = Assets.getImage("defonceuse/rose.png");
+    //private final Image silhouette = Assets.getImage("chasse taupe/silhouette.png");
+    private final Image cache = Assets.getImage("chasse taupe/rose.png");
     MutableRectangle rectangle;
     boolean rotateTete;
     boolean cacheTaupe;
