@@ -16,6 +16,8 @@ public class ChasseTaupe extends Minigame {
     boolean gameOver;
     boolean gameOverBis;
     int i;                                                 // on stocke la place de la tête associée à la bulle
+    int timer;
+    int level;
     Teo teo = new Teo();
     private List<Bulle> listBulle= new ArrayList<Bulle>();
     private List<Compliment> listCompliment= new ArrayList<Compliment>();
@@ -35,6 +37,7 @@ public class ChasseTaupe extends Minigame {
         listCompliment.add(new Compliment(Assets.getImage("chasse taupe/beau_travail.png")));
         listCompliment.add(new Compliment(Assets.getImage("chasse taupe/Bien_joué.png")));
         listCompliment.add(new Compliment(Assets.getImage("chasse taupe/bravo.png")));
+        level=1;
 
     }
 
@@ -56,12 +59,20 @@ public class ChasseTaupe extends Minigame {
             compliment.tick();
         }
         teo.tick();
+        if (timer>0){
+            timer--;
+        }
 
     }
 
     @Override
     public void render(GraphicsContext ctx) {
+        if(timer>0){
+            ctx.drawImage(Assets.getImage("chasse taupe/level2.png"),0,0,1920,1080);
+            return;
+        }
 
+        ctx.drawImage(Assets.getImage("chasse taupe/level1.png"), 0, 0, 1920, 1080);
         ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
         for (Taupe taupe:listTaupe)
         {
@@ -72,9 +83,13 @@ public class ChasseTaupe extends Minigame {
                        break;
                      }
                 }
+            if(level==2){
+
                 for (Compliment compliment:listCompliment){
                     compliment.render(ctx);
                 }
+            }
+
         };
         teo.render(ctx);
         if (success){
@@ -87,6 +102,7 @@ public class ChasseTaupe extends Minigame {
         if(gameOverBis){
             ctx.drawImage(Assets.getImage("chasse taupe/game_over2.png"),0,0,1920,1080);
         }
+
 
 
 
@@ -122,6 +138,9 @@ public class ChasseTaupe extends Minigame {
 
         }
         success=true;
+        timer=60;
+        level=level+1;
+
     }
 
     @Override
