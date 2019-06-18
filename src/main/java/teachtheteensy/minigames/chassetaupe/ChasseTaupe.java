@@ -55,8 +55,10 @@ public class ChasseTaupe extends Minigame {
         for (Bulle bulle: listBulle) {
             bulle.tick();
         }
-        for (Compliment compliment: listCompliment){
-            compliment.tick();
+        if (level==2) {
+            for (Compliment compliment : listCompliment) {
+                compliment.tick();
+            }
         }
         teo.tick();
         if (timer>0){
