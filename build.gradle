@@ -12,6 +12,7 @@ buildscript {
         maven {
             url = "http://oss.sonatype.org/content/repositories/snapshots"
         }
+        
     }
 }
 
@@ -20,6 +21,9 @@ apply plugin: 'java'
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        url "https://www.beatunes.com/repo/maven2/"
+    }
 }
 
 apply plugin: 'javafx-gradle-plugin'
@@ -31,6 +35,14 @@ jfx {
 
     // minimal requirement for jfxNative-task
     vendor = 'INTech'
+
+    jfxMainAppJarName = 'TeachTheTeensy.jar'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'teachtheteensy.boot.Bootstrap'
+    }
 }
 
 dependencies {
