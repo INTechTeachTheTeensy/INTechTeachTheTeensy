@@ -35,8 +35,8 @@ public class ChasseTaupe extends Minigame {
         listBulle.add(new Bulle(Assets.getImage("chasse taupe/infos.png")));
         listBulle.add(new Bulle(Assets.getImage("chasse taupe/personnellement.png")));
         listCompliment.add(new Compliment(Assets.getImage("chasse taupe/beau_travail.png")));
-        listCompliment.add(new Compliment(Assets.getImage("chasse taupe/Bien_joué.png")));
-        listCompliment.add(new Compliment(Assets.getImage("chasse taupe/bravo.png")));
+        //listCompliment.add(new Compliment(Assets.getImage("chasse taupe/Bien_joué.png")));
+        //listCompliment.add(new Compliment(Assets.getImage("chasse taupe/bravo.png")));
         level=1;
 
     }
