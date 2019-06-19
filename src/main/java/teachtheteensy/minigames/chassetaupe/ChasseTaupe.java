@@ -50,22 +50,25 @@ public class ChasseTaupe extends Minigame {
         } else {
             success = false;
         }
-        for (Taupe taupe: listTaupe) {
-            taupe.tick();
-            System.out.println(taupe.cacheTaupe);
 
-        }
-        success();
-        for (Bulle bulle: listBulle) {
-            bulle.tick();
-        }
-        if (level>1) {
-            for (Compliment compliment : listCompliment) {
-                compliment.tick();
+        if(!success) {
+            for (Taupe taupe: listTaupe) {
+                taupe.tick();
+                System.out.println(taupe.cacheTaupe);
+
             }
-        }
-        if(level==1){
-            teo.tick();
+            success();
+            for (Bulle bulle: listBulle) {
+                bulle.tick();
+            }
+            if (level>1) {
+                for (Compliment compliment : listCompliment) {
+                    compliment.tick();
+                }
+            }
+            if(level==1){
+                teo.tick();
+            }
         }
 
     }
@@ -148,9 +151,10 @@ public class ChasseTaupe extends Minigame {
 
         }
         success=true;
-        timer=60;
-        level=level+1;
-
+        if(level == 1) {
+            timer=60;
+            level=level+1;
+        }
     }
 
     @Override
