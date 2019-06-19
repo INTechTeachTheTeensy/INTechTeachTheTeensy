@@ -113,7 +113,7 @@ public class ChasseTaupe extends Minigame {
         }
 
         if (success && level>1){
-            timersuccess =180;
+            timersuccess =10000;
             //ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
             if (timersuccess>0){
             ctx.drawImage(Assets.getImage("chasse taupe/success.png"),0,0,1920,1080);
