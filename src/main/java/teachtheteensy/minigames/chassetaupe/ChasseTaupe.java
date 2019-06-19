@@ -64,7 +64,10 @@ public class ChasseTaupe extends Minigame {
                 compliment.tick();
             }
         }
-        teo.tick();
+        if(level==1){
+            teo.tick();
+        }
+
     }
 
     @Override
