@@ -94,7 +94,7 @@ public class ChasseTaupe extends Minigame {
 
         };
         teo.render(ctx);
-        if (success){
+        if (success && level==2){
             ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
             ctx.drawImage(Assets.getImage("chasse taupe/success.png"),0,0,1920,1080);
         }
