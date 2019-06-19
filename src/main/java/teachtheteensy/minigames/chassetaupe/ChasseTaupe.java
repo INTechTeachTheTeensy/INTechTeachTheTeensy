@@ -17,6 +17,7 @@ public class ChasseTaupe extends Minigame {
     boolean gameOverBis;
     int i;                                                 // on stocke la place de la tête associée à la bulle
     int timer;
+    int timer1;
     int level;
     Teo teo = new Teo();
     private List<Bulle> listBulle= new ArrayList<Bulle>();
@@ -38,6 +39,7 @@ public class ChasseTaupe extends Minigame {
         //listCompliment.add(new Compliment(Assets.getImage("chasse taupe/Bien_joué.png")));
         //listCompliment.add(new Compliment(Assets.getImage("chasse taupe/bravo.png")));
         level=1;
+        timer1=60;
 
     }
 
@@ -50,7 +52,9 @@ public class ChasseTaupe extends Minigame {
         } else {
             success = false;
         }
-
+        if (timer1>0){
+            timer1--;
+        }
         if(!success) {
             for (Taupe taupe: listTaupe) {
                 taupe.tick();
@@ -79,8 +83,9 @@ public class ChasseTaupe extends Minigame {
             ctx.drawImage(Assets.getImage("chasse taupe/level2.png"), 0, 0, 1920, 1080);
             return;
         }
-
-        ctx.drawImage(Assets.getImage("chasse taupe/level1.png"), 0, 0, 1920, 1080);
+        if (timer1>0) {
+            ctx.drawImage(Assets.getImage("chasse taupe/level1.png"), 0, 0, 1920, 1080);
+        }
         ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
         for (Taupe taupe:listTaupe)
         {
