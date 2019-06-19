@@ -85,6 +85,7 @@ public class ChasseTaupe extends Minigame {
         }
         if (timer1>0) {
             ctx.drawImage(Assets.getImage("chasse taupe/level1.png"), 0, 0, 1920, 1080);
+            return;
         }
         ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
         for (Taupe taupe:listTaupe)
