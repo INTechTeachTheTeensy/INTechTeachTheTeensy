@@ -131,9 +131,12 @@ public class ChasseTaupe extends Minigame {
             }
 
         }
-        if(teo.isPositionInTeo(sceneX,sceneY)){
-            gameOver=true;
+        if(level==1){
+            if(teo.isPositionInTeo(sceneX,sceneY)){
+                gameOver=true;
+            }
         }
+
 
     }
     public void success(){
