@@ -45,7 +45,11 @@ public class ChasseTaupe extends Minigame {
 
     @Override
     public void tick() {
-
+        if (timer>0){
+            timer--;
+        } else {
+            success = false;
+        }
         for (Taupe taupe: listTaupe) {
             taupe.tick();
             System.out.println(taupe.cacheTaupe);
@@ -61,16 +65,12 @@ public class ChasseTaupe extends Minigame {
             }
         }
         teo.tick();
-        if (timer>0){
-            timer--;
-        }
-
     }
 
     @Override
     public void render(GraphicsContext ctx) {
-        if(timer>0){
-            ctx.drawImage(Assets.getImage("chasse taupe/level2.png"),0,0,1920,1080);
+        if(timer>0) {
+            ctx.drawImage(Assets.getImage("chasse taupe/level2.png"), 0, 0, 1920, 1080);
             return;
         }
 
