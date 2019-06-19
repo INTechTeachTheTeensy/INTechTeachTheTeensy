@@ -55,7 +55,7 @@ public class ChasseTaupe extends Minigame {
         for (Bulle bulle: listBulle) {
             bulle.tick();
         }
-        if (level==2) {
+        if (level>1) {
             for (Compliment compliment : listCompliment) {
                 compliment.tick();
             }
@@ -85,8 +85,7 @@ public class ChasseTaupe extends Minigame {
                        break;
                      }
                 }
-            if(level==2){
-
+            if(level>1){
                 for (Compliment compliment:listCompliment){
                     compliment.render(ctx);
                 }
@@ -94,7 +93,7 @@ public class ChasseTaupe extends Minigame {
 
         };
         teo.render(ctx);
-        if (success && level==2){
+        if (success && level>1){
             ctx.drawImage(Assets.getImage("chasse taupe/rose.png"), 0, 0, 1920, 1080);
             ctx.drawImage(Assets.getImage("chasse taupe/success.png"),0,0,1920,1080);
         }
