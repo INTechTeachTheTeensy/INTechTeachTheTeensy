@@ -9,7 +9,7 @@ public class Compliment {
     MutableRectangle rectangle;
     private int positionBulle[][] = {{260-50,350+20},{1560-50,350+20},{910-50,350+20},{585-50,50+20},{585-50,650+20},{1175+60-50,50+20},{1175-50,650+20}};
     int tick;
-    int i;
+    int i = -1;
 
     public Compliment (Image imageCompliment){
         this.imageCompliment =imageCompliment;
