@@ -24,7 +24,7 @@ public class Compliment {
 
     public void tick(){
         tick=tick+1;
-        if (tick>=150){
+        if (tick>=300){
             i=(int)(Math.random()*6);
             rectangle.setX(positionBulle[i][0]);
             rectangle.setY(positionBulle[i][1]);
